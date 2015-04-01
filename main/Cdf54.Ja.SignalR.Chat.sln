@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cdf54.Ja.SignalR.Chat", "Cdf54.Ja.SignalR.Chat\Cdf54.Ja.SignalR.Chat.csproj", "{89B11572-7626-4582-8C58-CBE01ACDABFC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{F0581576-4853-4724-9186-0810E6451C07}"
+	ProjectSection(SolutionItems) = preProject
+		WebEssentials-Settings.json = WebEssentials-Settings.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cdf54.Ja.SignalR.Console.Client.Chat", "Cdf54.Ja.SignalR.Console.Client.Chat\Cdf54.Ja.SignalR.Console.Client.Chat.csproj", "{5F4FAC28-D8E6-4075-A73D-F178CD239606}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Cdf54.Ja.SignalR.Chat\\Cdf54.Ja.SignalR.Chat.csproj
+		SccProjectName1 = Cdf54.Ja.SignalR.Chat
+		SccLocalPath1 = Cdf54.Ja.SignalR.Chat
+		SccProjectUniqueName2 = Cdf54.Ja.SignalR.Console.Client.Chat\\Cdf54.Ja.SignalR.Console.Client.Chat.csproj
+		SccProjectName2 = Cdf54.Ja.SignalR.Console.Client.Chat
+		SccLocalPath2 = Cdf54.Ja.SignalR.Console.Client.Chat
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Staging CDF54 VM|Any CPU = Staging CDF54 VM|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89B11572-7626-4582-8C58-CBE01ACDABFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89B11572-7626-4582-8C58-CBE01ACDABFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89B11572-7626-4582-8C58-CBE01ACDABFC}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{89B11572-7626-4582-8C58-CBE01ACDABFC}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{89B11572-7626-4582-8C58-CBE01ACDABFC}.Staging CDF54 VM|Any CPU.ActiveCfg = Staging CDF54 VM|Any CPU
+		{89B11572-7626-4582-8C58-CBE01ACDABFC}.Staging CDF54 VM|Any CPU.Build.0 = Staging CDF54 VM|Any CPU
+		{5F4FAC28-D8E6-4075-A73D-F178CD239606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F4FAC28-D8E6-4075-A73D-F178CD239606}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F4FAC28-D8E6-4075-A73D-F178CD239606}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F4FAC28-D8E6-4075-A73D-F178CD239606}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F4FAC28-D8E6-4075-A73D-F178CD239606}.Staging CDF54 VM|Any CPU.ActiveCfg = Release|Any CPU
+		{5F4FAC28-D8E6-4075-A73D-F178CD239606}.Staging CDF54 VM|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
