@@ -99,9 +99,12 @@
 	https://damienbod.wordpress.com/2013/11/13/signalr-messaging-a-complete-client-with-a-console-application/
 	ADD: project :Cdf54.Ja.SignalR.Console.Client.Chat
 	INSTALL: nuget package Microsoft.AspNet.SignalR.Client
-- 2015-03-29 COMMIT: Codeplex jowchat.codeplex.com (107278) Console client
-- Refactor Cdf54.Ja.SignalR.Console.Client.Chat
-- 2015-03-31 COMMIT: Codeplex jowchat.codeplex.com (107291) Refactor Cdf54.Ja.SignalR.Console.Client.Chat
+- 2015-04-01 COMMIT: Codeplex jowchat.codeplex.com (107301) First commit
+- 2015-04-01 COMMIT: Codeplex jowchat.codeplex.com (107302) Docs
+- 2015-04-01 COMMIT: Codeplex jowchat.codeplex.com (107305) Cdf54.Ja.SignalR.Console.Client.Chat
+- 2015-04-01 COMMIT: Codeplex jowchat.codeplex.com (?) Missing files (why ?)
+- 2015-04-01 COMMIT: Codeplex jowchat.codeplex.com (?) Remove web.xxx.config files (security)
+
 
 ////////////////////////
 // Version 0.0.Alpha

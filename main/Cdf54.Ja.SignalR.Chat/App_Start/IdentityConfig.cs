@@ -115,7 +115,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "admin@free.fr";
-            const string password = "P@ssword2013";
+            const string password = "P@ssword2015";
             const string roleName = "Admin";
 
             //Create Role Admin if it does not exist
