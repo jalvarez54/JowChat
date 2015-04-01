@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Cdf54.Ja.SignalR.Chat.Hubs.ContentProviders.EmbedContentProvider">
+    <Position X="3.75" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAgAAAAAAAEAAAAACAAQAAAAAA=</HashCode>
+      <FileName>Hubs\ContentProviders\EmbedContentProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Cdf54.Ja.SignalR.Chat.Hubs.ContentProviders.CollegeHumorContentProvider">
+    <Position X="3.75" Y="5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAQAAACAA=</HashCode>
+      <FileName>Hubs\ContentProviders\CollegeHumorContentProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cdf54.Ja.SignalR.Chat.Hubs.ContentProviders.DailyMotionContentProvider">
+    <Position X="7" Y="5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAQAAACAA=</HashCode>
+      <FileName>Hubs\ContentProviders\DailyMotionContentProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cdf54.Ja.SignalR.Chat.Hubs.ContentProviders.ImageContentProvider">
+    <Position X="6.75" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Hubs\ContentProviders\ImageContentProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Cdf54.Ja.SignalR.Chat.Hubs.ContentProviders.YouTubeContentProvider">
+    <Position X="0.5" Y="5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAEAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Hubs\ContentProviders\YouTubeContentProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cdf54.Ja.SignalR.Chat.Hubs.ContentProviders.AudioContentProvider">
+    <Position X="9.25" Y="2" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Hubs\ContentProviders\AudioContentProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Cdf54.Ja.SignalR.Chat.Hubs.ContentProviders.IContentProvider">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Hubs\ContentProviders\IContentProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

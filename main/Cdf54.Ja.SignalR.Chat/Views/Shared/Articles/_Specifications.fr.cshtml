@@ -1,0 +1,47 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-user"></span>&nbsp;Specifications</h3>
+    </div>
+    <div class="panel-body ">
+        <h4>Specifications</h4>
+        <p>
+            Le but du projet, est de proposer aux utilisateurs authentifiés un outil de discussion instantanée (Chat) de type Publique et Privée. Il affiche la liste des utilisateurs connectés à l'outil permettant ainsi de démarrer une discussion privée en double cliquant sur l'utilisateur ciblé.
+        </p>
+        <p>
+            L'outil supporte plusieurs discussions intantanées simultanées de type Privées. Lorsqu'un utilisateur se déconnecte, il n'est plus possible de lui envoyer de message privé.
+        </p>
+        <p>
+            Une session de discussion est comprise entre l'instant ou un utilisateur utilise l'outil, et l'instant où tous les utilisateurs sont déconnectés de l'outil. Lorsqu'une session se termine l'ensemble des messages publics seront supprimés. Les messages privé eux ne sont pas mis en cache.
+        </p>
+        <p>
+            Un utilisateur peut avoir plusieurs sessions ouvertes sur le même navigateur, la même machine ou sur plusieurs machines; dans ce cas il n'est présent qu'une suele fois sur la liste des utilisateurs.
+        </p>
+        <p>
+            Une page d'administration, accessible uniquement par les membres du groupe Admin liste les utilisateurs connectés à l'outil et les messages publics de la session en cours. Elle permet de visualiser la trace de l'application côté serveur et client (admin@free.fr); cette fonctionnalitée est optionnelle et peut être activée/désactivée à partir du fichier de configuration web.config (IsTraceEnable). Elle offre aussi un ensemble d'informations techniques à destination de l'administrateur et du développeur.
+        </p>
+        <p>
+            Si la page est rafraîchie, l'utilisateur est déconnecté puis reconnecté instantanément.
+        </p>
+        <h4>
+            Améliorations possibles.
+        </h4>
+        <ul>
+            <li>
+                Stockage des messages dans une base de données
+            </li>
+            <li>
+                Visualisation des messages privés sauvegardés en base de données regroupés par destinataires (Facebook like).
+            </li>
+            <li>
+                Avatar utilisateur
+            </li>
+            <li>
+                Mise en oeuvre de la fonctionnalité de groupes de SignalR
+            </li>
+            <li>
+                Afficher du contenu multimédia: images, vidéos...
+            </li>
+        </ul>
+    </div>
+</div>
+

@@ -1,0 +1,144 @@
+﻿@using JA.UTILS.Helpers
+
+@*http://rdonfack.developpez.com/tutoriels/dotnet/creation-pages-web-asp-net-utilisant-moteur-vue-razor/?page=page_6*@
+
+@helper Technos()
+{
+    <ul>
+        <li>Visual Studio 2013 Ultimate</li>
+        <li>ASP.NET MVC5</li>
+        <li>Data base first</li>
+        <li>WebAPI2</li>
+        <li>Bootstrap 3</li>
+        <li>Razor</li>
+        <li>Razor helpers (Extension method & Declarative)</li>
+        <li>Annotation and filters (CustomFiltersAttributes)</li>
+        <li>Elmah, log4net, Glimpse and rotativa for pdf support</li>
+        <li>Styles for printing</li>
+        <li>System diagnostics trace</li>
+        <li>JQuery</li>
+        <li>Ajax</li>
+        <li>Internationalization (us for neutral, fr)</li>
+        <li>web.Config transformation</li>
+        <li>Error Handling</li>
+        <li>Helpers for tracing</li>
+        <li>Carousel</li>
+        <li>Area (Administration with page protected: user="admin" / pasword=p@ssword</li>
+        <li>ASP.NET Identity  (with extension and users management) </li>
+        <li>File upload for user photo and validation [ValidateFile]</li>
+        <li> Code snippets</li>
+        <li>Razor EditorTemplate</li>
+        <li>Googlemaps</li>
+        <li>HTML5 Video</li>
+    </ul>
+
+}
+@helper FixTab()
+{
+    if (!Request.Browser.IsMobileDevice)
+    {
+        <div class="divNotPrinted uv-tab">
+            <a class="uv-tab-label" href="/" target="_blank">
+                <img style="border:0; background-color: transparent; padding:0; margin:0;" alt="Feedback" src="/Content/app/feedback-tab.png">
+            </a>
+        </div>
+    }
+}
+@helper AddThis()
+{
+    <!-- AddThis Button BEGIN -->
+        <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-5316de7341cbf6b7" > <span class="glyphicon glyphicon-share"></span> Share</a>
+        <script type="text/javascript">var addthis_config = { "data_track_addressbar": true };</script>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5316de7341cbf6b7"></script>
+    <!-- AddThis Button END -->
+}
+@helper FooterInformations()
+{
+    <div class="well well-sm">
+        @if (!Request.Browser.IsMobileDevice)
+        {
+
+            <div class="text-info" style="text-align:center;font-size:smaller">
+                Société: @Utils.GetConfigCompanyName() |
+                App: @Utils.GetAssemblyProduct() | File Version: @Utils.GetAssemblyVersion() | Product Version: @Utils.GetAssemblyInformationnalVersion() |
+                Conception: @Utils.GetAssemblyCompany() |
+                @Utils.GetAssemblyCopyright()<br />
+                [User: @Utils.GetUserName()][Culture: @Utils.GetCulture()][UIculture: @Utils.GetUiCulture()]<br />
+            </div>
+        }
+        else
+        {
+            <div class="text-info" style="font-size:smaller">
+                Product Version: @Utils.GetAssemblyInformationnalVersion()
+            </div>
+        }
+    </div>
+}
+        }
+@helper DevFooterInformations()
+{
+    <div class="well well-sm">
+        <div class="text-info" style="text-align:left;font-size:smaller;font-style:italic">Use:  &lt;add key=&quot;ShowDemoExceptionLinks&quot; value=&quot;false&quot; /&gt; in Web.Config to configure.</div>
+        <div class="text-danger" style="text-align:left;font-size:smaller">
+            Compilation Mode: @Utils.GetCompilationMode() |
+            IsDebuggingEnabled: @Utils.IsDebuggingEnabled() |
+            IsAspNetTraceEnabled: @Utils.IsAspNetTraceEnabled() |
+            CustomErrorEnabled: @Utils.IsCustomErrorEnabled()<br />
+            * DefaultConnection: @Utils.GetCnxDefaultConnection()
+        </div>
+    </div>
+}
+@helper AdminInformations()
+{
+    <h3>Admin informations</h3>
+    <div class="container body-content">
+        <p class="text-info">
+            <h4>Footer</h4>
+            @FooterInformations()
+            <h4>Dev Footer</h4>
+            @DevFooterInformations()
+            <h4>Compilation mode</h4>
+            [Compilation Mode: @Utils.GetCompilationMode()]<br />
+            <h4>Debug</h4>
+            [IsDebuggingEnabled: @Utils.IsDebuggingEnabled()]
+            <h4>Trace</h4>
+            [IsAspNetTraceEnabled: @Utils.IsAspNetTraceEnabled()]
+            <h4>Custom error</h4>
+            [CustomErrorEnabled: @Utils.IsCustomErrorEnabled()]<br />
+            <h4>ConnectionString</h4>
+            [DefaultConnection: @Utils.GetCnxDefaultConnection()]<br />
+        </p>
+        <h4>IIS Server Variables</h4>
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <tr>
+                <td>Key</td>
+                <td>Value</td>
+            </tr>
+            @{
+                int loop1, loop2;
+                System.Collections.Specialized.NameValueCollection coll;
+
+                // Load ServerVariable collection into NameValueCollection object.
+                coll = Request.ServerVariables;
+                // Get names of all keys into a string array.
+                String[] arr1 = coll.AllKeys;
+                for (loop1 = 0; loop1 < arr1.Length; loop1++)
+                {
+                    String[] arr2 = coll.GetValues(arr1[loop1]);
+                    for (loop2 = 0; loop2 < arr2.Length; loop2++)
+                    {
+                        <tr>
+                            <td>@arr1[loop1]</td>
+                            <td>@Server.HtmlEncode(arr2[loop2])</td>
+                        </tr>
+                    }
+                }
+            }
+        </table>
+    </div>
+
+}
+@helper TagImage(string imgClass, byte[] picture, string imgTitle, string imgAlt, string imgBorder, int ole)
+{
+    <img class=@imgClass src=@Utils.ByteToStringImage(picture,ole) title=@imgTitle alt=@imgAlt border=@imgBorder />
+}

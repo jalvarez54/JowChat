@@ -1,0 +1,652 @@
+﻿/*
+ * Author: José ALVAREZ
+ * Date: 07/02/2015
+ * Description: Namespaces: APP, MISC, USER, MESSAGE, PUBLIC, PRIVATE
+ * http://falola.developpez.com/tutoriels/javascript/namespace/
+ * http://thomas.junghans.co.za/frontendengineering/javascript-module-pattern/downloads/Javascript-Module-Pattern.pdf
+ * File: cdf54.ja.signalR.chat.js
+ */
+
+//#region reference path.
+//Directives de référence https://msdn.microsoft.com/fr-fr/library/bb385682.aspx#Script
+//Une directive reference permet à Visual Studio d'établir une relation entre le script vous modifiez actuellement et d'autres scripts.
+//La directive reference vous permet d'inclure un fichier de script dans le contexte de script du fichier de script actuel.
+//Cela permet à IntelliSense de référencer des fonctions définies extérieurement, des types et des champs lors de l'écriture de code.
+//
+/// <reference path="~/Scripts/app/cdf54.ja.signalR.demotransports.js" />
+/// <reference path="~/Scripts/app/cdf54.ja.signalR.chat.namespace.js" />
+/// <reference path="~/Scripts/app/cdf54.ja.utils.js" />
+/// <reference path="~/Scripts/app/cdf54.ja.signalR.chat.helpers.js" />
+/// <reference path="~/Views/Chat/_ViewStart.cshtml" />
+//#endregion
+
+//#region $(document).ready(function () {};
+$(function () {
+    CDF54.JA.SIGNALR.CHAT.APP.Init();
+    CDF54.JA.SIGNALR.CHAT.APP.Start();
+});
+//#endregion
+
+//#region CDF54.JA.SIGNALR.CHAT.APP module.
+CDF54.JA.SIGNALR.CHAT.APP = (function () {
+    'use strict';
+    //
+    // Private members
+    //
+    function _ChatOrChatAdmin() {
+        var p = window.location.pathname;
+        var pathArray = window.location.pathname.split('/');
+        return pathArray[pathArray.length - 1];
+    };
+    function _RegisterClientMethods() {
+        CDF54.JA.SIGNALR.CHAT.MISC.registerClientMethods();
+        CDF54.JA.SIGNALR.CHAT.USER.registerClientMethods();
+        CDF54.JA.SIGNALR.CHAT.MESSAGE.registerClientMethods();
+        aliasPRIVATE.registerClientMethods();
+        aliasPUBLIC.registerClientMethods();
+        CDF54.JA.SIGNALR.CHAT.ADMIN.registerClientMethods();
+    };
+    function _StartFail() {
+        CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('hub.start.fail: Could not Connect!');
+        CDF54.JA.SIGNALR.CHAT.MISC.FillState('hub.start.fail: Could not Connect!');
+    }
+    //
+    // Public members
+    //
+    return {
+        //
+        // Public properties
+        //
+        // Proxy property to reference the hub.
+        ChatHubProxy: null,
+        // Property to persist UserName.
+        UserName: null,
+        // Property to persist ConnectionId.
+        ConnectionId: null,
+        // Property to differentiate pages Chat and ChatAdmin
+        ChatOrChatAdmin: _ChatOrChatAdmin(),
+        //
+        // Public methods
+        //
+        StartDone: function () {
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace(CDF54.JA.UTILS.StringFormat('hub.start.done: Connected, connection ID= {0}', $.connection.hub.id));
+            CDF54.JA.SIGNALR.CHAT.APP.RegisterEvents();
+            CDF54.JA.SIGNALR.CHAT.MISC.ShowHub();
+            CDF54.JA.SIGNALR.CHAT.MISC.FillState('Connected, connection ID=' + $.connection.hub.id + ' with ' + 'Transport = <strong>' + $.connection.hub.transport.name + '</strong>');
+        },
+        RegisterEvents: function () {
+            aliasPUBLIC.registerEvents();
+            aliasPRIVATE.registerEvents();
+        },
+        Init: function () {
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace("Init");
+
+            // Enable console logs if IsConsoleLoggingEnable is true in web.config
+            $.connection.hub.logging = JSON.parse(String(IsConsoleLoggingEnable()).toLowerCase());
+
+            // Proxy to reference the hub initialisation.
+            this.ChatHubProxy = $.connection.chatHub;
+
+            _RegisterClientMethods();
+
+            // Load audio files.
+            CDF54.JA.SIGNALR.CHAT.MISC.LoadHtml5NewUserAudioTag();
+            CDF54.JA.SIGNALR.CHAT.MISC.LoadHtml5AudioTag();
+
+            // For Chat page
+            if (this.ChatOrChatAdmin == "Chat") {
+                CDF54.JA.SIGNALR.CHAT.MISC.showAppPath("spanAppPath");
+                CDF54.JA.SIGNALR.CHAT.MISC.showAppVersion("spanJsVersion");
+            };
+            
+            // For Admin page
+            if (this.ChatOrChatAdmin == "ChatAdmin") {
+                $('#spanCompany').append(CDF54.company.name);
+                $('#spanAddress').append(CDF54.company.address);
+                $('#spanDepartment').append(CDF54.company.departement);
+
+                $('#spanIsTraceEnable').append(IsTraceEnable());
+                $('#spanIsDemo').append(IsDemo());
+                $('#spanIsConsoleLoggingEnable').append(IsConsoleLoggingEnable());
+                $('#spanAppPath').append(AppPath());
+
+                $('#spanChat').append(CDF54.JA.UTILS.StringFormat("Author = {0} Version = {1}", CDF54.JA.SIGNALR.CHAT.author, CDF54.JA.SIGNALR.CHAT.version))
+                $('#spanUtils').append(CDF54.JA.UTILS.StringFormat("Author = {0} Version = {1}", CDF54.JA.UTILS.author, CDF54.JA.UTILS.version))
+
+                CDF54.JA.SIGNALR.CHAT.HELPERS.showJqueryVersion("spanJqueryVersion");
+                CDF54.JA.SIGNALR.CHAT.HELPERS.showBootstrapVersion("spanBootStrapVersion");
+                CDF54.JA.SIGNALR.CHAT.HELPERS.showSignalRVersion("spanSignalRVersion");
+            };
+        },
+        Start: function () {
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('Calling hub.start()');
+
+            if (JSON.parse(String(IsDemo()).toLowerCase())) {
+                DemoTransports();
+            }
+            else {
+                // Async execution.
+                $.connection.hub.start()
+                    .done(function () {
+                        CDF54.JA.SIGNALR.CHAT.APP.StartDone();
+                    })
+                    .fail(function () {
+                        _StartFail();
+                    });
+            }
+        },
+    }
+})();// CDF54.JA.SIGNALR.CHAT.APP module 
+//#endregion
+//#region CDF54.JA.SIGNALR.CHAT.MISC module.
+CDF54.JA.SIGNALR.CHAT.MISC = (function () {
+    'use strict';
+    //
+    // Public members
+    //
+    return {
+        //
+        // Client RPC
+        //
+        registerClientMethods: function () {
+            this.MyTrace('Entring CDF54.JA.SIGNALR.CHAT.MISC function registerClientMethods');
+
+            // Called to show server traces.
+            CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.client.showServerTrace = function (serverTraceMessage) {
+                $('#divServerTrace').append('<div class="message"><span>' + '[' + Date() + '] ' + '</span> : ' + serverTraceMessage + '</div>');
+            };
+            // Called to fill status bar
+            CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.client.fillState = CDF54.JA.SIGNALR.CHAT.MISC.FillState;
+            // Called to fill server context panel
+            CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.client.showServerContext = function (serverContext) {
+                if (JSON.parse(String(IsTraceEnable()).toLowerCase())) {
+                    $('#divContext').append('<div class="message"><span>' + '[Context.ConnectionId] ' + '</span> : ' + serverContext.ConnectionId + '</div>');
+                    $('#divContext').append('<div class="message"><span>' + '[Context.User.Identity.Name] ' + '</span> : ' + serverContext.Name + '</div>');
+                    $('#divContext').append('<div class="message"><span>' + '[Context.QueryString["Transport"]] ' + '</span> : <strong>' + serverContext.Transport + '</strong></div>');
+                    $('#divContext').append('<div class="message"><span>' + '[Context.QueryString["ConnectionData"]] ' + '</span> : ' + serverContext.ConnectionData + '</div>');
+                };
+            };
+        },// Client RPC
+        //
+        // Public methods
+        //
+        // get app name
+        showAppPath: function (tag) {
+            $('#' + tag).append(AppPath());
+        },
+        // get your app version 
+        showAppVersion: function (tag) {
+            $('#' + tag).append(CDF54.JA.SIGNALR.CHAT.version);
+        },
+        ToggleVisibilty: function () {
+            $('#inputPrivateMessage').fadeToggle('slow');
+        },
+        ShowHub: function () {
+            var hub = $.connection.hub;
+            if (JSON.parse(String(IsTraceEnable()).toLowerCase())) {
+                $('#divHub').append('<div class="message"><span>' + '[id] ' + '</span> : ' + hub.id + '</div>');
+                $('#divHub').append('<div class="message"><span>' + '[transport.name] ' + '</span> : ' + hub.transport.name + '</div>');
+                $('#divHub').append('<div class="message"><span>' + '[protocol] ' + '</span> : ' + hub.protocol + '</div>');
+                $('#divHub').append('<div class="message"><span>' + '[host] ' + '</span> : ' + hub.host + '</div>');
+                $('#divHub').append('<div class="message"><span>' + '[appRelativeUrl] ' + '</span> : ' + hub.appRelativeUrl + '</div>');
+                if (hub.transport.name == 'webSockets')
+                    $('#divHub').append('<div class="message"><span>' + '[socket.url] ' + '</span> : ' + hub.socket.url + '</div>');
+                $('#divHub').append('<div class="message"><span>' + '========================================================================================= ' + '</span> : ' + '</div>');
+                $('#divHub').append('<div class="message"><span>' + '[navigator.appName] ' + '</span> : ' + navigator.appName + '</div>');
+                $('#divHub').append('<div class="message"><span>' + '[navigator.product] ' + '</span> : ' + navigator.appName + '</div>');
+                $('#divHub').append('<div class="message"><span>' + '[navigator.userAgent] ' + '</span> : ' + navigator.userAgent + '</div>');
+            }
+        },
+        ShowClientTrace: function (clientTraceMessage) {
+            $('#divClientTrace').append('<div class="message"><span>' + '[' + Date() + '] ' + '</span> : ' + clientTraceMessage + '</div>');
+        },
+        // Local and RPC method.
+        FillState: function (state) {
+            $('#spanState').html("");
+            $('#spanState').append(state);
+        },
+        MyTrace: function (message) {
+            // If IsTraceEnable = true activate client side trace. 
+            if (JSON.parse(String(IsTraceEnable()).toLowerCase())) {
+                console.log(message);
+                this.ShowClientTrace(message);
+            }
+        },
+        // Html5 Audio tag 
+        LoadHtml5NewUserAudioTag: function () {
+            var appPath = AppPath();
+            var html5Audio = '<audio id="newUserAudio">' +
+                '<source src="' + appPath + '/Content/app/Spittoon.mp3" type="audio/mp3">'
+            $(html5Audio).appendTo('body');
+        },
+        // Html5 Audio tag 
+        LoadHtml5AudioTag: function () {
+            var appPath = AppPath();
+            var html5Audio = '<audio id="chatAudio">' +
+                '<source src="' + appPath + '/Content/app/notify.ogg" type="audio/ogg">' +
+                '<source src="' + appPath + '/Content/app/notify.mp3" type="audio/mp3">' +
+                '<source src="' + appPath + '/Content/app/notify.wav" type="audio/wav">'
+            $(html5Audio).appendTo('body');
+        },// Public methods
+    };
+})();// CDF54.JA.SIGNALR.CHAT.MISC module.
+//#endregion
+//#region CDF54.JA.SIGNALR.CHAT.USER module.
+CDF54.JA.SIGNALR.CHAT.USER = (function () {
+    'use strict';
+    //
+    // Public members
+    //
+    return {
+
+        //
+        // Client RPC
+        //
+        registerClientMethods: function () {
+
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('Entring CDF54.JA.SIGNALR.CHAT.USER function registerClientMethods');
+            // Called when UsersCount change
+            CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.client.showOnlineUsers = function (count) {
+                CDF54.JA.SIGNALR.CHAT.MISC.MyTrace(CDF54.JA.UTILS.StringFormat('Server calling showOnlineUsers: count={0} ', count));
+                $('#spanUsersCount').text(count);
+            }
+            // On User Connected
+            CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.client.onConnected = function (user, allUsers, messages, contentMessages) {
+                CDF54.JA.SIGNALR.CHAT.MISC.MyTrace(CDF54.JA.UTILS.StringFormat('Server calling CHAT_APP.ChatHubProxy.client.onConnected: id={0} username={1}', user.ConnectionId, user.UserName));
+
+                // Some CDF54.JA.SIGNALR.CHAT properties initialisation.
+                CDF54.JA.SIGNALR.CHAT.ConnectionId = user.ConnectionId;
+                CDF54.JA.SIGNALR.CHAT.UserName = user.UserName;
+
+                // for Chat page
+                if (CDF54.JA.SIGNALR.CHAT.APP.ChatOrChatAdmin == "Chat") {
+                    if (document.getElementById("spanUser") != null)
+                        $('#spanUser').html(user.UserName);
+                    if (document.getElementById("spanDateConnection") != null)
+                        $('#spanDateConnection').html(user.ConnectionDateTime);
+                    if (document.getElementById("spanTransport") != null)
+                        $("#spanTransport").html($.connection.hub.transport.name);
+                };
+                // for Admin page
+                if (CDF54.JA.SIGNALR.CHAT.APP.ChatOrChatAdmin == "ChatAdmin") {
+                    if (document.getElementById("spanUserName") != null)
+                        $("#spanUserName").html(user.UserName);
+                    if (document.getElementById("spanIdConnection") != null)
+                        $("#spanIdConnection").html(user.ConnectionId);
+                    if (document.getElementById("spanTransport") != null)
+                        $("#spanTransport").html($.connection.hub.transport.name);
+                    if (document.getElementById("spanProtocol") != null)
+                        $("#spanProtocol").html($.connection.hub.protocol);
+                }
+                // Add All Users
+                for (i = 0; i < allUsers.length; i++) {
+                    CDF54.JA.SIGNALR.CHAT.USER.AddUser(allUsers[i]);
+                }
+                // Add Existing Messages
+                var i = 0;
+                for (i = 0; i < messages.length; i++) {
+                    CDF54.JA.SIGNALR.CHAT.MESSAGE.AddMessage(messages[i], "PUBLIC", "");
+                }
+                // Add Existing ContentMessages
+                var i = 0;
+                for (i = 0; i < contentMessages.length; i++) {
+                    CDF54.JA.SIGNALR.CHAT.MESSAGE.AddContentMessage(contentMessages[i]);
+                }
+            }
+            // On new User Connected
+            CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.client.onNewUserConnected = function (newUser) {
+                CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('Server calling CHAT_APP.ChatHubProxy.client.onNewUserConnected');
+
+                if (document.getElementById("newUserAudio") != null)
+                    $('#newUserAudio')[0].play();
+                CDF54.JA.SIGNALR.CHAT.USER.AddUser(newUser);
+            }
+            // On User Disconnected
+            CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.client.onUserDisconnected = function (disconnectedUser) {
+                CDF54.JA.SIGNALR.CHAT.MISC.MyTrace(CDF54.JA.UTILS.StringFormat('Server calling CDF54.JA.SIGNALR.CHAT.ChatHubProxy.client.onUserDisconnected({0}, {1})', disconnectedUser.ConnectionId, disconnectedUser.UserName))
+
+                if ($('#' + disconnectedUser.ConnectionId).length > 0) {
+                    $('#' + disconnectedUser.ConnectionId).remove();
+                    var disc = $('<div class="disconnect">"' + disconnectedUser.UserName + '" logged off.</div>');
+                    $(disc).hide();
+                    $('#divusers').prepend(disc);
+                    $(disc).fadeIn(200).delay(2000).fadeOut(200);
+
+                    if ($('#Private_Input_' + disconnectedUser.ConnectionId).length > 0) {
+                        $('#Private_Input_' + disconnectedUser.ConnectionId).find('#btnClosePrivate').click();
+                    }
+                }
+            }
+        },// Client RPC
+        //
+        // Private methods
+        //
+        AddUser: function (newUser) {
+            // Retreive current user id
+            var userId = CDF54.JA.SIGNALR.CHAT.ConnectionId;
+            var code = "";
+            var codeA = "";
+            if (userId == newUser.ConnectionId) {
+                //code = $('<div class="alert alert-success well-sm">' + newUser.UserName + "</div>");
+                //code = $('<p class="bg-success">' + newUser.UserName + "</p>");
+                code = $('<p class="alert alert-success"><img src="http://www.gravatar.com/avatar/${hash}?s=16&d=mm" class="gravatar" /> ' + newUser.UserName + "</p>");
+            }
+            else {
+                //code = $('<div id="' + newUser.ConnectionId + '" class="alert alert-info well-sm" style="cursor: pointer" title="Double click for private talk">' + newUser.UserName + '</div>');
+                //code = $('<p id="' + newUser.ConnectionId + '" class="bg-info" style="cursor: pointer" title="Double click for private talk">' + newUser.UserName + '</p>');
+                code = $('<p id="' + newUser.ConnectionId + '" class="alert alert-info" style="cursor: pointer" title="Double click for private talk"><img src="http://www.gravatar.com/avatar/${hash}?s=16&d=mm" class="gravatar" /> ' + newUser.UserName + '</p>');
+                $(code).dblclick(function () {
+                    var id = $(this).attr('id');
+                    if (userId != id) {
+                        //alert('AddUser dblclick : ' + id + ' / ' + newUser.UserName);
+                        CDF54.JA.SIGNALR.CHAT.MESSAGE.PRIVATE.OpenPrivateChatPanel(id, newUser.UserName);
+                    }
+                });
+            }
+            $("#divusers").append(code);
+
+            // Using jQuery to scroll to the bottom of #panelUsers DIV.
+            var height = $('#panelUsers')[0].scrollHeight;
+            $('#panelUsers').scrollTop(height);
+        },// Private methods
+    };// Public members
+})();// CDF54.JA.SIGNALR.CHAT.USER module.
+//#endregion
+//#region CDF54.JA.SIGNALR.CHAT.MESSAGE module.
+CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
+    'use strict';
+    //
+    // Public members
+    //
+    return {
+        registerClientMethods: function () {
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('Entring CDF54.JA.SIGNALR.CHAT.MESSAGE function registerClientMethods');
+
+            // Called by server to push content message for PUBLIC and PRIVATE messages.
+            CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.client.showContentMessageReceived = function (message) {
+                CDF54.JA.SIGNALR.CHAT.MISC.MyTrace(CDF54.JA.UTILS.StringFormat('Server calling CDF54.JA.SIGNALR.CHAT.ChatHubProxy.client.showContentMessageReceived({0}, {1}, {2})', message.UserName, message.MessageDateTime, message.Message))
+                CDF54.JA.SIGNALR.CHAT.MESSAGE.AddContentMessage(message);
+            };
+        },
+        //
+        // Common methods
+        //
+        // Add PUBLIC and PRIVATE content message.
+        AddContentMessage: function(message){
+            var e = $('#' + message.Id).append(message.Message);
+        },
+        // Add PUBLIC and PRIVATE message.
+        AddMessage: function (message, type, from) {
+            //var encodedMessage = CDF54.JA.UTILS.EncodeString(message.Message);
+            var encodedMessage = message.Message;
+
+            switch (type) {
+                case "PUBLIC":
+                    if (document.getElementById("divChatMessages") != null) {
+                        if (message.UserName == CDF54.JA.SIGNALR.CHAT.UserName) {
+                            //$('#divChatMessages').append('<div class="alert alert-success well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
+                            $('#divChatMessages').append('<p id=' + message.Id + ' class="text-success"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
+                        }
+                        else {
+                            //$('#divChatMessages').append('<div class="alert alert-info well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
+                            $('#divChatMessages').append('<p id=' + message.Id + ' class="text-info"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
+
+                        }
+                        // Using jQuery to scroll to the bottom of #panelChatMessages DIV.
+                        var height = $('#panelChatMessages')[0].scrollHeight;
+                        $('#panelChatMessages').scrollTop(height);
+                        // beep
+                        CDF54.JA.UTILS.beep();
+                    }
+                    break;
+                case "PRIVATE":
+                    if (!$('#Private_List_Panel_' + from).is(':visible'))
+                        $('#Private_List_Panel_' + from).toggle();
+                    if (document.getElementById("divChatMessages") != null) {
+                        if (message.UserName == CDF54.JA.SIGNALR.CHAT.UserName) {
+                            //$('#Private_List_' + from).append('<div class="alert alert-success well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
+                            $('#Private_List_' + from).append('<p id=' + message.Id + ' class="text-success"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
+                        }
+                        else {
+                            //$('#Private_List_' + from).append('<div class="alert alert-info well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
+                            $('#Private_List_' + from).append('<p id=' + message.Id + ' class="text-info"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
+                        }
+                        // Using jQuery to scroll to the bottom of #Private_List_Panel_ DIV.
+                        var height = $('#Private_List_Panel_' + from)[0].scrollHeight;
+                        $('#Private_List_Panel_' + from).scrollTop(height);
+                        // beep
+                        $('#chatAudio')[0].play();
+                        break;
+                    };
+            }
+        },// Common methods
+    };// Public members
+})();// CDF54.JA.SIGNALR.CHAT.MESSAGE module.
+//#endregion
+//#region CDF54.JA.SIGNALR.CHAT.MESSAGE.PUBLIC module.
+// CDF54.JA.SIGNALR.CHAT.MESSAGE.PUBLIC module.
+CDF54.JA.SIGNALR.CHAT.MESSAGE.PUBLIC = (function () {
+    'use strict';
+    //
+    // Public members
+    //
+    return {
+        //
+        // Events registering
+        //
+        registerEvents: function () {
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('Entring CDF54.JA.SIGNALR.CHAT.MESSAGE.PUBLIC function registerEvents');
+
+            $('#btnSendMsg').click(function () {
+                CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('btnSendMsg');
+
+                var msg = $("#txtMessage").val();
+                if (msg.length > 0) {
+                    CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.server.sendMessageToAll(msg);
+                    CDF54.JA.SIGNALR.CHAT.MISC.MyTrace(CDF54.JA.UTILS.StringFormat('Client calling CDF54.JA.SIGNALR.CHAT.ChatHubProxy.server.sendMessageToAll({0})', msg))
+                    $("#txtMessage").val('');
+                }
+            });
+            $("#txtMessage").keypress(function (e) {
+                if (e.which == 13) {
+                    $('#btnSendMsg').click();
+                }
+            });
+        },// Events registering
+        //
+        // Client RPC
+        //
+        registerClientMethods: function () {
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('Entring CDF54.JA.SIGNALR.CHAT.MESSAGE.PUBLIC function registerClientMethods');
+            //
+            // Called by server to push PUBLIC message.
+            //
+            CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.client.showMessageReceived = function (message) {
+                CDF54.JA.SIGNALR.CHAT.MISC.MyTrace(CDF54.JA.UTILS.StringFormat('Server calling CDF54.JA.SIGNALR.CHAT.ChatHubProxy.client.showMessageReceived({0}, {1}, {2})', message.UserName, message.MessageDateTime, message.Message))
+                CDF54.JA.SIGNALR.CHAT.MESSAGE.AddMessage(message, "PUBLIC", "");
+            };
+        },// Client RPC
+    };// Public members
+})();// CDF54.JA.SIGNALR.CHAT.MESSAGE.PUBLIC module.
+//#endregion
+//#region CDF54.JA.SIGNALR.CHAT.MESSAGE.PRIVATE module.
+CDF54.JA.SIGNALR.CHAT.MESSAGE.PRIVATE = (function () {
+    'use strict';
+    //
+    // Private members
+    //
+    //
+    // CDF54.JA.SIGNALR.CHAT.MESSAGE.PRIVATE properties
+    //
+    var _privatePanelOpenNumber = 0;// CDF54.JA.SIGNALR.CHAT.MESSAGE.PRIVATE properties
+    //
+    // Private methods
+    //
+    var _CreatePrivateChatPanel = function (id, name) {
+        if (_privatePanelOpenNumber == 0) {
+            CDF54.JA.SIGNALR.CHAT.MISC.ToggleVisibilty();
+        }
+        _privatePanelOpenNumber++;
+        var div = '<div class="input-group" id=Private_Input_' + id + '>' +
+                            '<span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-pencil"></span>&nbsp;To&nbsp;<strong><span>' + name + '></span></strong></span>' +
+                            '<input type="text" class="form-control input-sm" placeholder="Your message here..." id="txtPrivateMessage" />' +
+                            '<div class="input-group-btn">' +
+                                '<div class="btn-group btn-group-xs" role="group"><button class="btn btn-warning" type="button" id="btnSendMessage" value="Send">Send private</button></div>' +
+                                '<div class="btn-group btn-group-xs"  role="group"><button class="btn btn-danger" type="button" id="btnClosePrivate" value="Send">Close private</button></div>' +
+                            '</div>' +
+                    '</div>' +
+                    '<div class="panel panel-default panelScrollDown1 divHide" id=Private_List_Panel_' + id + '>' +
+                            '<div id=Private_List_' + id + '>' +
+                            '</div>' +
+                    '</div>'
+
+        var $div = $(div);
+        $div.find('#btnSendMessage').click(function () {
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('btnSendMessage');
+
+            var $textBox = $div.find("#txtPrivateMessage");
+            var msg = $textBox.val();
+            if (msg.length > 0) {
+                CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.server.sendPrivateMessage(id, msg);
+                CDF54.JA.SIGNALR.CHAT.MISC.MyTrace(CDF54.JA.UTILS.StringFormat("Client calling CDF54.JA.SIGNALR.CHAT.ChatHubProxy.server.sendPrivateMessage({0}, {1})", id, msg))
+                $("#txtPrivateMessage").val('');
+            }
+        });
+
+        $div.find('#btnClosePrivate').click(function () {
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('btnClosePrivate');
+            var inputctrId = 'Private_Input_' + id;
+            var listctrId = 'Private_List_' + id;
+            var listpanelctrId = 'Private_List_Panel_' + id;
+
+            $('#' + inputctrId).remove();
+            $('#' + listctrId).remove();
+            $('#' + listpanelctrId).remove();
+            _privatePanelOpenNumber--;
+            if (_privatePanelOpenNumber == 0) {
+                CDF54.JA.SIGNALR.CHAT.MISC.ToggleVisibilty();
+            }
+        });
+
+        $div.find("#txtPrivateMessage").keypress(function (e) {
+            if (e.which == 13) {
+                $('#btnSendMessage').click();
+            }
+        });
+
+
+        AddDivToContainer($div);
+    };
+    var AddDivToContainer = function ($div) {
+        $('#inputPrivateMessage').append($div);
+    };// Private methods // Private members
+    //
+    // Public members
+    //
+    return {
+        //
+        // Events registring
+        //
+        registerEvents: function () {
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('Entring CDF54.JA.SIGNALR.CHAT.MESSAGE.PRIVATE function registerEvents');
+
+        },// Events registring
+        //
+        // Client RPC
+        //
+        registerClientMethods: function () {
+
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('Entring CDF54.JA.SIGNALR.CHAT.MESSAGE.PRIVATE function registerClientMethods');
+
+            //
+            // Called by server to push PRIVATE message.
+            //
+            CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.client.showPrivateMessage = function (toOrfromUser, message) {
+                CDF54.JA.SIGNALR.CHAT.MISC.MyTrace(CDF54.JA.UTILS.StringFormat('Server calling CDF54.JA.SIGNALR.CHAT.ChatHubProxy.client.showPrivateMessage({0}, {1}, {2})', toOrfromUser.ConnectionId, message.UserName, message.Message))
+
+                if (!$('#Private_Input_' + toOrfromUser.ConnectionId).is(":visible")) {
+                    _CreatePrivateChatPanel(toOrfromUser.ConnectionId, message.UserName);
+                }
+                CDF54.JA.SIGNALR.CHAT.MESSAGE.AddMessage(message, "PRIVATE", toOrfromUser.ConnectionId);
+            }
+        },// Client RPC
+        //
+        // Public methods
+        //
+        OpenPrivateChatPanel: function (id, userName) {
+            var ctrId = 'Private_Input_' + id;
+            if ($('#' + ctrId).length > 0) return;
+            _CreatePrivateChatPanel(id, userName);
+        },// Public methods
+    };// Public members
+})();// CDF54.JA.SIGNALR.CHAT.MESSAGE.PRIVATE module.
+//#endregion
+//#region CDF54.JA.SIGNALR.CHAT.ADMIN module.
+CDF54.JA.SIGNALR.CHAT.ADMIN = (function () {
+    'use strict';
+    //
+    // Public members
+    //
+    return {
+        //
+        // Client RPC
+        //
+        registerClientMethods: function () {
+            CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('Entring CDF54.JA.SIGNALR.CHAT.ADMIN function registerClientMethods');
+
+            //
+            // Called to fill Admin table.
+            //
+            CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.client.showAdminTable = function (ca) {
+                if (CDF54.JA.SIGNALR.CHAT.APP.ChatOrChatAdmin == "ChatAdmin") {
+                    if (document.getElementById("adminTbodyTable") != null) {
+                        $("#adminTbodyTable").html("");
+                        for (var i = 0; i < ca.length; i++) {
+                            $('#adminTbodyTable').append('<tr>' + '<td>' + ca[i].ConnectionId + '</td>' + '<td>' + ca[i].UserName + '</td>' + '<td>' + ca[i].ConnectionDateTime + '</td>' + '<td>' + ca[i].Message + '</td>' + '<td>' + ca[i].MessageDateTime + '</td>' + '</tr>');
+                            // beep
+                            CDF54.JA.UTILS.beep();
+                        }
+                    }
+                }
+            };
+        },// Client RPC
+    };// Public members
+})();//CDF54.JA.SIGNALR.CHAT.ADMIN module.
+//#endregion
+//#region Namespace aliases.
+var aliasPUBLIC = CDF54.JA.SIGNALR.CHAT.MESSAGE.PUBLIC;
+var aliasPRIVATE = CDF54.JA.SIGNALR.CHAT.MESSAGE.PRIVATE;// Namespace aliases
+//#endregion
+////#region CDF54.JA.SIGNALR.CHAT.HELPERS module.
+//CDF54.JA.SIGNALR.CHAT.HELPERS = (function () {
+//    'use strict';
+//    //
+//    // Private members
+//    //
+
+//    //
+//    // Public members
+//    //
+//    return {
+//        //
+//        // Public properties
+//        //
+
+//        //
+//        // Public methods
+//        //
+//        // get bootstrap version
+//        showBootstrapVersion: function (tag) {
+//            $('#' + tag).append("3.3.2");
+//        },
+//        // get jquery version
+//        showJqueryVersion: function (tag) {
+//            $('#' + tag).append($.fn.jquery);
+//        },
+//        // get signalR version
+//        showSignalRVersion: function (tag) {
+//            $('#' + tag).append($.signalR.version);
+//        },
+//    };// Public members
+//})();//CDF54.JA.SIGNALR.CHAT.HELPERS.
+////#endregion

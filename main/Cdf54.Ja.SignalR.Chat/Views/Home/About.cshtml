@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<hgroup>
+    <h2>@ViewBag.Title.</h2>
+</hgroup>
+        
+
+<!-- container -->
+<div id="divContainer" class="container">
+    <!-- up row -->
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+        </div>
+    </div><!-- up row -->
+    <!-- upper row -->
+    <div class="row">
+        <!-- left col -->
+        <div class="col-lg-6 col-sm-6">
+
+        </div><!-- left col -->
+        <!-- right col -->
+        <div class="col-lg-6 col-sm-6">
+
+        </div><!-- right col -->
+    </div><!-- upper row -->
+    <!-- middle row -->
+    <div class="row">
+        <!-- left col -->
+        <div class="col-lg-6 col-sm-6">
+            @Html.Partial("Articles/_About")
+        </div><!-- left col -->
+        <!-- center col -->
+        <div class="col-lg-1 col-sm-1">
+        </div><!-- center col -->
+        <!-- right col -->
+        <div class="col-lg-6 col-sm-6">
+            @Html.Partial("Articles/_Specifications")
+        </div><!-- right col -->
+    </div><!-- middle row -->
+    <!-- down row -->
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+        </div>
+    </div><!-- down row -->
+
+</div><!-- container -->

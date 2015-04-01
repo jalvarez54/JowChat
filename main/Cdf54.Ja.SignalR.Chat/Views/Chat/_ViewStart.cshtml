@@ -1,0 +1,36 @@
+﻿@using JA.UTILS.Helpers
+
+<!--Cannot use Razor in js files ! (An alternative: http://www.nuget.org/packages/RazorJS)-->
+@*
+    Those functions must be adapted for server type. Here is an implementation for IIS.
+    The 3 first retrieve settings from web.config.
+    AppPath retreive the IIS Chat application virtual path.
+
+*@
+
+
+<script type="text/javascript">
+    // Get appsetting IsTraceEnable for js.
+    function IsTraceEnable() {
+        return '@Utils.GetAppSetting("IsTraceEnable")';
+    }
+    // Get appsetting IsConsoleLoggingEnable for js.
+    function IsConsoleLoggingEnable() {
+        return '@Utils.GetAppSetting("IsConsoleLoggingEnable")';
+    }
+    // Get appsetting IsDemo for js.
+    function IsDemo() {
+        return '@Utils.GetAppSetting("IsDemo")';
+    }
+    // Get IIS application virtual path for js.
+    function AppPath() {
+        var a = '@HttpContext.Current.Request.ApplicationPath';
+        if (a == '/') {
+            appPath = '';
+        }
+        else {
+            appPath = a;
+        }
+        return appPath;
+    }
+</script>

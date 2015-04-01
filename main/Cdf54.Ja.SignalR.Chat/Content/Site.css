@@ -1,0 +1,103 @@
+﻿body {
+    padding-top: 80px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/*#region Styles for application*/
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+.disconnect
+{
+    position: absolute;
+    margin: 10px;
+    background-color: #ffcbcb;
+    padding: 4px;
+    border: solid 1px red;
+}
+
+.panelScrollDown{
+    max-height:300px;
+    overflow-y:auto;
+}
+
+.panelScrollDown1{
+    max-height:100px;
+    overflow-y:auto;
+}
+
+
+.divContextLongText{
+    overflow-x:hidden;
+}
+
+.divHubLongText{
+    overflow-x:hidden;
+}
+
+.divTechInfosLongText{
+    overflow-x:hidden;
+}
+
+.divHide{
+    display:none;
+}
+
+.carousel-caption {
+    top: 0;
+    bottom: auto;
+}
+.content-img {
+display:block;
+height: auto;
+max-width: 200px;
+}
+.content-vid {
+display:block;
+height: auto;
+max-width: 200px;
+}
+    
+/*#endregion*/
