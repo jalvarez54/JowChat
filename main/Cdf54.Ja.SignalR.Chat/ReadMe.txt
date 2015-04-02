@@ -223,63 +223,65 @@
 ////////////////////////
 // NB
 //////////////////////////////////////////////////////////////
-Elements like application settings, IIS virtual path are only resolved on server side.
-It's not possible to retrive those values in JS on client side.
-	===> Sol:
-		Insert functions in _ViewStart.cshtml
-			ex:
-				<script type="text/javascript">
-					// Get appsetting IsTraceEnable for js.
-					function IsTraceEnable() {
-						return @Utils.GetAppSetting("IsTraceEnable");
-					}
-					// Get appsetting IsConsoleLoggingEnable for js.
-					function IsConsoleLoggingEnable() {
-						return @Utils.GetAppSetting("IsConsoleLoggingEnable");
-					}
-					// Get appsetting IsDemo for js.
-					function IsDemo() {
-						return @Utils.GetAppSetting("IsDemo");
-					}
-					// Get IIS application virtual path for js.
-					function AppPath() {
-						var a = '@HttpContext.Current.Request.ApplicationPath';
-						if (a == '/') {
-							appPath = '';
+- ADD: .tfignore file
+	https://msdn.microsoft.com/library/vstudio/ms245454%28v=vs.110%29.aspx#tfignore
+- Elements like application settings, IIS virtual path are only resolved on server side.
+	It's not possible to retrive those values in JS on client side.
+		===> Sol:
+			Insert functions in _ViewStart.cshtml
+				ex:
+					<script type="text/javascript">
+						// Get appsetting IsTraceEnable for js.
+						function IsTraceEnable() {
+							return @Utils.GetAppSetting("IsTraceEnable");
 						}
-						else {
-							appPath = a;
+						// Get appsetting IsConsoleLoggingEnable for js.
+						function IsConsoleLoggingEnable() {
+							return @Utils.GetAppSetting("IsConsoleLoggingEnable");
 						}
-						return appPath;
-					}
-				</script>
-			The Razor code is executed on server side and the values are resolved before the JS
-			is loaded on client side.
-			ex: result
-				<script type="text/javascript">
-					// Get appsetting IsTraceEnable for js.
-					function IsTraceEnable() {
-						return true;
-					}
-					// Get appsetting IsConsoleLoggingEnable for js.
-					function IsConsoleLoggingEnable() {
-						return false;
-					}
-					// Get appsetting IsDemo for js.
-					function IsDemo() {
-						return false;
-					}
-					// Get IIS application virtual path for js.
-					function AppPath() {
-						var a = '/Cdf54Chat';
-						if (a == '/') {
-							appPath = '';
+						// Get appsetting IsDemo for js.
+						function IsDemo() {
+							return @Utils.GetAppSetting("IsDemo");
 						}
-						else {
-							appPath = a;
+						// Get IIS application virtual path for js.
+						function AppPath() {
+							var a = '@HttpContext.Current.Request.ApplicationPath';
+							if (a == '/') {
+								appPath = '';
+							}
+							else {
+								appPath = a;
+							}
+							return appPath;
 						}
-						return appPath;
-					}
-				</script>
-			From JS we can use those function to retrieve the values
-			ex: if (JSON.parse(String(IsTraceEnable()).toLowerCase()))
+					</script>
+				The Razor code is executed on server side and the values are resolved before the JS
+				is loaded on client side.
+				ex: result
+					<script type="text/javascript">
+						// Get appsetting IsTraceEnable for js.
+						function IsTraceEnable() {
+							return true;
+						}
+						// Get appsetting IsConsoleLoggingEnable for js.
+						function IsConsoleLoggingEnable() {
+							return false;
+						}
+						// Get appsetting IsDemo for js.
+						function IsDemo() {
+							return false;
+						}
+						// Get IIS application virtual path for js.
+						function AppPath() {
+							var a = '/Cdf54Chat';
+							if (a == '/') {
+								appPath = '';
+							}
+							else {
+								appPath = a;
+							}
+							return appPath;
+						}
+					</script>
+				From JS we can use those function to retrieve the values
+				ex: if (JSON.parse(String(IsTraceEnable()).toLowerCase()))

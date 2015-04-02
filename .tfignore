@@ -1,0 +1,46 @@
+﻿################################################################################
+# Ce fichier .tfignore a été créé automatiquement par Microsoft(R) Visual Studio.
+#
+# Les éléments locaux correspondant aux spécifications de ce fichier ne seront pas ajoutés au contrôle 
+# de version. Ce fichier peut être archivé afin de partager les exclusions avec les autres.
+#
+# Les caractères génériques sont * et ?. Les modèles sont mis en correspondance de manière récursive, sauf si le
+# modèle utilise le préfixe \.
+#
+# Vous pouvez ajouter un chemin en préfixe à un modèle de manière à le rendre plus spécifique. Dans ce cas,
+# les caractères génériques ne sont pas autorisés dans la partie représentant le chemin.
+#
+# Le caractère # au début d'une ligne indique un commentaire.
+#
+# Le préfixe ! inverse un modèle. Il peut être utilisé pour réinclure un élément après
+# son exclusion par un fichier .tfignore situé plus haut dans l'arborescence, ou par la liste d'exclusions globales 
+# de la collection de projets d'équipe.
+#
+# Le caractère / est interprété en tant que \ sur les plateformes Windows.
+#
+# Exemples :
+#
+#  # Exclut tous les fichiers se terminant par .txt dans Alpha\Beta et tous ses sous-dossiers.
+#  Alpha\Beta\*.txt
+#
+#  # Exclut tous les fichiers se terminant par .cpp dans ce dossier uniquement.
+#  \*.cpp
+#
+#  # Exclut tous les fichiers se terminant par .cpp dans ce dossier et tous les sous-dossiers.
+#  *.cpp
+#
+#  # Si "Contoso" est un dossier, alors Contoso et tous ses enfants sont exclus.
+#  # S'il s'agit d'un fichier, seul le fichier "Contoso" situé dans ce dossier est exclu.
+#  \Contoso
+#
+#  # Si Help.exe est exclu par un fichier .tfignore supérieur ou par la liste d'exclusions globales
+#  # de la collection de projets d'équipe, alors ce modèle le réinclut dans
+#  #ce dossier uniquement.
+#  !\Help.exe    
+#
+################################################################################
+
+Web.Staging CDF54 VM.config
+Web.Debug.config
+Web.Release.config
+\main\Cdf54.Ja.SignalR.Chat\App_Data
