@@ -526,7 +526,7 @@ namespace Cdf54.Ja.SignalR.Chat.Hubs
         }
         private MessageDetail AddContentMessageinCache(string message)
         {
-            MyTrace("Entring server private void AddMessageinCache");
+            MyTrace("Entring server private void AddContentMessageinCache");
 
             MessageDetail messageToAdd = new MessageDetail { UserName = Context.User.Identity.Name, Message = message };
             CurrentContentMessages.Add(messageToAdd);

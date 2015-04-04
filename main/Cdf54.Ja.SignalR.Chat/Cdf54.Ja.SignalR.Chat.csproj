@@ -178,11 +178,18 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jQuery.tmpl.js" />
+    <Content Include="Scripts\jQuery.tmpl.min.js">
+      <DependentUpon>jQuery.tmpl.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\app\cdf54.ja.signalR.chat.min.js.map">
       <DependentUpon>cdf54.ja.signalR.chat.min.js</DependentUpon>
     </Content>
     <Content Include="Hubs\ContentProviders\ContentProvidersClassDiagram.cd" />
+    <Content Include="Scripts\jQuery.tmpl.min.js.map">
+      <DependentUpon>jQuery.tmpl.min.js</DependentUpon>
+    </Content>
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Chat\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Articles\_Specifications.cshtml" />
@@ -360,7 +367,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

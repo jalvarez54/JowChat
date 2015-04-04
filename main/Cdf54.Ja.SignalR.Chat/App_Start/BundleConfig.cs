@@ -8,6 +8,7 @@ namespace Cdf54.Ja.SignalR.Chat
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                        "~/Scripts/jQuery.tmpl.min.js",
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -25,7 +26,7 @@ namespace Cdf54.Ja.SignalR.Chat
             "~/Scripts/app/cdf54.ja.utils.js",
            "~/Scripts/app/cdf54.ja.signalR.chat.helpers.js",
            //"~/Scripts/app/cdf54.ja.signalR.chat.js"));
-           "~/Scripts/app/cdf54.ja.signalR.chat.min.js"));
+           "~/Scripts/app/cdf54.ja.signalR.chat.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",

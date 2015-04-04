@@ -26,7 +26,7 @@
 	alert(pathArray[pathArray.length - 1]); ==> Chat or ChatAdmin
 	===> done
 - Review append html code
-	==>
+	==> done
 - Replace: .click() with .on
 	http://chez-syl.fr/2012/02/les-evenements-sur-des-elements-charges-en-ajax/
 	http://chez-syl.fr/2011/12/comment-traduire-gestionnaires-evenements-avec-le-nouveau-on/
@@ -54,7 +54,10 @@
 - Refactor ContentProvider
 	==> done
 - How to Migration with multiple web.config (multiple connectionString) ?
-	==>
+	==> done
+- Use template to insert HTML code.
+	==> done
+- Review trace messages
 
 ////////////////////////
 // Version 1.0.Alpha
@@ -102,8 +105,14 @@
 - 2015-04-01 COMMIT: Codeplex jowchat.codeplex.com (107301) First commit
 - 2015-04-01 COMMIT: Codeplex jowchat.codeplex.com (107302) Docs
 - 2015-04-01 COMMIT: Codeplex jowchat.codeplex.com (107305) Cdf54.Ja.SignalR.Console.Client.Chat
-- 2015-04-01 COMMIT: Codeplex jowchat.codeplex.com (?) Missing files (why ?)
-- 2015-04-01 COMMIT: Codeplex jowchat.codeplex.com (?) Remove web.xxx.config files (security)
+- 2015-04-01 COMMIT: Codeplex jowchat.codeplex.com (107307) Remove web.xxx.config files (security)
+- 2015-04-02 COMMIT: Codeplex jowchat.codeplex.com (107312) Unmap Documentation
+- ADD: .tfignore file
+	https://msdn.microsoft.com/library/vstudio/ms245454%28v=vs.110%29.aspx#tfignore
+- ADD jquery.tmpl.js see _ViewStart.cshtml
+	http://www.borismoore.com/2010/09/introducing-jquery-templates-1-first.html
+- 2015-04-04 COMMIT: Codeplex jowchat.codeplex.com (?) ADD jquery.tmpl.js review code
+
 
 
 ////////////////////////
@@ -223,8 +232,6 @@
 ////////////////////////
 // NB
 //////////////////////////////////////////////////////////////
-- ADD: .tfignore file
-	https://msdn.microsoft.com/library/vstudio/ms245454%28v=vs.110%29.aspx#tfignore
 - Elements like application settings, IIS virtual path are only resolved on server side.
 	It's not possible to retrive those values in JS on client side.
 		===> Sol:
