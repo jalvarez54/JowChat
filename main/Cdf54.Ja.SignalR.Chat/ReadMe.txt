@@ -111,7 +111,8 @@
 	https://msdn.microsoft.com/library/vstudio/ms245454%28v=vs.110%29.aspx#tfignore
 - ADD jquery.tmpl.js see _ViewStart.cshtml
 	http://www.borismoore.com/2010/09/introducing-jquery-templates-1-first.html
-- 2015-04-04 COMMIT: Codeplex jowchat.codeplex.com (?) ADD jquery.tmpl.js review code
+- 2015-04-04 COMMIT: Codeplex jowchat.codeplex.com (107323) ADD jquery.tmpl.js review code
+- 2015-04-04 COMMIT: Codeplex jowchat.codeplex.com (?) DELETE: package folder
 
 
 
