@@ -32,12 +32,12 @@ CDF54.JA.SIGNALR.CHAT.HELPERS = (function () {
         },
         // get bootstrap version need ~/Views/Chat/_ViewStart.cshtml
         showBootstrapVersion1: function (tag) {
-            //var appPath = AppPath();
-            //$.get(appPath + "/Scripts/bootstrap.min.js", function (data) {
-            //    var version = data.match(/v[.\d]+[.\d]/);
-            //    //alert("V= " + version);
-            //    $('#' + tag).append(version);
-            //});
+            var appPath = AppPath();
+            $.get(appPath + "/Scripts/bootstrap.js", function (data) {
+                var version = data.match(/v[.\d]+[.\d]/);
+                //alert("V= " + version);
+                $('#' + tag).append(version);
+            });
         },
         // get jquery version
         showJqueryVersion: function (tag) {

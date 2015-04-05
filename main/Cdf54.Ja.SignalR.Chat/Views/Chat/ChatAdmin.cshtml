@@ -108,6 +108,19 @@
                                 <li>AppPath: <span id="spanAppPath"></span></li>
                                 <li>@MyRazorHelpers.AdminInformations()</li>
                                 <li>IIS Virtual path: <span id="spanIISVirtualPath"></span></li>
+                                <li>
+                                    packages.config:<br />
+                                    @{
+                                        var dataFile = Server.MapPath("~/packages.config");
+                                        Array userData = File.ReadAllLines(dataFile);
+                                    }
+                                    @foreach (string dataLine in userData)
+                                    {
+                                        foreach (string dataItem in dataLine.Split(','))
+                                        {@dataItem <text>&nbsp;</text>}
+                                    <br />
+                                    }
+                                </li>
                             </ul>
                         </p>
 
@@ -115,65 +128,67 @@
                 </div>
             </div>
         </div><!-- tech infos -->
-        <!-- trace div -->
         @if (Boolean.Parse(System.Configuration.ConfigurationManager.AppSettings["IsTraceEnable"]))
         {
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            <span class="glyphicon glyphicon-camera"></span>&nbsp;Client Trace and RPC called by Server
-                        </a>
-                    </h3>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div id="divClientTrace" class="alert alert-danger divContextLongText">
+            <!-- trace div -->
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                <span class="glyphicon glyphicon-camera"></span>&nbsp;Client Trace and RPC called by Server
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div id="divClientTrace" class="alert alert-danger divContextLongText">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                            <span class="glyphicon glyphicon-camera"></span>&nbsp;Server Trace and RPC called by Client
-                        </a>
-                    </h3>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div id="divServerTrace" class="alert alert-danger divContextLongText">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                <span class="glyphicon glyphicon-camera"></span>&nbsp;Server Trace and RPC called by Client
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div id="divServerTrace" class="alert alert-danger divContextLongText">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                            <span class="glyphicon glyphicon-signal"></span>&nbsp;Server Context
-                        </a>
-                    </h3>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div id="divContext" class="alert alert-warning divContextLongText">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                <span class="glyphicon glyphicon-signal"></span>&nbsp;Server Context
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div id="divContext" class="alert alert-warning divContextLongText">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                            <span class="glyphicon glyphicon-signal"></span>&nbsp;Client hub
-                        </a>
-                    </h3>
-                </div>
-                <div id="collapseFour" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div id="divHub" class="alert alert-warning divHubLongText">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                <span class="glyphicon glyphicon-signal"></span>&nbsp;Client hub
+                            </a>
+                        </h3>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div id="divHub" class="alert alert-warning divHubLongText">
+                            </div>
                         </div>
                     </div>
                 </div>

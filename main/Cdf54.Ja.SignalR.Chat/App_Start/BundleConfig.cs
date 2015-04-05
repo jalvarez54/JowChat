@@ -20,12 +20,13 @@ namespace Cdf54.Ja.SignalR.Chat
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/chat").Include(
+            "~/Scripts/jquery.cssemoticons.js",
             "~/Scripts/jquery.signalR-2.2.0.js",
            "~/Scripts/app/cdf54.ja.signalR.demotransports.js",
            "~/Scripts/app/cdf54.ja.signalR.chat.namespace.js",
             "~/Scripts/app/cdf54.ja.utils.js",
            "~/Scripts/app/cdf54.ja.signalR.chat.helpers.js",
-           //"~/Scripts/app/cdf54.ja.signalR.chat.js"));
+           //"~/Scripts/app/cdf54.ja.signalR.chat.min.js"));
            "~/Scripts/app/cdf54.ja.signalR.chat.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
@@ -33,6 +34,8 @@ namespace Cdf54.Ja.SignalR.Chat
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/jquery.cssemoticons.css",
+                      "~/Content/css/font-awesome.css",
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 

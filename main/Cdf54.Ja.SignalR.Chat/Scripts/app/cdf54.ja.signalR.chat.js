@@ -18,6 +18,7 @@
 /// <reference path="~/Scripts/app/cdf54.ja.utils.js" />
 /// <reference path="~/Scripts/app/cdf54.ja.signalR.chat.helpers.js" />
 /// <reference path="~/Scripts/jQuery.tmpl.js" />
+/// <reference path="~/Scripts/jquery.cssemoticons.js" />
 /// <reference path="~/Views/Chat/_ViewStart.cshtml" />
 //#endregion
 
@@ -537,12 +538,17 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
                             //$('#divChatMessages').append('<p id=' + message.Id + ' class="text-success"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
                             datasmessage.texttype = "text-success";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#divChatMessages'));
+                            $('.text-success').emoticonize();
+
+
                         }
                         else {
                             //$('#divChatMessages').append('<div class="alert alert-info well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
                             //$('#divChatMessages').append('<p id=' + message.Id + ' class="text-info"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
                             datasmessage.texttype = "text-info";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#divChatMessages'));
+                            $('.text-info').emoticonize();
+
                         }
                         // Using jQuery to scroll to the bottom of #panelChatMessages DIV.
                         var height = $('#panelChatMessages')[0].scrollHeight;
@@ -554,18 +560,20 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
                 case "PRIVATE":
                     if (!$('#Private_List_Panel_' + from).is(':visible'))
                         $('#Private_List_Panel_' + from).toggle();
-                    if (document.getElementById("divChatMessages") != null) {
+                    //if (document.getElementById("divChatMessages") != null) {
                         if (message.UserName == CDF54.JA.SIGNALR.CHAT.UserName) {
                             //$('#Private_List_' + from).append('<div class="alert alert-success well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
                             //$('#Private_List_' + from).append('<p id=' + message.Id + ' class="text-success"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
                             datasmessage.texttype = "text-success";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#Private_List_' + from))
+                            $('.text-success').emoticonize();
                         }
                         else {
                             //$('#Private_List_' + from).append('<div class="alert alert-info well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
                             //$('#Private_List_' + from).append('<p id=' + message.Id + ' class="text-info"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
                             datasmessage.texttype = "text-info";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#Private_List_' + from))
+                            $('.text-info').emoticonize();
                         }
                         // Using jQuery to scroll to the bottom of #Private_List_Panel_ DIV.
                         var height = $('#Private_List_Panel_' + from)[0].scrollHeight;
@@ -573,7 +581,7 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
                         // beep
                         $('#chatAudio')[0].play();
                         break;
-                    };
+                    //};
             }
         },// Common methods
     };// Public members
@@ -605,6 +613,12 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE.PUBLIC = (function () {
                 }
             });
             $("#txtMessage").keypress(function (e) {
+                //var $text = $('#txtMessage'),
+                //$in = $(this);
+
+                //setTimeout(function () {
+                //    $text.html($.emoticons.replace($in.val()));
+                //}, 100);
                 if (e.which == 13) {
                     $('#btnSendMsg').click();
                 }
@@ -661,21 +675,21 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE.PRIVATE = (function () {
         //            '</div>'
         var div = $('#new-private-template').tmpl({ id: id, name: name, });
         var $div = $(div);
-        $div.find('#btnSendMessage').click(function () {
+        $div.find("#btnSendMessage_" + id).click(function () {
             CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('btnSendMessage');
 
-            var $textBox = $div.find("#txtPrivateMessage");
+            var $textBox = $div.find("#txtPrivateMessage_" + id);
             var msg = $textBox.val();
             if (msg.length > 0) {
                 CDF54.JA.SIGNALR.CHAT.APP.ChatHubProxy.server.sendPrivateMessage(id, msg);
                 CDF54.JA.SIGNALR.CHAT.MISC.MyTrace(CDF54.JA.UTILS.StringFormat("Client calling CDF54.JA.SIGNALR.CHAT.ChatHubProxy.server.sendPrivateMessage({0}, {1})",
                     id,
                     msg))
-                $("#txtPrivateMessage").val('');
+                $("#txtPrivateMessage_" + id).val('');
             }
         });
 
-        $div.find('#btnClosePrivate').click(function () {
+        $div.find("#btnClosePrivate_" + id).click(function () {
             CDF54.JA.SIGNALR.CHAT.MISC.MyTrace('btnClosePrivate');
             var inputctrId = 'Private_Input_' + id;
             var listctrId = 'Private_List_' + id;
@@ -690,9 +704,9 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE.PRIVATE = (function () {
             }
         });
 
-        $div.find("#txtPrivateMessage").keypress(function (e) {
+        $div.find("#txtPrivateMessage_" + id).keypress(function (e) {
             if (e.which == 13) {
-                $('#btnSendMessage').click();
+                $("#btnSendMessage_" + id).click();
             }
         });
 

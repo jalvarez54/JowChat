@@ -39,7 +39,7 @@
 </script>
 
 <script id="new-pmessage-template" type="text/x-jquery-tmpl">
-    <p id="${Id}" class="${texttype}"><strong> [ ${MessageDateTime} - ${UserName} ]</strong> <i>{{html encodedMessage}} </i></p>
+    <p id="${Id}" class="${texttype}"><strong> [ ${MessageDateTime} - ${UserName} ]</strong> {{html encodedMessage}}</p>
 </script>
 
 
@@ -52,16 +52,16 @@
 </script>
 
 <script id="new-private-template" type="text/x-jquery-tmpl">
-    <div class="input-group" id=Private_Input_${id}>
-        <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-pencil"></span>&nbsp;To&nbsp;<strong><span>${name}></span></strong></span>
-        <input type="text" class="form-control input-sm" placeholder="Your message here..." id="txtPrivateMessage" />
-        <div class="input-group-btn">
-            <div class="btn-group btn-group-xs" role="group"><button class="btn btn-warning" type="button" id="btnSendMessage" value="Send">Send private</button></div>
-            <div class="btn-group btn-group-xs" role="group"><button class="btn btn-danger" type="button" id="btnClosePrivate" value="Send">Close private</button></div>
-        </div>
-    </div>
     <div class="panel panel-default panelScrollDown1 divHide" id=Private_List_Panel_${id}>
         <div id=Private_List_${id}>
+        </div>
+    </div>
+    <div class="input-group" id=Private_Input_${id}>
+        <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-pencil"></span>&nbsp;To&nbsp;<strong><span>${name}></span></strong></span>
+        <input type="text" class="form-control" placeholder="Your message here..." id="txtPrivateMessage_${id}" />
+        <div class="input-group-btn">
+            <div class="btn-group btn-group" role="group"><button class="btn btn-warning" type="button" id="btnSendMessage_${id}" value="Send">Send private</button></div>
+            <div class="btn-group btn-group" role="group"><button class="btn btn-danger" type="button" id="btnClosePrivate_${id}" value="Send">Close private</button></div>
         </div>
     </div>
 </script>

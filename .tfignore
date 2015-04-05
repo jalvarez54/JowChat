@@ -44,3 +44,4 @@ Web.Staging CDF54 VM.config
 Web.Debug.config
 Web.Release.config
 \main\Cdf54.Ja.SignalR.Chat\App_Data
+\main\packages

@@ -169,6 +169,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\jquery.cssemoticons.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="packages.config" />
@@ -178,6 +183,7 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery.cssemoticons.js" />
     <Content Include="Scripts\jQuery.tmpl.js" />
     <Content Include="Scripts\jQuery.tmpl.min.js">
       <DependentUpon>jQuery.tmpl.js</DependentUpon>
@@ -190,6 +196,11 @@
     <Content Include="Scripts\jQuery.tmpl.min.js.map">
       <DependentUpon>jQuery.tmpl.min.js</DependentUpon>
     </Content>
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Chat\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Articles\_Specifications.cshtml" />
@@ -219,7 +230,7 @@
     <Content Include="Content\app\Diapositive4.PNG" />
     <Content Include="Content\app\Diapositive5.PNG" />
     <Content Include="Content\app\Diapositive6.PNG" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\_Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\cdf54.ja.signalR.chat.js" />
     <Content Include="Scripts\app\cdf54.ja.signalR.chat.helpers.js" />

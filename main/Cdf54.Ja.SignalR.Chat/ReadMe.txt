@@ -58,6 +58,16 @@
 - Use template to insert HTML code.
 	==> done
 - Review trace messages
+	==>
+- CHANGE: Design
+	http://www.designbootstrap.com/bootstrap-chat-box-template-example/
+		==>
+- ADD: emoticons
+	==> done
+- ADD: user avatar
+	==>
+- CORRECTION: Private message send on return
+	==>
 
 ////////////////////////
 // Version 1.0.Alpha
@@ -112,7 +122,11 @@
 - ADD jquery.tmpl.js see _ViewStart.cshtml
 	http://www.borismoore.com/2010/09/introducing-jquery-templates-1-first.html
 - 2015-04-04 COMMIT: Codeplex jowchat.codeplex.com (107323) ADD jquery.tmpl.js review code
-- 2015-04-04 COMMIT: Codeplex jowchat.codeplex.com (?) DELETE: package folder
+- 2015-04-04 COMMIT: Codeplex jowchat.codeplex.com (107324) DELETE: package folder
+- ADD: Emoticons
+	http://os.alfajango.com/css-emoticons/
+	https://github.com/JangoSteve/jQuery-CSSEmoticons
+- 2015-04-06 COMMIT: Codeplex jowchat.codeplex.com (?) ADD: Emoticons
 
 
 
