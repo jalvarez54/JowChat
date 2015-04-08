@@ -4,11 +4,24 @@ using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
+
 namespace Cdf54.Ja.SignalR.Chat.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        /* Add extension */
+        public string PhotoUrl { get; set; }
+        [NotMapped]
+        public HttpPostedFileWrapper Photo { get; set; }
+        [NotMapped]
+        public bool IsNoPhotoChecked { get; set; }
+        public string Pseudo { get; set; }
+
+        /* \Add extension */
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

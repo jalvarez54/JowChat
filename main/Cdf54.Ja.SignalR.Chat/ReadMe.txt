@@ -65,9 +65,24 @@
 - ADD: emoticons
 	==> done
 - ADD: user avatar
-	==>
+	==> done
 - CORRECTION: Private message send on return
+	==> done
+- CHANGE: partial view usage for photos
+	==> impossible
+- ADD: user avatar in Chat
 	==>
+- BUG: crash if PhotoUrl = NULL
+	==> done
+- ADD: pseudo and IsnoPhotoChecked properties
+	==> done
+- BUG: nochange photo line 108 ManageController
+	==> done
+- ???: Can i suppress IsnoPhotoChecked from database ?
+	yes i can, so add notmapped attribut
+	==> done
+
+
 
 ////////////////////////
 // Version 1.0.Alpha
@@ -126,7 +141,53 @@
 - ADD: Emoticons
 	http://os.alfajango.com/css-emoticons/
 	https://github.com/JangoSteve/jQuery-CSSEmoticons
-- 2015-04-06 COMMIT: Codeplex jowchat.codeplex.com (?) ADD: Emoticons
+- 2015-04-06 COMMIT: Codeplex jowchat.codeplex.com (107328) ADD: Emoticons
+- ADD: User avatar.
+	http://typecastexception.com/post/2014/06/22/ASPNET-Identity-20-Customizing-Users-and-Roles.aspx
+	EXEC: Enable-Migrations -EnableAutomaticMigrations
+	ADD: PhotoUrl and Photo properties in IdentityModels.cs
+	EXEC: Add-Migration Photo
+	EXEC: Update-Database
+	UPDATE: RegisterViewModel
+	UPDATE: Register View
+		http://www.w3schools.com/tags/att_form_enctype.asp
+	ADD: cdf54.ja.signalR.chatapp.js for image preview
+	ADD: "~/Scripts/app/cdf54.ja.signalR.chatapp.js" to bundle
+	ADD: public static string SavePhotoFileToDisk method in UTILS
+	ADD: MyCustomAttributes.cs in CustomFiltersAttributes folder
+	UPDATE: Register Method on AccountController
+	ADD: ChangePhotoViewModel in ManageViewModels
+	ADD: public ActionResult ChangePhoto() GET and POST in ManageController
+	ADD Manage/ChangePhoto View
+	ADD: User avatar to _LoginPartial.cshtml
+	==> done
+- EXEC: Update-Database in staging
+	Update-Database -Script -ConnectionString "data source=192.168.107.232;initial catalog=Cdf54.Ja.SignalR.Chat;Persist Security Info=True;User ID=cdf54projet;Password=p@ssword2014"providerName="System.Data.SqlClient"
+	==>
+- BUG: Private input not unloaded when client disconnect
+	==> done
+- ADD: pseudo and IsnoPhotoChecked properties
+	ADD: ManageViewModels/ChangePhotoViewModel
+	ADD: IsNoPhotoChecked and pseudo properties in IdentityModel
+	ADD: IsNoPhotoChecked and pseudo properties in AccountViewModels/RegisterViewModel
+	UPDATE:  ChangePhoto and Register views.
+	ADD: condition && model.IsNoPhotoChecked  in ChangePhoto ManageController
+	ADD: Pseudo = model.Pseudo in AccountController/Register
+	ADD: ManageViewModels/ChangeProfileViewModel
+	ADD: Manage/ChangeProfile View for Pseudo modification
+	ADD: 	ADD: public ActionResult ChangeProfile() GET and POST in ManageController
+	EXEC: Add-Migration IsNoPhotoCheckedAndPseudo
+	EXEC: Update-Database
+- IsnoPhotoChecked not necessary in database so remove it.
+	ADD: [NotMapped] attribut
+	EXEC: Update-Database -TargetMigration Photo
+	EXEC: Add-Migration Pseudo
+	EXEC: Update-Database
+- 2015-04-04 COMMIT: Codeplex jowchat.codeplex.com (?) ADD: photo and pseudo
+
+
+
+
 
 
 

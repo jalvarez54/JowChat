@@ -9,6 +9,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
+using JA.UTILS.Helpers;
 
 namespace Cdf54.Ja.SignalR.Chat.Controllers
 {
@@ -137,7 +139,11 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            /* Add extension */
+            RegisterViewModel model = new RegisterViewModel();
+            model.PhotoUrl = System.IO.Path.Combine(HttpRuntime.AppDomainAppVirtualPath, @"Content/Avatars", @"BlankPhoto.jpg");
+            return View(model);
+            /* \Add extension */
         }
 
         //
@@ -149,7 +155,15 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Pseudo = model.Pseudo};
+
+                /* Add extension */
+                // Save file to disk and retreive calculated file name or null if handled exception occure
+                // if user don't provide photo then he don't want photo
+                model.PhotoUrl = Utils.SavePhotoFileToDisk(model.Photo, this, null, model.Photo == null ? true : false);
+                user.PhotoUrl = model.PhotoUrl;
+                /* \Add extension */
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

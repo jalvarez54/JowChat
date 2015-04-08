@@ -2,6 +2,8 @@
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 
 namespace Cdf54.Ja.SignalR.Chat.Models
 {
@@ -19,7 +21,24 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         public IList<UserLoginInfo> CurrentLogins { get; set; }
         public IList<AuthenticationDescription> OtherLogins { get; set; }
     }
+    /* Add extension */
+    public class ChangePhotoViewModel
+    {
+        public string PhotoUrl { get; set; }
+        [NotMapped]
+        [Display(Name = "Change")]
+        [Cdf54.Ja.SignalR.Chat.CustomFiltersAttributes.MyCustomAttributes.ValidateFile]
+        public HttpPostedFileWrapper Photo { get; set; }
+        [NotMapped]
+        [Display(Name = "Remove if checked")]
+        public bool IsNoPhotoChecked { get; set; }
+    }
+    public class ChangeProfileViewModel
+    {
+        public string Pseudo { get; set; }
 
+    }
+    /* \Add extension */
     public class FactorViewModel
     {
         public string Purpose { get; set; }

@@ -166,6 +166,65 @@ namespace JA.UTILS.Helpers
             return System.Environment.Version.ToString();
         }
 
+        /// <summary>
+        /// Save photo to disk, used by Edit and Register with two different models.
+        /// </summary>
+        /// <param name="photo">HttpPostedFileWrapper</param>
+        /// <param name="controller">Controller calling</param>
+        /// <returns>Path where photo is stored with it's calculated filename, or default photo "BlankPhoto.jpg" or null on error</returns>
+        public static string SavePhotoFileToDisk(HttpPostedFileWrapper photo, System.Web.Mvc.Controller controller, string oldPhotoUrl, bool isNoPhotoChecked)
+        {
 
+            string photoPath = string.Empty;
+            string fileName = string.Empty;
+
+            // If photo is uploaded calculate his name
+            if (photo != null)
+            {
+                fileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+            }
+            else
+            {
+                // if user want to remove his photo
+                if (oldPhotoUrl != null && isNoPhotoChecked == true)
+                {
+                    if (!oldPhotoUrl.Contains("BlankPhoto.jpg"))
+                    {
+                        string fileToDelete = Path.GetFileName(oldPhotoUrl);
+                        var path = Path.Combine(controller.Server.MapPath("~/Content/Avatars"), fileToDelete);
+                        FileInfo fi = new FileInfo(path);
+                        if (fi.Exists)
+                            fi.Delete();
+                    }
+                }
+
+                // If no previews photo it's a new user who don't provide photo
+                if (oldPhotoUrl == null || isNoPhotoChecked == true)
+                {
+                    fileName = "BlankPhoto.jpg";
+                }
+                else
+                {
+                    // User don't want to change his photo
+                    return oldPhotoUrl;
+                }
+            }
+            // We save the new/first photo on disk
+            try
+            {
+                string path;
+                path = Path.Combine(controller.Server.MapPath("~/Content/Avatars"), fileName);
+                photoPath = Path.Combine(HttpRuntime.AppDomainAppVirtualPath, "Content/Avatars", fileName);
+                // We save the new/first photo or nothing because BlankPhoto is in the folder
+                if (photo != null) photo.SaveAs(path);
+            }
+            catch (Exception ex)
+            {
+                // Handled exception catch code
+                //Helpers.Utils.SignalExceptionToElmahAndTrace(ex, controller);
+                return null;
+            }
+            return photoPath;
+        }
     }
 }

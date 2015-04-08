@@ -44,7 +44,7 @@
 
 
 <script id="new-audio-template" type="text/x-jquery-tmpl">
-    <audio id="newUserAudio">
+    <audio id="${id}">
         <source src="${appPath}/Content/app/${filename}.ogg" type="audio/ogg">' + '
         <source src="${appPath}/Content/app/${filename}.mp3" type="audio/mp3">' + '
         <source src="${appPath}/Content/app/${filename}.wav" type="audio/wav">' + '
@@ -67,7 +67,13 @@
 </script>
 
 <script id="new-adduser-template" type="text/x-jquery-tmpl">
-    <p id="${connectionId}" class="${theClass}" style ="{{html theStyle}}" title="${theTitle}"><img src="http://www.gravatar.com/avatar/${hash}?s=16&d=mm" class="gravatar" /> ${name}</p>
+    @{
+        //var Db = new Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext();
+        //var user = Db.Users.First(u => u.UserName == User.Identity.Name);
+        //var image = Path.Combine(Server.MapPath("~"), user.PhotoUrl);
+        var image = Path.Combine(Server.MapPath("~"), "/Content/Avatars/BlankPhoto.jpg");
+    }
+    <p id="${connectionId}" class="${theClass}" style="{{html theStyle}}" title="${theTitle}"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" />${name}</p>
 </script>
 
 <script id="new-admintable-template" type="text/x-jquery-tmpl">

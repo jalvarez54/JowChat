@@ -123,7 +123,7 @@ namespace Cdf54.Ja.SignalR.Chat.Hubs
             {
                 ConnectedUsers.Add(caller);
             }
-            
+
             /// send to caller users (nonduplicated) list and messages list
             var connectedUsersWithoutDuplication =
                 (from a in ConnectedUsers

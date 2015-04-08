@@ -1,11 +1,27 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated) {
+    var Db = new Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext();
+    var user = Db.Users.First(u => u.UserName == User.Identity.Name);
+    var image = "";
+    if (user.PhotoUrl != null)
+    {
+        image = Path.Combine(Server.MapPath("~"), user.PhotoUrl);
+    }
+    else
+    {
+        image = Path.Combine(Server.MapPath("~"), "/Content/Avatars/BlankPhoto.jpg");
+    }
+
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
         @Html.AntiForgeryToken()
-
+    
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @*<a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @User.Identity.GetUserName()</a>*@
+                <a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @user.Pseudo</a>
+
+                @*<img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" />
+                @Html.ActionLink(User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>

@@ -4,13 +4,19 @@
 }
 
 <h2>@ViewBag.Title.</h2>
-
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@*/* Add extension enctype = "multipart/form-data"*/*@
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Pseudo, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Pseudo, new { @class = "form-control" })
+        </div>
+    </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
@@ -29,11 +35,29 @@
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
+    /* Add extension */
+    <div class="form-group">
+        @Html.Label("Actual photo", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <img src="@Html.DisplayFor(m => m.PhotoUrl)" alt="My photo" width="100" title="My photo" />
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Photo, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Photo, null, new { id = "filePhoto", onchange = "readURL(this)", type = "file", title = "Search for file to add", @class = "btn btn-primary" })
+            @Html.ValidationMessageFor(m => m.Photo)<br />
+            <img id="blah" src="#" alt="" width="100" />
+        </div>
+    </div>
+    /* \Add extension */
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Register" />
         </div>
     </div>
+
+
 }
 
 @section Scripts {

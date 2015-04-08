@@ -435,7 +435,7 @@ CDF54.JA.SIGNALR.CHAT.USER = (function () {
                     $(disc).fadeIn(200).delay(2000).fadeOut(200);
 
                     if ($('#Private_Input_' + disconnectedUser.ConnectionId).length > 0) {
-                        $('#Private_Input_' + disconnectedUser.ConnectionId).find('#btnClosePrivate').click();
+                        $('#Private_Input_' + disconnectedUser.ConnectionId).find('#btnClosePrivate_' + disconnectedUser.ConnectionId).click();
                     }
                 }
             }

@@ -1,7 +1,9 @@
 ﻿using Cdf54.Ja.SignalR.Chat.Models;
+using JA.UTILS.Helpers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -39,7 +41,8 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                message == ManageMessageId.ChangePhotoSuccess ? "Your photo has been changed."
+                : message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two factor provider has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
@@ -57,6 +60,114 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             };
             return View(model);
         }
+        // /* Add extension */
+        // GET: /Manage/ChangeProfile
+        public ActionResult ChangeProfile(EditMessageID? message = null)
+        {
+            ViewBag.StatusMessage =
+                message == EditMessageID.ModifSuccess ? "Your profile has been updated."
+                : message == EditMessageID.Error ? "An error has occurred."
+                : "";
+
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == User.Identity.Name);
+            var model = new ChangeProfileViewModel();
+            model.Pseudo = user.Pseudo;
+
+            return View(model);
+        }
+        //
+        // POST: /Manage/ChangeProfile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeProfile(ChangeProfileViewModel model)
+        {
+            var Db = new ApplicationDbContext();
+            var user = Db.Users.First(u => u.UserName == User.Identity.Name);
+
+            if (ModelState.IsValid)
+            {
+                user.Pseudo = model.Pseudo;
+
+
+                Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                await Db.SaveChangesAsync();
+                return RedirectToAction("ChangeProfile", new { Message = EditMessageID.ModifSuccess });
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+
+        }
+        // GET: /Manage/ChangePhoto
+        public ActionResult ChangePhoto(EditMessageID? message = null)
+        {
+            ViewBag.StatusMessage =
+                message == EditMessageID.ModifSuccess ? "Your photo has been changed."
+                : message == EditMessageID.Error ? "An error has occurred."
+                : message == EditMessageID.NoChange ? "No change made."
+                : "";
+
+            var db = new ApplicationDbContext();
+            var user = db.Users.First(u => u.UserName == User.Identity.Name);
+            var model = new ChangePhotoViewModel();
+            if (user.PhotoUrl == null)
+            {
+                model.PhotoUrl = Path.Combine(Server.MapPath("~"), "/Content/Avatars/BlankPhoto.jpg");
+            }
+            else
+            {
+                model.PhotoUrl = user.PhotoUrl;
+            }
+            return View(model);
+        }
+        //
+        // POST: /Manage/ChangePhoto
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePhoto(ChangePhotoViewModel model)
+        {
+            var Db = new ApplicationDbContext();
+            var user = Db.Users.First(u => u.UserName == User.Identity.Name);
+
+            if (ModelState.IsValid)
+            {
+                // No change
+                if (model.Photo == null && !model.IsNoPhotoChecked)
+                {
+                    return RedirectToAction("ChangePhoto", new { Message = EditMessageID.NoChange });
+                }
+                if (user.PhotoUrl != null)
+                {
+                    // Dont delete BlankPhoto.jpg
+                    if ((!user.PhotoUrl.Contains("BlankPhoto.jpg")) && model.IsNoPhotoChecked )
+                    {
+                        string fileToDelete = Path.GetFileName(user.PhotoUrl);
+                        var path = Path.Combine(Server.MapPath("~/Content/Avatars"), fileToDelete);
+                        FileInfo fi = new FileInfo(path);
+                        if (fi.Exists)
+                            fi.Delete();
+                    }
+                }
+                if (model.IsNoPhotoChecked)
+                {
+                    model.PhotoUrl = "/Content/Avatars/BlankPhoto.jpg";
+                }
+                else
+                {
+                    model.PhotoUrl = Utils.SavePhotoFileToDisk(model.Photo, this, user.PhotoUrl, false);
+                }
+                user.PhotoUrl = model.PhotoUrl;
+
+                Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                await Db.SaveChangesAsync();
+                return RedirectToAction("ChangePhoto", new { Message = EditMessageID.ModifSuccess });
+            }
+            model.PhotoUrl = user.PhotoUrl;
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+        /* \Add extension */
 
         //
         // GET: /Account/RemoveLogin
@@ -377,9 +488,19 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             return false;
         }
 
+        #region MyApplications auxiliaires
+        public enum EditMessageID
+        {
+            ModifSuccess,
+            Error,
+            NoChange,
+        }
+        #endregion
+
         public enum ManageMessageId
         {
             AddPhoneSuccess,
+            ChangePhotoSuccess,
             ChangePasswordSuccess,
             SetTwoFactorSuccess,
             SetPasswordSuccess,

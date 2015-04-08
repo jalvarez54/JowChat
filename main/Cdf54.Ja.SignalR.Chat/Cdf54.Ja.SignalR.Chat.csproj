@@ -165,6 +165,7 @@
     <Content Include="Content\app\About.PNG" />
     <Content Include="Content\app\Diapositive7.PNG" />
     <Content Include="Content\app\Spittoon.mp3" />
+    <Content Include="Content\Avatars\BlankPhoto.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -201,6 +202,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Scripts\app\cdf54.ja.signalR.chatapp.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Chat\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Articles\_Specifications.cshtml" />
@@ -212,6 +214,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Views\Manage\ChangePhoto.cshtml" />
+    <Content Include="Views\Manage\ChangeProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -313,6 +317,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="CustomFiltersAttributes\MyCustomAttributes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -326,6 +331,15 @@
     <Compile Include="Hubs\ContentProviders\ImageContentProvider.cs" />
     <Compile Include="Hubs\ContentProviders\DailyMotionContentProvider.cs" />
     <Compile Include="Hubs\ContentProviders\YouTubeContentProvider.cs" />
+    <Compile Include="Migrations\201504060829359_Photo.cs" />
+    <Compile Include="Migrations\201504060829359_Photo.Designer.cs">
+      <DependentUpon>201504060829359_Photo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504081313144_Pseudo.cs" />
+    <Compile Include="Migrations\201504081313144_Pseudo.Designer.cs">
+      <DependentUpon>201504081313144_Pseudo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ChatAdminViewModel.cs" />
@@ -342,6 +356,14 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201504060829359_Photo.resx">
+      <DependentUpon>201504060829359_Photo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504081313144_Pseudo.resx">
+      <DependentUpon>201504081313144_Pseudo.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

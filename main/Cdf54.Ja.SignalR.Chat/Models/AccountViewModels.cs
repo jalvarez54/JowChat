@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 
 namespace Cdf54.Ja.SignalR.Chat.Models
 {
@@ -76,6 +78,18 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        /* Add extension */
+        public string PhotoUrl { get; set; }
+        [NotMapped]
+        [Display(Name = "Change")]
+        [Cdf54.Ja.SignalR.Chat.CustomFiltersAttributes.MyCustomAttributes.ValidateFile]
+        public HttpPostedFileWrapper Photo { get; set; }
+        [NotMapped]
+        public bool IsNoPhotoChecked { get; set; }
+        public string Pseudo { get; set; }
+        /* \Add extension */
+
+
     }
 
     public class ResetPasswordViewModel
