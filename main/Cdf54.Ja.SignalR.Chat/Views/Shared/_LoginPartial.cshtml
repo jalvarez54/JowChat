@@ -1,11 +1,20 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated) {
-    var Db = new Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext();
-    var user = Db.Users.First(u => u.UserName == User.Identity.Name);
+
+    var userManager = new UserManager<Cdf54.Ja.SignalR.Chat.Models.ApplicationUser>
+        (new Microsoft.AspNet.Identity.EntityFramework.UserStore<Cdf54.Ja.SignalR.Chat.Models.ApplicationUser>
+            (new Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext()));
+
+    // Get the current logged in User and look up the user in ASP.NET Identity
+    var currentUser = userManager.FindById(User.Identity.GetUserId()); 
+        
+    //var Db = new Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext();
+    //var user = Db.Users.First(u => u.UserName == User.Identity.Name);
+    
     var image = "";
-    if (user.PhotoUrl != null)
+    if (currentUser.PhotoUrl != null)
     {
-        image = Path.Combine(Server.MapPath("~"), user.PhotoUrl);
+        image = Path.Combine(Server.MapPath("~"), currentUser.PhotoUrl);
     }
     else
     {
@@ -17,7 +26,8 @@
     
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @User.Identity.GetUserName()</a>
+                <a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @currentUser.UserName</a>
+                @*<a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @User.Identity.GetUserName()</a>*@
                 @*<a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @user.Pseudo</a>*@
 
                 @*<img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" />

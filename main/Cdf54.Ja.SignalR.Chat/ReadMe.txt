@@ -11,7 +11,7 @@
 
 ////////////////////////
 // TODO
-//////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 - @Request.ServerVariables["SERVER_SOFTWARE"].Contains("IIS") equivalent in JS.
 	===> impossible because server side.
 - BUG: Chat dropdown pb.
@@ -90,11 +90,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
 ////////////////////////
 // Version 1.0.Alpha
-//////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 - Add Shared/Articles recipient folder
 - Add _Specifications.cshtml file in Articles for Home/Index: @Html.Partial("Articles/_Specifications")
 - Add XML comment with scripts reference for js intellisense 
@@ -202,12 +200,16 @@
 		retreive old pseudo from User.Identity.Name (?)
 		(Not resolved)
 	==> done
-- 2015-04-08 COMMIT: Codeplex jowchat.codeplex.com (?) CHANGE: UserName from Email to Pseudo in Account sub-system
+- 2015-04-09 COMMIT: Codeplex jowchat.codeplex.com (107344) CHANGE: UserName from Email to Pseudo in Account sub-system
+- USE: UserManager instead of ApplicationDbContext() instance.
+	ManageController/ChangePhoto, ChangeProfile, _LoginPartial
+	http://www.ciiycode.com/0yNm6PjPWjPQ/aspnet-identity-extend-methods-to-access-user-properties
+- 2015-04-09 COMMIT: Codeplex jowchat.codeplex.com (?) USE: UserManager instead of ApplicationDbContext() instance
 
 
 ////////////////////////
 // Version 0.0.Alpha
-//////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 - Ref. : http://www.codeproject.com/Articles/562023/Asp-Net-SignalR-Chat-Room
 - Template: Empty web project
 - Install-Package Microsoft.AspNet.Identity.Samples -Pre
@@ -304,10 +306,9 @@
 - Change IdentitySample to Cdf54.Ja.SignalR.Chat
 - Add _ViewStart.cshtml in Chat views to share Razor with js files instead of having this code in each view file Chat folder.
 
-
 ////////////////////////
 // SignalR Performances
-//////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 - Perfs Tools Folder (crank, SignalR-tools, Tresi)
 - Crank
 - https://github.com/SignalR/SignalR/tree/dev/src/Microsoft.AspNet.SignalR.Crank
@@ -318,10 +319,9 @@
 - Tresi
 	http://www.wcfstorm.com/wcf/home.aspx
 
-
 ////////////////////////
 // NB
-//////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 - Elements like application settings, IIS virtual path are only resolved on server side.
 	It's not possible to retrive those values in JS on client side.
 		===> Sol:

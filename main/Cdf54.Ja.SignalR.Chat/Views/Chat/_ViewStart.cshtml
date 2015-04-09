@@ -68,9 +68,6 @@
 
 <script id="new-adduser-template" type="text/x-jquery-tmpl">
     @{
-        //var Db = new Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext();
-        //var user = Db.Users.First(u => u.UserName == User.Identity.Name);
-        //var image = Path.Combine(Server.MapPath("~"), user.PhotoUrl);
         var image = Path.Combine(Server.MapPath("~"), "/Content/Avatars/BlankPhoto.jpg");
     }
     <p id="${connectionId}" class="${theClass}" style="{{html theStyle}}" title="${theTitle}"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" />${name}</p>

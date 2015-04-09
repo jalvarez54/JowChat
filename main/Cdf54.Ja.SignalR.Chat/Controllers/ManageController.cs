@@ -107,8 +107,12 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 : message == EditMessageID.Error ? "An error has occurred."
                 : "";
 
-            var db = new ApplicationDbContext();
-            var user = db.Users.First(u => u.UserName == User.Identity.Name);
+            var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
+
+            //var db = new ApplicationDbContext();
+            //var user = db.Users.First(u => u.UserName == User.Identity.Name);
+            
+
             var model = new ChangeProfileViewModel();
             model.Pseudo = user.Pseudo;
             model.Email = user.Email;
@@ -121,15 +125,20 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangeProfile(ChangeProfileViewModel model)
         {
-            var Db = new ApplicationDbContext();
-            var user = Db.Users.First(u => u.UserName == User.Identity.Name);
+
+            var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
+
+            //var Db = new ApplicationDbContext();
+            //var user = Db.Users.First(u => u.UserName == User.Identity.Name);
 
             if (ModelState.IsValid)
             {
                 user.Email = model.Email;
+                await UserManager.UpdateAsync(user);
 
-                Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-                await Db.SaveChangesAsync();
+                //Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                //await Db.SaveChangesAsync();
+
                 return RedirectToAction("ChangeProfile", new { Message = EditMessageID.ModifSuccess });
             }
             // If we got this far, something failed, redisplay form
@@ -147,8 +156,11 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 : message == EditMessageID.NoChange ? "No change made."
                 : "";
 
-            var db = new ApplicationDbContext();
-            var user = db.Users.First(u => u.UserName == User.Identity.Name);
+            var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
+
+            //var db = new ApplicationDbContext();
+            //var user = db.Users.First(u => u.UserName == User.Identity.Name);
+
             var model = new ChangePhotoViewModel();
             if (user.PhotoUrl == null)
             {
@@ -166,8 +178,11 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePhoto(ChangePhotoViewModel model)
         {
-            var Db = new ApplicationDbContext();
-            var user = Db.Users.First(u => u.UserName == User.Identity.Name);
+            var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
+
+
+            //var Db = new ApplicationDbContext();
+            //var user = Db.Users.First(u => u.UserName == User.Identity.Name);
 
             if (ModelState.IsValid)
             {
@@ -198,8 +213,12 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 }
                 user.PhotoUrl = model.PhotoUrl;
 
-                Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-                await Db.SaveChangesAsync();
+                await UserManager.UpdateAsync(user);
+
+                //Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                //await Db.SaveChangesAsync();
+
+
                 return RedirectToAction("ChangePhoto", new { Message = EditMessageID.ModifSuccess });
             }
             model.PhotoUrl = user.PhotoUrl;
