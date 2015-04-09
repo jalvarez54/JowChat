@@ -118,7 +118,8 @@ namespace Cdf54.Ja.SignalR.Chat.Hubs
             
             /// Add user to ConnectedUsers list
              var userName = Context.User.Identity.Name;
-            var caller = new UserDetail { ConnectionId = Context.ConnectionId, UserName = userName };
+            var caller = new UserDetail { ConnectionId = Context.ConnectionId, UserName = userName};
+
             lock (ConnectedUsers)
             {
                 ConnectedUsers.Add(caller);

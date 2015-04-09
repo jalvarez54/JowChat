@@ -61,6 +61,44 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             return View(model);
         }
         // /* Add extension */
+        //// GET: /Manage/ChangePseudoUserName
+        //public ActionResult ChangePseudoUserName(EditMessageID? message = null)
+        //{
+        //    ViewBag.StatusMessage =
+        //        message == EditMessageID.ModifSuccess ? "Your profile has been updated."
+        //        : message == EditMessageID.Error ? "An error has occurred."
+        //        : "";
+
+        //    var db = new ApplicationDbContext();
+        //    var user = db.Users.First(u => u.UserName == User.Identity.Name);
+        //    var model = new ChangePseudoUserNameViewModel();
+        //    model.Pseudo = user.Pseudo;
+
+        //    return View(model);
+        //}
+        ////
+        //// POST: /Manage/ChangePseudoUserName
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> ChangePseudoUserName(ChangePseudoUserNameViewModel model)
+        //{
+        //    var Db = new ApplicationDbContext();
+        //    var user = Db.Users.First(u => u.UserName == User.Identity.Name);
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        user.UserName = user.Pseudo = model.Pseudo;
+
+        //        Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+        //        await Db.SaveChangesAsync();
+        //        return RedirectToAction("ChangePseudoUserName", new { Message = EditMessageID.ModifSuccess });
+        //    }
+        //    // If we got this far, something failed, redisplay form
+        //    return View(model);
+
+        //}
+
+
         // GET: /Manage/ChangeProfile
         public ActionResult ChangeProfile(EditMessageID? message = null)
         {
@@ -73,6 +111,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             var user = db.Users.First(u => u.UserName == User.Identity.Name);
             var model = new ChangeProfileViewModel();
             model.Pseudo = user.Pseudo;
+            model.Email = user.Email;
 
             return View(model);
         }
@@ -87,8 +126,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
             if (ModelState.IsValid)
             {
-                user.Pseudo = model.Pseudo;
-
+                user.Email = model.Email;
 
                 Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                 await Db.SaveChangesAsync();
@@ -98,6 +136,8 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             return View(model);
 
         }
+
+
         // GET: /Manage/ChangePhoto
         public ActionResult ChangePhoto(EditMessageID? message = null)
         {

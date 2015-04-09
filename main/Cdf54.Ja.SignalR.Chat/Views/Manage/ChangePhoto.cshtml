@@ -1,6 +1,6 @@
 ﻿@model Cdf54.Ja.SignalR.Chat.Models.ChangePhotoViewModel
 @{
-    ViewBag.Title = "Change Password";
+    ViewBag.Title = "Change Photo";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -8,7 +8,7 @@
 @using (Html.BeginForm("ChangePhoto", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Change Password Form</h4>
+    <h4>Change Photo Form</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     

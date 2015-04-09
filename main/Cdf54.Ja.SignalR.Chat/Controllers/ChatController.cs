@@ -17,7 +17,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             return View();
         }
         // GET: Chat/ChatAdmin
-        [Authorize(Users = "admin@free.fr")]
+        [Authorize(Roles = "Admin")]
         public ActionResult ChatAdmin()
         {
             ViewBag.Message = "Chat administration";

@@ -10,7 +10,7 @@ namespace Cdf54.Ja.SignalR.Chat.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = false; 
+            //AutomaticMigrationDataLossAllowed = false; 
             ContextKey = "Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext";
         }
 

@@ -216,6 +216,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Views\Manage\ChangePhoto.cshtml" />
     <Content Include="Views\Manage\ChangeProfile.cshtml" />
+    <Content Include="Views\Manage\ChangePseudoUserName.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

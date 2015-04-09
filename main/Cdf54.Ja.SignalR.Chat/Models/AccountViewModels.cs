@@ -47,10 +47,14 @@ namespace Cdf54.Ja.SignalR.Chat.Models
 
     public class LoginViewModel
     {
+        //[Required]
+        //[Display(Name = "Email")]
+        //[EmailAddress]
+        //public string Email { get; set; }
+
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Pseudo")]
+        public string Pseudo { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -86,6 +90,8 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         public HttpPostedFileWrapper Photo { get; set; }
         [NotMapped]
         public bool IsNoPhotoChecked { get; set; }
+        [Required]
+        [Display(Name = "Pseudo")]
         public string Pseudo { get; set; }
         /* \Add extension */
 

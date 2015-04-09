@@ -20,6 +20,10 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
+        [Required]
+        [Display(Name = "Pseudo")]
+        public string Pseudo { get; set; }
+
 
         public IEnumerable<SelectListItem> RolesList { get; set; }
     }

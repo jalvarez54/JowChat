@@ -116,6 +116,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "admin@free.fr";
             const string password = "P@ssword2015";
+            const string pseudo = "admin";
             const string roleName = "Admin";
 
             //Create Role Admin if it does not exist
@@ -127,7 +128,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
 
             var user = userManager.FindByName(name);
             if (user == null) {
-                user = new ApplicationUser { UserName = name, Email = name };
+                user = new ApplicationUser { UserName = name, Email = name , Pseudo = pseudo};
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }

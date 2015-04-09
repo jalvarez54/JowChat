@@ -23,9 +23,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Chats
@@ -41,30 +41,51 @@
                             <li class="divider"></li>
                             <li><a href="~/ReadMe.txt" target="_blank">Read Me</a></li>
                         </ul>
+                    </li>
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Admin
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
+                                <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
+                            </ul>
+                        </li>
+                    }
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-question-circle fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-messages">
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                        </ul>
 
-                        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-                        {
-                            <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
-                            <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
-                        }
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
+                        <!-- /.dropdown-messages -->
+                    </li>
+                    <li>@MyRazorHelpers.AddThis()</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
-        <div class="container body-content">
-            @RenderBody()
-            <footer>
-                @MyRazorHelpers.FooterInformations()
-                @if (User.IsInRole("Admin"))
-                {
-                    @MyRazorHelpers.DevFooterInformations()
-                }
-            </footer>
-        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <footer>
+            @MyRazorHelpers.FooterInformations()
+            @if (User.IsInRole("Admin"))
+            {
+                @MyRazorHelpers.DevFooterInformations()
+            }
+        </footer>
+    </div>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-    </body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
 </html>

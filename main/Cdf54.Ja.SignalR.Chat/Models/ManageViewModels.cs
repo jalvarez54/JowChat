@@ -35,8 +35,20 @@ namespace Cdf54.Ja.SignalR.Chat.Models
     }
     public class ChangeProfileViewModel
     {
-        public string Pseudo { get; set; }
+        [Required]
+        [Display(Name = "Email")]
+        [EmailAddress]
+        public string Email { get; set; }
 
+        [Required]
+        [Display(Name = "Pseudo")]
+        public string Pseudo { get; set; }
+    }
+    public class ChangePseudoUserNameViewModel
+    {
+        [Required]
+        [Display(Name = "Pseudo")]
+        public string Pseudo { get; set; }
     }
     /* \Add extension */
     public class FactorViewModel

@@ -17,8 +17,8 @@
     
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @*<a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @User.Identity.GetUserName()</a>*@
-                <a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @user.Pseudo</a>
+                <a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @User.Identity.GetUserName()</a>
+                @*<a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @user.Pseudo</a>*@
 
                 @*<img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" />
                 @Html.ActionLink(User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@

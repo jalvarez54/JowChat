@@ -81,6 +81,14 @@
 - ???: Can i suppress IsnoPhotoChecked from database ?
 	yes i can, so add notmapped attribut
 	==> done
+- CHANGE: In chat, show pseuso instead of email
+	==> done
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -163,7 +171,7 @@
 	==> done
 - EXEC: Update-Database in staging
 	Update-Database -Script -ConnectionString "data source=192.168.107.232;initial catalog=Cdf54.Ja.SignalR.Chat;Persist Security Info=True;User ID=cdf54projet;Password=p@ssword2014"providerName="System.Data.SqlClient"
-	==>
+	==> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 - BUG: Private input not unloaded when client disconnect
 	==> done
 - ADD: pseudo and IsnoPhotoChecked properties
@@ -183,12 +191,18 @@
 	EXEC: Update-Database -TargetMigration Photo
 	EXEC: Add-Migration Pseudo
 	EXEC: Update-Database
-- 2015-04-04 COMMIT: Codeplex jowchat.codeplex.com (?) ADD: photo and pseudo
-
-
-
-
-
+- 2015-04-08 COMMIT: Codeplex jowchat.codeplex.com (107340) ADD: photo and pseudo
+- CHANGE: UserName from Email to Pseudo in Account sub-system
+	- AccountController/Login: SignInManager.PasswordSignInAsync(model.Email, ==> SignInManager.PasswordSignInAsync(model.Pseudo,
+	- AccountViewModels/LoginViewModel: Email property ==> Pseudo property
+	- Login view: m => m.Email ==> m => m.Pseudo
+	- ADAPT: Manage section
+	- BUG: Exception when trying to change Pseudo/UserName
+		in GET action public ActionResult ChangePseudoUserName(EditMessageID? message = null)
+		retreive old pseudo from User.Identity.Name (?)
+		(Not resolved)
+	==> done
+- 2015-04-08 COMMIT: Codeplex jowchat.codeplex.com (?) CHANGE: UserName from Email to Pseudo in Account sub-system
 
 
 ////////////////////////
