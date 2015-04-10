@@ -209,8 +209,8 @@
 - 2015-04-09 COMMIT: Codeplex jowchat.codeplex.com (107345) USE: UserManager instead of ApplicationDbContext() instance
 - 2015-04-10 COMMIT: Codeplex jowchat.codeplex.com (107353) - BUG: Change role, photo path
 - 2015-04-10 COMMIT: Codeplex jowchat.codeplex.com (107354) - FIX: Some bugs with Application path and design
-- 2015-04-10 COMMIT: Codeplex jowchat.codeplex.com (107354) - ADD: packages
-
+- 2015-04-10 COMMIT: Codeplex jowchat.codeplex.com (107355) - ADD: packages
+- 2015-04-10 COMMIT: Codeplex jowchat.codeplex.com (?) DELETE: package folder
 
 ////////////////////////
 // Version 0.0.Alpha
