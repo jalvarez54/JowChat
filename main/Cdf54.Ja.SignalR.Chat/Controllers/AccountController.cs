@@ -141,7 +141,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         {
             /* Add extension */
             RegisterViewModel model = new RegisterViewModel();
-            model.PhotoUrl = System.IO.Path.Combine(HttpRuntime.AppDomainAppVirtualPath, @"Content/Avatars", @"BlankPhoto.jpg");
+            model.PhotoUrl =  System.IO.Path.Combine(HttpRuntime.AppDomainAppVirtualPath, @"Content/Avatars", @"BlankPhoto.jpg");
             return View(model);
             /* \Add extension */
         }

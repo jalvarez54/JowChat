@@ -68,7 +68,8 @@
 
 <script id="new-adduser-template" type="text/x-jquery-tmpl">
     @{
-        var image = Path.Combine(Server.MapPath("~"), "/Content/Avatars/BlankPhoto.jpg");
+        //var image = Path.Combine(Server.MapPath("~"), "/Content/Avatars/BlankPhoto.jpg");
+        var image = HttpContext.Current.Request.ApplicationPath + "/Content/Avatars/BlankPhoto.jpg";
     }
     <p id="${connectionId}" class="${theClass}" style="{{html theStyle}}" title="${theTitle}"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" />${name}</p>
 </script>

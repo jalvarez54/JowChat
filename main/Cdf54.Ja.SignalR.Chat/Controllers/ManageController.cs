@@ -164,7 +164,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             var model = new ChangePhotoViewModel();
             if (user.PhotoUrl == null)
             {
-                model.PhotoUrl = Path.Combine(Server.MapPath("~"), "/Content/Avatars/BlankPhoto.jpg");
+                model.PhotoUrl = HttpContext.Request.ApplicationPath + "/Content/Avatars/BlankPhoto.jpg";
             }
             else
             {
@@ -197,6 +197,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                     if ((!user.PhotoUrl.Contains("BlankPhoto.jpg")) && model.IsNoPhotoChecked )
                     {
                         string fileToDelete = Path.GetFileName(user.PhotoUrl);
+
                         var path = Path.Combine(Server.MapPath("~/Content/Avatars"), fileToDelete);
                         FileInfo fi = new FileInfo(path);
                         if (fi.Exists)
@@ -205,7 +206,8 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 }
                 if (model.IsNoPhotoChecked)
                 {
-                    model.PhotoUrl = "/Content/Avatars/BlankPhoto.jpg";
+                    var path =  HttpContext.Request.ApplicationPath + "/Content/Avatars/BlankPhoto.jpg";
+                    model.PhotoUrl = path;
                 }
                 else
                 {

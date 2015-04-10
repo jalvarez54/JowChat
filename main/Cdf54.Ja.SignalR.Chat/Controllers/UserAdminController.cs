@@ -140,6 +140,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             {
                 Id = user.Id,
                 Email = user.Email,
+                Pseudo = user.Pseudo,
                 RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
                 {
                     Selected = userRoles.Contains(x.Name),
@@ -153,7 +154,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Email,Id")] EditUserViewModel editUser, params string[] selectedRole)
+        public async Task<ActionResult> Edit([Bind(Include = "Email,Pseudo,Id")] EditUserViewModel editUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -163,7 +164,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                     return HttpNotFound();
                 }
 
-                user.UserName = editUser.Email;
+                user.UserName = editUser.Pseudo;
                 user.Email = editUser.Email;
 
                 var userRoles = await UserManager.GetRolesAsync(user.Id);

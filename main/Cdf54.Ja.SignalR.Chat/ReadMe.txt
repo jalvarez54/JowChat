@@ -83,6 +83,8 @@
 	==> done
 - CHANGE: In chat, show pseuso instead of email
 	==> done
+- BUG: Change role, photo path
+	==> done
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,7 +170,7 @@
 	ADD: User avatar to _LoginPartial.cshtml
 	==> done
 - EXEC: Update-Database in staging
-	Update-Database -Script -ConnectionString "data source=192.168.107.232;initial catalog=Cdf54.Ja.SignalR.Chat;Persist Security Info=True;User ID=cdf54projet;Password=p@ssword2014"providerName="System.Data.SqlClient"
+	Update-Database -Script -ConnectionString "data source=192.168.107.232;initial catalog=Cdf54.Ja.SignalR.Chat;Persist Security Info=True;User ID=cdf54projet;Password=p@ssword2014" -ConnectionProviderName System.Data.SqlClient
 	==> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 - BUG: Private input not unloaded when client disconnect
 	==> done
@@ -204,7 +206,8 @@
 - USE: UserManager instead of ApplicationDbContext() instance.
 	ManageController/ChangePhoto, ChangeProfile, _LoginPartial
 	http://www.ciiycode.com/0yNm6PjPWjPQ/aspnet-identity-extend-methods-to-access-user-properties
-- 2015-04-09 COMMIT: Codeplex jowchat.codeplex.com (?) USE: UserManager instead of ApplicationDbContext() instance
+- 2015-04-09 COMMIT: Codeplex jowchat.codeplex.com (107345) USE: UserManager instead of ApplicationDbContext() instance
+- 2015-04-10 COMMIT: Codeplex jowchat.codeplex.com (?) - BUG: Change role, photo path
 
 
 ////////////////////////
