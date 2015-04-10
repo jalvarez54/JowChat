@@ -164,6 +164,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             var model = new ChangePhotoViewModel();
             if (user.PhotoUrl == null)
             {
+                //model.PhotoUrl = HttpContext.Request.ApplicationPath + "/Content/Avatars/BlankPhoto.jpg";
                 model.PhotoUrl = HttpContext.Request.ApplicationPath + "/Content/Avatars/BlankPhoto.jpg";
             }
             else
@@ -206,7 +207,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 }
                 if (model.IsNoPhotoChecked)
                 {
-                    var path =  HttpContext.Request.ApplicationPath + "/Content/Avatars/BlankPhoto.jpg";
+                    var path =  Path.Combine(HttpContext.Request.ApplicationPath, "/Content/Avatars/BlankPhoto.jpg");
                     model.PhotoUrl = path;
                 }
                 else

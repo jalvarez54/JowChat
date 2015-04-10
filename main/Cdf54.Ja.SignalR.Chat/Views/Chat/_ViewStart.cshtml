@@ -39,7 +39,10 @@
 </script>
 
 <script id="new-pmessage-template" type="text/x-jquery-tmpl">
-    <p id="${Id}" class="${texttype}"><strong> [ ${MessageDateTime} - ${UserName} ]</strong> {{html encodedMessage}}</p>
+    <p id="${Id}" class="${texttype}">
+        <img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="${imagePath}" />
+        <strong> [ ${MessageDateTime} - ${UserName} ]</strong> {{html encodedMessage}}
+    </p>
 </script>
 
 
@@ -67,11 +70,7 @@
 </script>
 
 <script id="new-adduser-template" type="text/x-jquery-tmpl">
-    @{
-        //var image = Path.Combine(Server.MapPath("~"), "/Content/Avatars/BlankPhoto.jpg");
-        var image = HttpContext.Current.Request.ApplicationPath + "/Content/Avatars/BlankPhoto.jpg";
-    }
-    <p id="${connectionId}" class="${theClass}" style="{{html theStyle}}" title="${theTitle}"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" />${name}</p>
+    <p id="${connectionId}" class="${theClass}" style="{{html theStyle}}" title="${theTitle}"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="${imagePath}" />${name}</p>
 </script>
 
 <script id="new-admintable-template" type="text/x-jquery-tmpl">

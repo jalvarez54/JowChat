@@ -18,27 +18,25 @@
     }
     else
     {
-        image = HttpContext.Current.Request.ApplicationPath + "/Content/Avatars/BlankPhoto.jpg";
+        image = Path.Combine(HttpContext.Current.Request.ApplicationPath, "/Content/Avatars/BlankPhoto.jpg");
     }
-    var pathManage = HttpContext.Current.Request.ApplicationPath + "/Manage";
     
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
         @Html.AntiForgeryToken()
-    
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a title="Manage" href="@pathManage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @currentUser.UserName</a>
-                @*<a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @User.Identity.GetUserName()</a>*@
-                @*<a title="Manage" href="/Manage"><img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" /> @user.Pseudo</a>*@
 
-                @*<img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@image" />*@
-                @*@Html.ActionLink(User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
-            </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-        </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="@Url.Action("Index", "Manage")" title="Manage" , rel="nofollow">
+                @currentUser.UserName <img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@Url.Content(@image)" />
+            </a>
+            @*@Html.ActionLink(User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
     }
 }
-else {
+else
+{
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>

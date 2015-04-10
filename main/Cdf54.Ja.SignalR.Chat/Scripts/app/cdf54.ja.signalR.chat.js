@@ -453,9 +453,11 @@ CDF54.JA.SIGNALR.CHAT.USER = (function () {
                 connectionId:"",
                 theClass: "alert alert-success",
                 theStyle: "",
-                theTitle:"",
+                theTitle: newUser.UserName,
                 name: newUser.UserName,
+                imagePath: AppPath() + "/Content/Avatars/BlankPhoto.jpg",
             }
+
             if (userId == newUser.ConnectionId) {
                 //code = $('<div class="alert alert-success well-sm">' + newUser.UserName + "</div>");
                 //code = $('<p class="bg-success">' + newUser.UserName + "</p>");
@@ -472,6 +474,7 @@ CDF54.JA.SIGNALR.CHAT.USER = (function () {
                 if (CDF54.JA.SIGNALR.CHAT.APP.ChatOrChatAdmin == "Chat") {
                     data.theStyle = "cursor: pointer";
                     data.theTitle = "Double click for private talk";
+                    data.imagePath = AppPath() + "/Content/Avatars/BlankPhoto.jpg";
                 }
                 code = $('#new-adduser-template').tmpl(data);
                 $(code).dblclick(function () {
@@ -527,8 +530,8 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
                     UserName: message.UserName,
                     encodedMessage: encodedMessage,
                     texttype: "",
-                };
-
+                    imagePath: AppPath() + "/Content/Avatars/BlankPhoto.jpg",
+                }
             switch (type) {
                 case "PUBLIC":
 
