@@ -117,8 +117,13 @@ namespace Cdf54.Ja.SignalR.Chat.Hubs
             MyTrace("===> Entring Server OnConnected");
             
             /// Add user to ConnectedUsers list
-             var userName = Context.User.Identity.Name;
-            var caller = new UserDetail { ConnectionId = Context.ConnectionId, UserName = userName};
+            //var userName = Context.User.Identity.Name;
+            //var caller = new UserDetail { ConnectionId = Context.ConnectionId, UserName = userName, PhotoUrl};
+
+            var Db = new Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext();
+            var user = Db.Users.First(us => us.UserName == Context.User.Identity.Name);
+            var userName = user.UserName;
+            var caller = new UserDetail { ConnectionId = Context.ConnectionId, UserName = userName, PhotoUrl = user.PhotoUrl};
 
             lock (ConnectedUsers)
             {
@@ -298,7 +303,11 @@ namespace Cdf54.Ja.SignalR.Chat.Hubs
             // fromUser == Caller
             var fromUser = ConnectedUsers.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
 
-            MessageDetail callerMessageToSend = new MessageDetail { UserName = fromUser.UserName, Message = messageText };
+            var Db = new Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext();
+            var toUserPhotoUrl =  Db.Users.First(us => us.UserName == toUser.UserName).PhotoUrl;
+            var fromUserPhotoUrl = Db.Users.First(us => us.UserName == fromUser.UserName).PhotoUrl;
+
+            MessageDetail callerMessageToSend = new MessageDetail { UserName = fromUser.UserName, Message = messageText, PhotoUrl = fromUserPhotoUrl };
 
             if (toUser != null && fromUser != null)
             {
@@ -518,7 +527,11 @@ namespace Cdf54.Ja.SignalR.Chat.Hubs
         {
             MyTrace("Entring server private void AddMessageinCache");
 
-            MessageDetail messageToAdd = new MessageDetail { UserName = Context.User.Identity.Name, Message = message };
+            var Db = new Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext();
+            var user = Db.Users.First(us => us.UserName == Context.User.Identity.Name);
+            var userName = user.UserName;
+
+            MessageDetail messageToAdd = new MessageDetail { UserName = user.UserName, Message = message, PhotoUrl = user.PhotoUrl };
             CurrentMessages.Add(messageToAdd);
 
             if (CurrentMessages.Count > 100)

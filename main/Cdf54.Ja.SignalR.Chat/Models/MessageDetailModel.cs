@@ -20,6 +20,6 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             MessageDateTime = DateTime.Now.ToString("HH:mm:ss");
             Id = Guid.NewGuid().ToString("d");
         }
-
+        public string PhotoUrl { get; set; }
     }
 }

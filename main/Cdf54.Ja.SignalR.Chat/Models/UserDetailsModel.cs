@@ -18,6 +18,6 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         {
             ConnectionDateTime = DateTime.UtcNow.ToString();
         }
-
+        public string PhotoUrl { get; set; }
     }
 }

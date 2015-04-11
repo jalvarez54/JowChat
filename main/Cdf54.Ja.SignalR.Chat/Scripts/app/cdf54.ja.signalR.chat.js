@@ -455,7 +455,8 @@ CDF54.JA.SIGNALR.CHAT.USER = (function () {
                 theStyle: "",
                 theTitle: newUser.UserName,
                 name: newUser.UserName,
-                imagePath: AppPath() + "/Content/Avatars/BlankPhoto.jpg",
+                //imagePath: AppPath() + "/Content/Avatars/BlankPhoto.jpg",
+                imagePath: newUser.PhotoUrl,
             }
 
             if (userId == newUser.ConnectionId) {
@@ -474,7 +475,8 @@ CDF54.JA.SIGNALR.CHAT.USER = (function () {
                 if (CDF54.JA.SIGNALR.CHAT.APP.ChatOrChatAdmin == "Chat") {
                     data.theStyle = "cursor: pointer";
                     data.theTitle = "Double click for private talk";
-                    data.imagePath = AppPath() + "/Content/Avatars/BlankPhoto.jpg";
+                    //data.imagePath = AppPath() + "/Content/Avatars/BlankPhoto.jpg";
+                    data.imagePath = newUser.PhotoUrl;
                 }
                 code = $('#new-adduser-template').tmpl(data);
                 $(code).dblclick(function () {
@@ -529,8 +531,8 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
                     MessageDateTime: message.MessageDateTime,
                     UserName: message.UserName,
                     encodedMessage: encodedMessage,
-                    texttype: "",
-                    imagePath: AppPath() + "/Content/Avatars/BlankPhoto.jpg",
+                    myClass: "",
+                    imagePath: message.PhotoUrl,
                 }
             switch (type) {
                 case "PUBLIC":
@@ -539,7 +541,7 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
                         if (message.UserName == CDF54.JA.SIGNALR.CHAT.UserName) {
                             //$('#divChatMessages').append('<div class="alert alert-success well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
                             //$('#divChatMessages').append('<p id=' + message.Id + ' class="text-success"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
-                            datasmessage.texttype = "text-success";
+                            datasmessage.myClass = "alert alert-success";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#divChatMessages'));
                             $('.text-success').emoticonize();
 
@@ -548,7 +550,7 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
                         else {
                             //$('#divChatMessages').append('<div class="alert alert-info well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
                             //$('#divChatMessages').append('<p id=' + message.Id + ' class="text-info"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
-                            datasmessage.texttype = "text-info";
+                            datasmessage.myClass = "alert alert-info";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#divChatMessages'));
                             $('.text-info').emoticonize();
 
@@ -567,14 +569,14 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
                         if (message.UserName == CDF54.JA.SIGNALR.CHAT.UserName) {
                             //$('#Private_List_' + from).append('<div class="alert alert-success well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
                             //$('#Private_List_' + from).append('<p id=' + message.Id + ' class="text-success"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
-                            datasmessage.texttype = "text-success";
+                            datasmessage.myClass = "alert alert-success";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#Private_List_' + from))
                             $('.text-success').emoticonize();
                         }
                         else {
                             //$('#Private_List_' + from).append('<div class="alert alert-info well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
                             //$('#Private_List_' + from).append('<p id=' + message.Id + ' class="text-info"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
-                            datasmessage.texttype = "text-info";
+                            datasmessage.myClass = "alert alert-info";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#Private_List_' + from))
                             $('.text-info').emoticonize();
                         }

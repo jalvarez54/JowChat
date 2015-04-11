@@ -71,7 +71,7 @@
 - CHANGE: partial view usage for photos
 	==> impossible
 - ADD: user avatar in Chat
-	==>
+	==> done
 - BUG: crash if PhotoUrl = NULL
 	==> done
 - ADD: pseudo and IsnoPhotoChecked properties
@@ -171,7 +171,7 @@
 	==> done
 - EXEC: Update-Database in staging
 	Update-Database -Script -ConnectionString "data source=192.168.107.232;initial catalog=Cdf54.Ja.SignalR.Chat;Persist Security Info=True;User ID=cdf54projet;Password=p@ssword2014" -ConnectionProviderName System.Data.SqlClient
-	==> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	==> done sucess
 - BUG: Private input not unloaded when client disconnect
 	==> done
 - ADD: pseudo and IsnoPhotoChecked properties
@@ -210,7 +210,11 @@
 - 2015-04-10 COMMIT: Codeplex jowchat.codeplex.com (107353) - BUG: Change role, photo path
 - 2015-04-10 COMMIT: Codeplex jowchat.codeplex.com (107354) - FIX: Some bugs with Application path and design
 - 2015-04-10 COMMIT: Codeplex jowchat.codeplex.com (107355) - ADD: packages
-- 2015-04-10 COMMIT: Codeplex jowchat.codeplex.com (?) DELETE: package folder
+- 2015-04-10 COMMIT: Codeplex jowchat.codeplex.com (107356) DELETE: package folder
+- EXEC: Manage nuget packages for the solution
+	https://docs.nuget.org/consume/package-restore/msbuild-integrated
+- 2015-04-11 COMMIT: Codeplex jowchat.codeplex.com (?) ADD: user avatar in Chat
+
 
 ////////////////////////
 // Version 0.0.Alpha
