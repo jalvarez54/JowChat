@@ -19,7 +19,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         [NotMapped]
         public bool IsNoPhotoChecked { get; set; }
         public string Pseudo { get; set; }
-
+        public bool UseGravatar { get; set; }
         /* \Add extension */
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

@@ -191,36 +191,6 @@ CDF54.JA.SIGNALR.CHAT.MISC = (function () {
                         },
                     ];
                     $('#new-divmessval-template').tmpl(datas).appendTo($('#divContext'))
-
-                    //var data1 = {
-                    //    text: '[Context.ConnectionId]',
-                    //    value: serverContext.ConnectionId,
-                    //};
-                    //$('#new-context-template').tmpl(data1)
-                    //                      .appendTo($('#divContext'))
-                    //var data2 = {
-                    //    text: '[Context.User.Identity.Name]',
-                    //    value: serverContext.Name,
-                    //};
-                    //$('#new-context-template').tmpl(data2)
-                    //                      .appendTo($('#divContext'));
-                    //var data3 = {
-                    //    text: '[Context.QueryString["Transport"]',
-                    //    value: serverContext.Transport,
-                    //};
-                    //$('#new-context-template').tmpl(data3)
-                    //                      .appendTo($('#divContext'));
-                    //var data4 = {
-                    //    text: '[Context.QueryString["ConnectionData"]',
-                    //    value: serverContext.ConnectionData,
-                    //};
-                    //$('#new-context-template').tmpl(data4)
-                    //                      .appendTo($('#divContext'));
-
-                    //$('#divContext').append('<div class="message"><span>' + '[Context.ConnectionId] ' + '</span> : ' + serverContext.ConnectionId + '</div>');
-                    //$('#divContext').append('<div class="message"><span>' + '[Context.User.Identity.Name] ' + '</span> : ' + serverContext.Name + '</div>');
-                    //$('#divContext').append('<div class="message"><span>' + '[Context.QueryString["Transport"]] ' + '</span> : <strong>' + serverContext.Transport + '</strong></div>');
-                    //$('#divContext').append('<div class="message"><span>' + '[Context.QueryString["ConnectionData"]] ' + '</span> : ' + serverContext.ConnectionData + '</div>');
                 };
             };
         },// Client RPC
@@ -265,11 +235,6 @@ CDF54.JA.SIGNALR.CHAT.MISC = (function () {
                 ];
                 $('#new-divmessval-template').tmpl(datashub).appendTo($('#divHub'))
 
-                //$('#divHub').append('<div class="message"><span>' + '[id] ' + '</span> : ' + hub.id + '</div>');
-                //$('#divHub').append('<div class="message"><span>' + '[transport.name] ' + '</span> : ' + hub.transport.name + '</div>');
-                //$('#divHub').append('<div class="message"><span>' + '[protocol] ' + '</span> : ' + hub.protocol + '</div>');
-                //$('#divHub').append('<div class="message"><span>' + '[host] ' + '</span> : ' + hub.host + '</div>');
-                //$('#divHub').append('<div class="message"><span>' + '[appRelativeUrl] ' + '</span> : ' + hub.appRelativeUrl + '</div>');
                 if (hub.transport.name == 'webSockets')
                     $('#new-divmessval-template').tmpl({ text: '[hub.socket.url] ', value: hub.socket.url, }).appendTo($('#divHub'))
                 //$('#divHub').append('<div class="message"><span>' + '[socket.url] ' + '</span> : ' + hub.socket.url + '</div>');
@@ -291,10 +256,6 @@ CDF54.JA.SIGNALR.CHAT.MISC = (function () {
                     },
                 ];
                 $('#new-divmessval-template').tmpl(datasnavigator).appendTo($('#divHub'))
-
-                //$('#divHub').append('<div class="message"><span>' + '[navigator.appName] ' + '</span> : ' + navigator.appName + '</div>');
-                //$('#divHub').append('<div class="message"><span>' + '[navigator.product] ' + '</span> : ' + navigator.appName + '</div>');
-                //$('#divHub').append('<div class="message"><span>' + '[navigator.userAgent] ' + '</span> : ' + navigator.userAgent + '</div>');
             }
         },
         ShowClientTrace: function (clientTraceMessage) {
@@ -316,9 +277,6 @@ CDF54.JA.SIGNALR.CHAT.MISC = (function () {
         // Html5 Audio tag 
         LoadHtml5NewUserAudioTag: function () {
             var appPath = AppPath();
-            //var html5Audio = '<audio id="newUserAudio">' +
-            //    '<source src="' + appPath + '/Content/app/Spittoon.mp3" type="audio/mp3">' + '</audio>'
-            //$(html5Audio).appendTo('body');
             var dataaudio =
                 {
                     id: "newUserAudio",
@@ -331,11 +289,6 @@ CDF54.JA.SIGNALR.CHAT.MISC = (function () {
         // Html5 Audio tag 
         LoadHtml5AudioTag: function () {
             var appPath = AppPath();
-            //var html5Audio = '<audio id="chatAudio">' +
-            //    '<source src="' + appPath + '/Content/app/notify.ogg" type="audio/ogg">' +
-            //    '<source src="' + appPath + '/Content/app/notify.mp3" type="audio/mp3">' +
-            //    '<source src="' + appPath + '/Content/app/notify.wav" type="audio/wav">' + '</audio>'
-            //$(html5Audio).appendTo('body');
             var dataaudio =
                 {
                     id: "chatAudio",
@@ -355,7 +308,6 @@ CDF54.JA.SIGNALR.CHAT.USER = (function () {
     // Public members
     //
     return {
-
         //
         // Client RPC
         //
@@ -543,7 +495,7 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
                             //$('#divChatMessages').append('<p id=' + message.Id + ' class="text-success"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
                             datasmessage.myClass = "alert alert-success";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#divChatMessages'));
-                            $('.text-success').emoticonize();
+                            $('.alert').emoticonize();
 
 
                         }
@@ -552,12 +504,12 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
                             //$('#divChatMessages').append('<p id=' + message.Id + ' class="text-info"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
                             datasmessage.myClass = "alert alert-info";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#divChatMessages'));
-                            $('.text-info').emoticonize();
+                            $('.alert').emoticonize();
 
                         }
                         // Using jQuery to scroll to the bottom of #panelChatMessages DIV.
-                        var height = $('#panelChatMessages')[0].scrollHeight;
-                        $('#panelChatMessages').scrollTop(height);
+                        var height = $('#divChatMessages')[0].scrollHeight;
+                        $('#divChatMessages').scrollTop(height);
                         // beep
                         CDF54.JA.UTILS.beep();
                     }
@@ -571,14 +523,14 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE = (function () {
                             //$('#Private_List_' + from).append('<p id=' + message.Id + ' class="text-success"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
                             datasmessage.myClass = "alert alert-success";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#Private_List_' + from))
-                            $('.text-success').emoticonize();
+                            $('.alert').emoticonize();
                         }
                         else {
                             //$('#Private_List_' + from).append('<div class="alert alert-info well-sm"><span>' + '[' + message.MessageDateTime + '] ' + message.UserName + '</span> : ' + encodedMessage + '</div>');
                             //$('#Private_List_' + from).append('<p id=' + message.Id + ' class="text-info"><strong>' + '[' + message.MessageDateTime + '] ' + message.UserName + ' : </strong><i>' + encodedMessage + '</i></p>');
                             datasmessage.myClass = "alert alert-info";
                             $('#new-pmessage-template').tmpl(datasmessage).appendTo($('#Private_List_' + from))
-                            $('.text-info').emoticonize();
+                            $('.alert').emoticonize();
                         }
                         // Using jQuery to scroll to the bottom of #Private_List_Panel_ DIV.
                         var height = $('#Private_List_Panel_' + from)[0].scrollHeight;
@@ -618,12 +570,6 @@ CDF54.JA.SIGNALR.CHAT.MESSAGE.PUBLIC = (function () {
                 }
             });
             $("#txtMessage").keypress(function (e) {
-                //var $text = $('#txtMessage'),
-                //$in = $(this);
-
-                //setTimeout(function () {
-                //    $text.html($.emoticons.replace($in.val()));
-                //}, 100);
                 if (e.which == 13) {
                     $('#btnSendMsg').click();
                 }

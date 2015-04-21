@@ -60,44 +60,6 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             };
             return View(model);
         }
-        // /* Add extension */
-        //// GET: /Manage/ChangePseudoUserName
-        //public ActionResult ChangePseudoUserName(EditMessageID? message = null)
-        //{
-        //    ViewBag.StatusMessage =
-        //        message == EditMessageID.ModifSuccess ? "Your profile has been updated."
-        //        : message == EditMessageID.Error ? "An error has occurred."
-        //        : "";
-
-        //    var db = new ApplicationDbContext();
-        //    var user = db.Users.First(u => u.UserName == User.Identity.Name);
-        //    var model = new ChangePseudoUserNameViewModel();
-        //    model.Pseudo = user.Pseudo;
-
-        //    return View(model);
-        //}
-        ////
-        //// POST: /Manage/ChangePseudoUserName
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> ChangePseudoUserName(ChangePseudoUserNameViewModel model)
-        //{
-        //    var Db = new ApplicationDbContext();
-        //    var user = Db.Users.First(u => u.UserName == User.Identity.Name);
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        user.UserName = user.Pseudo = model.Pseudo;
-
-        //        Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-        //        await Db.SaveChangesAsync();
-        //        return RedirectToAction("ChangePseudoUserName", new { Message = EditMessageID.ModifSuccess });
-        //    }
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-
-        //}
-
 
         // GET: /Manage/ChangeProfile
         public ActionResult ChangeProfile(EditMessageID? message = null)
@@ -108,10 +70,6 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 : "";
 
             var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
-
-            //var db = new ApplicationDbContext();
-            //var user = db.Users.First(u => u.UserName == User.Identity.Name);
-            
 
             var model = new ChangeProfileViewModel();
             model.Pseudo = user.Pseudo;
@@ -128,16 +86,21 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
             var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
 
-            //var Db = new ApplicationDbContext();
-            //var user = Db.Users.First(u => u.UserName == User.Identity.Name);
-
             if (ModelState.IsValid)
             {
                 user.Email = model.Email;
-                await UserManager.UpdateAsync(user);
+                if (user.UseGravatar == true)
+                {
+                    user.PhotoUrl = JA.UTILS.Helpers.Utils.GetGravatarUrlForAddress(model.Email);
+                }
+                var result = await UserManager.UpdateAsync(user);
 
-                //Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-                //await Db.SaveChangesAsync();
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("", result.Errors.First());
+                    return View();
+                }
+
 
                 return RedirectToAction("ChangeProfile", new { Message = EditMessageID.ModifSuccess });
             }
@@ -145,7 +108,6 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             return View(model);
 
         }
-
 
         // GET: /Manage/ChangePhoto
         public ActionResult ChangePhoto(EditMessageID? message = null)
@@ -158,19 +120,18 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
             var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
 
-            //var db = new ApplicationDbContext();
-            //var user = db.Users.First(u => u.UserName == User.Identity.Name);
-
             var model = new ChangePhotoViewModel();
             if (user.PhotoUrl == null)
             {
-                //model.PhotoUrl = HttpContext.Request.ApplicationPath + "/Content/Avatars/BlankPhoto.jpg";
-                model.PhotoUrl = HttpContext.Request.ApplicationPath + "/Content/Avatars/BlankPhoto.jpg";
+                model.PhotoUrl = System.IO.Path.Combine(HttpRuntime.AppDomainAppVirtualPath, @"Content/Avatars", @"BlankPhoto.jpg");
             }
             else
             {
                 model.PhotoUrl = user.PhotoUrl;
             }
+            model.UseGravatar = user.UseGravatar;
+            model.Email = user.Email;
+            model.Pseudo = user.Pseudo;
             return View(model);
         }
         //
@@ -181,21 +142,18 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         {
             var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
 
-
-            //var Db = new ApplicationDbContext();
-            //var user = Db.Users.First(u => u.UserName == User.Identity.Name);
-
             if (ModelState.IsValid)
             {
                 // No change
-                if (model.Photo == null && !model.IsNoPhotoChecked)
+                if (model.Photo == null && !model.IsNoPhotoChecked && !model.UseGravatar)
                 {
                     return RedirectToAction("ChangePhoto", new { Message = EditMessageID.NoChange });
                 }
-                if (user.PhotoUrl != null)
+                //if Photo exist and is not a gravatar
+                if ((user.PhotoUrl != null && !user.PhotoUrl.Contains("http://")))
                 {
-                    // Dont delete BlankPhoto.jpg
-                    if ((!user.PhotoUrl.Contains("BlankPhoto.jpg")) && model.IsNoPhotoChecked )
+                    // Delete file if not the BlankPhoto.jpg and if we change for a gravatar
+                    if (((!user.PhotoUrl.Contains("BlankPhoto.jpg")) && model.IsNoPhotoChecked) || ((!user.PhotoUrl.Contains("BlankPhoto.jpg")) && model.UseGravatar))
                     {
                         string fileToDelete = Path.GetFileName(user.PhotoUrl);
 
@@ -214,13 +172,13 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 {
                     model.PhotoUrl = Utils.SavePhotoFileToDisk(model.Photo, this, user.PhotoUrl, false);
                 }
+                if (model.UseGravatar == true)
+                {
+                    model.PhotoUrl = JA.UTILS.Helpers.Utils.GetGravatarUrlForAddress(user.Email);
+               }
                 user.PhotoUrl = model.PhotoUrl;
-
+                user.UseGravatar = model.UseGravatar;
                 await UserManager.UpdateAsync(user);
-
-                //Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-                //await Db.SaveChangesAsync();
-
 
                 return RedirectToAction("ChangePhoto", new { Message = EditMessageID.ModifSuccess });
             }
@@ -229,7 +187,6 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-        /* \Add extension */
 
         //
         // GET: /Account/RemoveLogin

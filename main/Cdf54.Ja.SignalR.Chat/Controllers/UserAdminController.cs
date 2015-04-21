@@ -90,7 +90,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = userViewModel.Email, Email = userViewModel.Email };
+                var user = new ApplicationUser { UserName = userViewModel.Pseudo, Email = userViewModel.Email };
                 var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 
                 //Add User to the selected Roles 
@@ -166,6 +166,10 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
                 user.UserName = editUser.Pseudo;
                 user.Email = editUser.Email;
+                if (user.UseGravatar == true)
+                {
+                    user.PhotoUrl = JA.UTILS.Helpers.Utils.GetGravatarUrlForAddress(user.Email);
+                }
 
                 var userRoles = await UserManager.GetRolesAsync(user.Id);
 
@@ -176,14 +180,36 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.First());
-                    return View();
+                    return View(new EditUserViewModel()
+                    {
+                        Id = user.Id,
+                        Email = user.Email,
+                        Pseudo = user.Pseudo,
+                        RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
+                        {
+                            Selected = userRoles.Contains(x.Name),
+                            Text = x.Name,
+                            Value = x.Name
+                        })
+                    });
                 }
                 result = await UserManager.RemoveFromRolesAsync(user.Id, userRoles.Except(selectedRole).ToArray<string>());
 
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.First());
-                    return View();
+                    return View(new EditUserViewModel()
+                    {
+                        Id = user.Id,
+                        Email = user.Email,
+                        Pseudo = user.Pseudo,
+                        RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
+                        {
+                            Selected = userRoles.Contains(x.Name),
+                            Text = x.Name,
+                            Value = x.Name
+                        })
+                    });
                 }
                 return RedirectToAction("Index");
             }

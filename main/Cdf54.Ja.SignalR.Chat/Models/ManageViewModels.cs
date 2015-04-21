@@ -32,6 +32,11 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         [NotMapped]
         [Display(Name = "Remove if checked")]
         public bool IsNoPhotoChecked { get; set; }
+        [Display(Name = "Use my Gravatar")]
+        public bool UseGravatar { get; set; }
+        public string Email { get; set; }
+        public string Pseudo { get; set; }
+
     }
     public class ChangeProfileViewModel
     {
@@ -40,9 +45,10 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
         [Display(Name = "Pseudo")]
         public string Pseudo { get; set; }
+        public string PhotoUrl { get; set; }
+
     }
     public class ChangePseudoUserNameViewModel
     {

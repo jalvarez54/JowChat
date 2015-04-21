@@ -9,11 +9,13 @@ namespace Cdf54.Ja.SignalR.Chat
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jQuery.tmpl.min.js",
-                        "~/Scripts/app/cdf54.ja.signalR.chatapp.js"));
+                        "~/Scripts/jQuery.tmpl.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/chatphoto").Include(
+            "~/Scripts/app/cdf54.ja.signalR.chatphoto.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're 
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

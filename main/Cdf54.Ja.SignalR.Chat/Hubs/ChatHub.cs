@@ -457,7 +457,7 @@ namespace Cdf54.Ja.SignalR.Chat.Hubs
 
         /// <summary>
         /// For Chat Admin
-        /// We clear tbody table and refill it with all messages for all admin@free.fr (x)
+        /// We clear tbody table and refill it with all messages for all Admin(x)
         /// We could use Group of type Administrators
         /// </summary>
         private void ChatAdminInit()

@@ -93,6 +93,9 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         [Required]
         [Display(Name = "Pseudo")]
         public string Pseudo { get; set; }
+        [Display(Name = "Use my Gravatar")]
+        public bool UseGravatar { get; set; }
+
         /* \Add extension */
 
 

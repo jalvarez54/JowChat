@@ -7,11 +7,66 @@ using System.Reflection;
 using System.Configuration;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace JA.UTILS.Helpers
 {
     public class Utils
     {
+        /// <summary>
+        /// 2005/04/17
+        /// Gets the currently active Gravatar image URL for the email address supplied to this method call
+        /// Throws a <see cref="Gravatar.NET.GravatarEmailHashFailedException"/> if the provided email address is invalid
+        /// </summary>
+        /// <param name="address">The address to retireve the image for</param>
+        /// /// <param name="pars">The available parameters passed by the request to Gravatar when retrieving the image</param>
+        /// <returns>The Gravatar image URL</returns>
+        public static string GetGravatarUrlForAddress(string address)
+        {
+
+            const string GRAVATAR_URL_BASE = "http://s.gravatar.com/avatar/";
+            var sbResult = new StringBuilder(GRAVATAR_URL_BASE);
+            sbResult.Append(HashString(address));
+            sbResult.Append("?");
+            // https://ja.gravatar.com/site/implement/images/
+            sbResult.Append("d=wavatar");
+            sbResult.Append("&");
+            sbResult.Append("s=100");
+
+
+            return sbResult.ToString();
+        }
+
+
+        /// <summary>
+        /// 2005/04/17
+        /// Hashes a string with MD5.  Suitable for use with Gravatar profile
+        /// image urls
+        /// </summary>
+        /// <param name="myString"></param>
+        /// <returns></returns>
+        public static string HashString(string myString)
+        {
+            // Create a new instance of the MD5CryptoServiceProvider object.  
+            MD5 md5Hasher = MD5.Create();
+
+            // Convert the input string to a byte array and compute the hash.  
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(myString));
+
+            // Create a new Stringbuilder to collect the bytes  
+            // and create a string.  
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data  
+            // and format each one as a hexadecimal string.  
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            return sBuilder.ToString();  // Return the hexadecimal string. 
+        }
         /// <summary>
         /// This function is used to check specified file being used or not
         /// http://dotnet-assembly.blogspot.fr/2012/10/c-check-file-is-being-used-by-another.html

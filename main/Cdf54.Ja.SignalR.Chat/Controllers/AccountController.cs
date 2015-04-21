@@ -142,6 +142,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             /* Add extension */
             RegisterViewModel model = new RegisterViewModel();
             model.PhotoUrl =  System.IO.Path.Combine(HttpRuntime.AppDomainAppVirtualPath, @"Content/Avatars", @"BlankPhoto.jpg");
+            model.UseGravatar = false;
             return View(model);
             /* \Add extension */
         }
@@ -160,10 +161,18 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 var user = new ApplicationUser { UserName = model.Pseudo, Email = model.Email, Pseudo = model.Pseudo };
 
                 /* Add extension */
-                // Save file to disk and retreive calculated file name or null if handled exception occure
-                // if user don't provide photo then he don't want photo
-                model.PhotoUrl = Utils.SavePhotoFileToDisk(model.Photo, this, null, model.Photo == null ? true : false);
-                user.PhotoUrl = model.PhotoUrl;
+                if (model.UseGravatar == false)
+                {
+                    // Save file to disk and retreive calculated file name or null if handled exception occure
+                    // if user don't provide photo then he don't want photo
+                    model.PhotoUrl = Utils.SavePhotoFileToDisk(model.Photo, this, null, model.Photo == null ? true : false);
+                    user.PhotoUrl = model.PhotoUrl;
+                }
+                else
+                {
+                    user.PhotoUrl = JA.UTILS.Helpers.Utils.GetGravatarUrlForAddress(user.Email);
+                }
+                user.UseGravatar = model.UseGravatar;
                 /* \Add extension */
 
                 var result = await UserManager.CreateAsync(user, model.Password);

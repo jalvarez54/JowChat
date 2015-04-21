@@ -44,7 +44,7 @@
         <strong> [ ${MessageDateTime} - ${UserName} ]</strong> {{html encodedMessage}}
     </p>*@
     <div id="${Id}" class="${myClass}">
-        <img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="${imagePath}" />
+        <img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="${imagePath}" title="${UserName}" />
         <strong> [ ${MessageDateTime} - ${UserName} ]</strong> {{html encodedMessage}}
     </div>
 </script>
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="input-group" id=Private_Input_${id}>
-        <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-pencil"></span>&nbsp;To&nbsp;<strong><span>${name}></span></strong></span>
+        <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-pencil"></span>&nbsp;To&nbsp;<strong><span>${name}</span></strong></span>
         <input type="text" class="form-control" placeholder="Your message here..." id="txtPrivateMessage_${id}" />
         <div class="input-group-btn">
             <div class="btn-group btn-group" role="group"><button class="btn btn-warning" type="button" id="btnSendMessage_${id}" value="Send">Send private</button></div>
