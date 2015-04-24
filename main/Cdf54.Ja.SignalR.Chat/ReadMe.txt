@@ -126,6 +126,9 @@
 - [10001] Web.config protection
     Use external files for appSettings, only "appSettings.config" is distributed on source control.
     ==> done
+- [10002] PB with email when using web.config email parameters thread exception
+    ==> done
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,7 +152,7 @@
     - Implementing the SMS Service
         EXEC: Install-Package Twilio
         IdentityConfig/public class SmsService : IIdentityMessageService
-        ==> Bad account Twilio (Twilio phone number)
+        ==> Bad account Twilio (Twilio phone number) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     - Testing change password and forget password
         ==> OK
     - Implementing the Remove Account
@@ -176,6 +179,11 @@
     ==> done
 - 2015-04-24 COMMIT: Codeplex jowchat.codeplex.com (107373) Version 2.0.Alpha: ADD: Login confirmation ADD: External login
 - 2015-04-24 COMMIT: Codeplex jowchat.codeplex.com (107374) Secure web.config
+- [10002] PB with email when using web.config email parameters thread exception
+    http://blog.falafel.com/avoid-taskcanceledexception-sending-email-async/
+    http://stackoverflow.com/questions/22797845/asp-net-identity-2-0-how-to-implement-iidentitymessageservice-to-do-async-smtp
+    ==> done
+- 2015-04-24 COMMIT: Codeplex jowchat.codeplex.com (?) Secure Mail settings
 
 
 

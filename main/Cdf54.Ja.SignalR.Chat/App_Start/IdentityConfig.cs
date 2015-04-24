@@ -85,56 +85,80 @@ namespace Cdf54.Ja.SignalR.Chat.Models
 
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
             //// Plug in your email service here to send an email.
             //return Task.FromResult(0);
 
             /* Email confirmation extension */
 
-            // Credentials:
-            var credentialUserName = Utils.GetAppSetting("credentialUserName");
-            var sentFrom = Utils.GetAppSetting("sentFrom");
-            var pwd = Utils.GetAppSetting("pwd");
+            //
+            // WORK FINE WITHOUT async
+            //
+            //// Credentials:
+            //var credentialUserName = Utils.GetAppSetting("credentialUserName");
+            //var sentFrom = Utils.GetAppSetting("sentFrom");
+            //var pwd = Utils.GetAppSetting("pwd");
 
-            // Configure the client:
-            System.Net.Mail.SmtpClient client =
-                new System.Net.Mail.SmtpClient(Utils.GetAppSetting("Smtp"));
+            //// Configure the client:
+            //System.Net.Mail.SmtpClient client =
+            //    new System.Net.Mail.SmtpClient(Utils.GetAppSetting("Smtp"));
 
-            client.Port = Convert.ToInt32(Utils.GetAppSetting("Port"));
-            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
+            //client.Port = Convert.ToInt32(Utils.GetAppSetting("Port"));
+            //client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+            //client.UseDefaultCredentials = false;
 
-            // Create the credentials:
-            System.Net.NetworkCredential credentials =
-                new System.Net.NetworkCredential(credentialUserName, pwd);
+            //// Create the credentials:
+            //System.Net.NetworkCredential credentials =
+            //    new System.Net.NetworkCredential(credentialUserName, pwd);
 
-            client.EnableSsl = Convert.ToBoolean(Utils.GetAppSetting("EnableSsl"));
-            client.Credentials = credentials;
+            //client.EnableSsl = Convert.ToBoolean(Utils.GetAppSetting("EnableSsl"));
+            //client.Credentials = credentials;
 
-            // Create the message:
-            var mail =
-                new System.Net.Mail.MailMessage(sentFrom, message.Destination);
+            //// Create the message:
+            //var mail =
+            //    new System.Net.Mail.MailMessage(sentFrom, message.Destination);
 
-            mail.Subject = message.Subject;
-            mail.Body = message.Body;
+            //mail.Subject = message.Subject;
+            //mail.Body = message.Body;
 
-            // Send:
-            return client.SendMailAsync(mail);
+            //// Send:
+            //return client.SendMailAsync(mail);
+
+
+            //http://stackoverflow.com/questions/22797845/asp-net-identity-2-0-how-to-implement-iidentitymessageservice-to-do-async-smtp
+            using (var client = new System.Net.Mail.SmtpClient())
+            {
+                var msg = new System.Net.Mail.MailMessage()
+                {
+                    Body = message.Body,
+                    Subject = message.Subject
+                };
+
+                msg.To.Add(message.Destination);
+
+                await client.SendMailAsync(msg);
+            }
+
+            //
+            // WORK FINE WITHOUT async
+            //
+            //var msg = new System.Net.Mail.MailMessage()
+            //{
+            //    Body = message.Body,
+            //    Subject = message.Subject
+            //};
+
+            //msg.To.Add(message.Destination);
+
+            //var client = new System.Net.Mail.SmtpClient();
+            //client.SendCompleted += (s, e) =>
+            //{
+            //    client.Dispose();
+            //};
+            //return client.SendMailAsync(msg);
 
             /* Email confirmation extension */
-            //using (var client = new System.Net.Mail.SmtpClient())
-            //{
-            //    var msg = new System.Net.Mail.MailMessage()
-            //    {
-            //        Body = message.Subject,
-            //        Subject = message.Body
-            //    };
-
-            //    msg.To.Add(message.Destination);
-
-            //    return client.SendMailAsync(msg);
-            //}
         }
     }
 
@@ -145,9 +169,9 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             //// Plug in your sms service here to send a text message.
             //return Task.FromResult(0);
             /* SMS confirmation extension */
-            string AccountSid = "AC39699ace46869340cc8bd23f35949f75";
-            string AuthToken = "9b3c61f7e3b2d6a3507a769f45b23271";
-            string twilioPhoneNumber = "+33975186543";
+            string AccountSid = Utils.GetAppSetting("AccountSid");
+            string AuthToken = Utils.GetAppSetting("AuthToken");
+            string twilioPhoneNumber = Utils.GetAppSetting("twilioPhoneNumber");
 
             var twilio = new Twilio.TwilioRestClient(AccountSid, AuthToken);
             twilio.SendSmsMessage(twilioPhoneNumber, message.Destination, message.Body);

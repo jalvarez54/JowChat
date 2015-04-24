@@ -211,10 +211,12 @@
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Scripts\app\cdf54.ja.signalR.chatphoto.js" />
-    <None Include="appSettings.config" />
-    <None Include="appSettings-Release.config" />
-    <None Include="appSettings-Staging CDF54 VM.config" />
-    <None Include="appSettings-Debug.config" />
+    <Content Include="App_Settings\appSettings.config" />
+    <Content Include="App_Settings\appSettings-Release.config" />
+    <Content Include="App_Settings\appSettings-Staging CDF54 VM.config" />
+    <Content Include="App_Settings\appSettings-Debug.config" />
+    <Content Include="App_Settings\MailSettings.config" />
+    <Content Include="App_Settings\MailSettings-Common.config" />
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Chat\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Articles\_Specifications.cshtml" />
