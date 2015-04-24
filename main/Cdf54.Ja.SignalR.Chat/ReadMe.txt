@@ -61,7 +61,7 @@
     ==> XXXX
 - CHANGE: Design
     http://www.designbootstrap.com/bootstrap-chat-box-template-example/
-        ==>
+    ==> XXXX
 - ADD: emoticons
     ==> done
 - ADD: user avatar
@@ -92,9 +92,9 @@
 - EXCEPTION: When deleting photo from gravatar
     ==> done
 - BUG: Scrolling in public message with long message
-    ==>
+    ==> XXXX
 - BUG: When loading ChangePhoto view, gravatar dont refresh
-    ==>
+    ==> XXXX
 - DELETE: Photo if change for gravatar
     ==> done
 - BUG: edit user in admin mode, exception if email exist
@@ -109,12 +109,76 @@
     ==> done UserAdminController line 169
 - EXEC: Update-Database in staging
     Update-Database -Script -ConnectionString "data source=192.168.107.232;initial catalog=Cdf54.Ja.SignalR.Chat;Persist Security Info=True;User ID=cdf54projet;Password=p@ssword2014" -ConnectionProviderName System.Data.SqlClient
+    ==> XXXX
+- ADD: 2FA
+    ==> done
+- ADD: Remove account by a user
+    ==> done
+- ADD: Remove photo if exist when removing user
+    ==> done
+- ADD: External login
+    ==> done
+- ADD: Claims
+    ==> XXXX
+- [10000] QUESTION: Why in ExternalLogin sub-system, "asp.net identity 2 sample" use the view ExternalLoginConfirmation.cshtml
+    insteadof retreive informations (Email) from the provider.
+    ==> done
+- [10001] Web.config protection
+    Use external files for appSettings, only "appSettings.config" is distributed on source control.
+    ==> done
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+
+
+
+
+////////////////////////
+// Version 2.0.Alpha
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+- ADD: Login confirmation
+    http://www.codeproject.com/Articles/762427/ASP-NET-Identity-Setting-Up-Account-Validation-and
+    - Implementing the Email Service Using Your Own Mail Account
+        IdentityConfig/public class EmailService : IIdentityMessageService
+        ==> OK
+    - Implementing the SMS Service
+        EXEC: Install-Package Twilio
+        IdentityConfig/public class SmsService : IIdentityMessageService
+        ==> Bad account Twilio (Twilio phone number)
+    - Testing change password and forget password
+        ==> OK
+    - Implementing the Remove Account
+        ADD: Manage/RemoveAccount and RemoveAccountConfirmed actions
+        ADD: Manage/RemoveAccount view
+        ==> OK
+- ADD: External login
+    http://www.asp.net/web-api/overview/security/external-authentication-services
+    http://blogs.msdn.com/b/webdev/archive/2012/08/15/oauth-openid-support-for-webforms-mvc-and-webpages.aspx
+    Twitter https://apps.twitter.com/ ==> done
+    FaceBook https://developers.facebook.com/ ==> done
+        http://blogs.msdn.com/b/webdev/archive/2013/10/16/get-more-information-from-social-providers-used-in-the-vs-2013-project-templates.aspx
+    Google http://www.asp.net/mvc/overview/security/create-an-aspnet-mvc-5-app-with-facebook-and-google-oauth2-and-openid-sign-on ,
+           https://developers.google.com/identity/ ,
+           https://console.developers.google.com/project
+    ==> done
+    Microsoft: http://www.asp.net/web-api/overview/security/external-authentication-services#MICROSOFT
+        https://msdn.microsoft.com/fr-fr/library/hh243646.aspx
+    ==> done
+  [9999] http://blogs.msdn.com/b/webdev/archive/2012/09/19/configuring-your-asp-net-application-for-microsoft-oauth-account.aspx
+        with www.jowchat.net url in host file and iisExpress applicationHost.config modification
+        <binding protocol="http" bindingInformation="*:80:www.jowchat.net" />
+- [10000] TODO RESPONSE: see code in AccountController/ExternalLoginConfirmation
+    ==> done
+
+
+
+
+
 
 ////////////////////////
 // Version 1.0.Alpha
@@ -258,7 +322,7 @@
 - ADD: Preview gravatar JS for Change and Register views
     http://www.deluxeblogtips.com/2010/04/get-gravatar-using-only-javascript.html
     http://www.southcoastweb.co.uk/bootstrap-by-twitter-file-input-box/
-- 2015-04-21 COMMIT: Codeplex jowchat.codeplex.com (?) ADD: gravatar capability
+- 2015-04-21 COMMIT: Codeplex jowchat.codeplex.com (107368) ADD: gravatar capability
 
 ////////////////////////
 // Version 0.0.Alpha

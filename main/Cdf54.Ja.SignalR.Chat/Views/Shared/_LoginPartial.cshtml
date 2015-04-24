@@ -27,7 +27,8 @@
     <ul class="nav navbar-nav navbar-right">
         <li>
             <a href="@Url.Action("Index", "Manage")" title="Manage" , rel="nofollow">
-                @currentUser.UserName <img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@Url.Content(@image)" />
+                @*[10000] change currentUser.UserName by currentUser.Pseudo*@
+                @currentUser.Pseudo <img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@Url.Content(@image)" />
             </a>
             @*@Html.ActionLink(User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
         </li>

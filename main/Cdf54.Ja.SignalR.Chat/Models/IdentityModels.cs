@@ -49,5 +49,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         {
             return new ApplicationDbContext();
         }
+
+        //public System.Data.Entity.DbSet<Cdf54.Ja.SignalR.Chat.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -141,7 +141,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         {
             /* Add extension */
             RegisterViewModel model = new RegisterViewModel();
-            model.PhotoUrl =  System.IO.Path.Combine(HttpRuntime.AppDomainAppVirtualPath, @"Content/Avatars", @"BlankPhoto.jpg");
+            model.PhotoUrl = System.IO.Path.Combine(HttpRuntime.AppDomainAppVirtualPath, @"Content/Avatars", @"BlankPhoto.jpg");
             model.UseGravatar = false;
             return View(model);
             /* \Add extension */
@@ -178,11 +178,24 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-                    ViewBag.Link = callbackUrl;
-                    return View("DisplayEmail");
+                    /* Add extension */
+                    // Add user to role Member
+                    result = await UserManager.AddToRoleAsync(user.Id, "Member");
+                    if (result.Succeeded)
+                    {
+                        /* \Add extension */
+                        var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account",
+                            new { userId = user.Id, code = code },
+                            protocol: Request.Url.Scheme);
+                        await UserManager.SendEmailAsync(user.Id,
+                            "Confirm your account",
+                            "Please confirm your account by clicking this link: <a href=\""
+                            + callbackUrl + "\">link</a>");
+
+                        ViewBag.Link = callbackUrl;
+                        return View("DisplayEmail");
+                    }
                 }
                 AddErrors(result);
             }
@@ -221,7 +234,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -230,7 +243,11 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+                await UserManager.SendEmailAsync(user.Id,
+                    "Reset Password",
+                    "Please reset your password by clicking here: <a href=\""
+                    + callbackUrl + "\">link</a>");
+
                 ViewBag.Link = callbackUrl;
                 return View("ForgotPasswordConfirmation");
             }
@@ -351,6 +368,22 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    var externalIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+                    if (externalIdentity != null)
+                    {
+                        // Retrieve the existing claims for the user and add the FacebookAccessTokenClaim 
+                        //var currentClaims = await UserManager.GetClaimsAsync(externalIdentity.GetUserId());
+                        ////var providerClaim = externalIdentity.FindFirstValue("provider") ?? string.Empty;
+                        //await StoreClaim("provider", User.Identity.GetUserId(), externalIdentity);
+                        //await StoreClaim("FacebookId", User.Identity.GetUserId(), externalIdentity);
+                        //await StoreClaim("image", User.Identity.GetUserId(), externalIdentity);
+                        //await StoreClaim("link", User.Identity.GetUserId(), externalIdentity);
+                        //await StoreClaim(ClaimTypes.Name, User.Identity.GetUserId(), externalIdentity);
+                        //await StoreClaim(ClaimTypes.Email, User.Identity.GetUserId(), externalIdentity);
+
+                        //var addedClaims = await UserManager.GetClaimsAsync(User.Identity.GetUserId());
+                    }
+                    //http://www.asp.net/mvc/overview/security/preventing-open-redirection-attacks
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -385,18 +418,33 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
+                // [10000] Added
+                ViewBag.LoginProvider = info.Login.LoginProvider;
+                // 10000 Added + Twitter dont provide Email
+                if (model.Email == info.Email || info.Login.LoginProvider == "Twitter")
                 {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    // [10000] Change model.Email by info.DefaultUserName (no because user may have same pseudo)
+                    //var user = new ApplicationUser { UserName = info.DefaultUserName, Email = model.Email };
+                    // so change change currentUser.UserName by currentUser.Pseudo in _LoginPartial
+                    var user = new ApplicationUser { Pseudo = info.DefaultUserName, UserName = model.Email, Email = model.Email };
+                    var result = await UserManager.CreateAsync(user);
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
+                        result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                        if (result.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToLocal(returnUrl);
+                        }
                     }
-                }
                 AddErrors(result);
+                }
+                else
+                {
+                    // [10000] Added
+                    var ir = new IdentityResult("Bad Email");
+                    AddErrors(ir);
+                }
             }
 
             ViewBag.ReturnUrl = returnUrl;

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Web;
+using JA.UTILS.Helpers;
 
 namespace Cdf54.Ja.SignalR.Chat.Models
 {
@@ -71,7 +72,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
     // Configure the RoleManager used in the application. RoleManager is defined in the ASP.NET Identity core assembly
     public class ApplicationRoleManager : RoleManager<IdentityRole>
     {
-        public ApplicationRoleManager(IRoleStore<IdentityRole,string> roleStore)
+        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
             : base(roleStore)
         {
         }
@@ -86,8 +87,54 @@ namespace Cdf54.Ja.SignalR.Chat.Models
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            //// Plug in your email service here to send an email.
+            //return Task.FromResult(0);
+
+            /* Email confirmation extension */
+
+            // Credentials:
+            var credentialUserName = Utils.GetAppSetting("credentialUserName");
+            var sentFrom = Utils.GetAppSetting("sentFrom");
+            var pwd = Utils.GetAppSetting("pwd");
+
+            // Configure the client:
+            System.Net.Mail.SmtpClient client =
+                new System.Net.Mail.SmtpClient(Utils.GetAppSetting("Smtp"));
+
+            client.Port = Convert.ToInt32(Utils.GetAppSetting("Port"));
+            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+
+            // Create the credentials:
+            System.Net.NetworkCredential credentials =
+                new System.Net.NetworkCredential(credentialUserName, pwd);
+
+            client.EnableSsl = Convert.ToBoolean(Utils.GetAppSetting("EnableSsl"));
+            client.Credentials = credentials;
+
+            // Create the message:
+            var mail =
+                new System.Net.Mail.MailMessage(sentFrom, message.Destination);
+
+            mail.Subject = message.Subject;
+            mail.Body = message.Body;
+
+            // Send:
+            return client.SendMailAsync(mail);
+
+            /* Email confirmation extension */
+            //using (var client = new System.Net.Mail.SmtpClient())
+            //{
+            //    var msg = new System.Net.Mail.MailMessage()
+            //    {
+            //        Body = message.Subject,
+            //        Subject = message.Body
+            //    };
+
+            //    msg.To.Add(message.Destination);
+
+            //    return client.SendMailAsync(msg);
+            //}
         }
     }
 
@@ -95,23 +142,37 @@ namespace Cdf54.Ja.SignalR.Chat.Models
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your sms service here to send a text message.
+            //// Plug in your sms service here to send a text message.
+            //return Task.FromResult(0);
+            /* SMS confirmation extension */
+            string AccountSid = "AC39699ace46869340cc8bd23f35949f75";
+            string AuthToken = "9b3c61f7e3b2d6a3507a769f45b23271";
+            string twilioPhoneNumber = "+33975186543";
+
+            var twilio = new Twilio.TwilioRestClient(AccountSid, AuthToken);
+            twilio.SendSmsMessage(twilioPhoneNumber, message.Destination, message.Body);
+
+            // Twilio does not return an async Task, so we need this:
             return Task.FromResult(0);
+            /* SMS confirmation extension */
+
         }
     }
 
     // This is useful if you do not want to tear down the database each time you run the application.
     // public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     // This example shows you how to create a new database if the Model changes
-    public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> 
+    public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
     {
-        protected override void Seed(ApplicationDbContext context) {
+        protected override void Seed(ApplicationDbContext context)
+        {
             InitializeIdentityForEF(context);
             base.Seed(context);
         }
 
         // Create Users with password=P@ssword2015 in the Admin and/or Member role        
-        public static void InitializeIdentityForEF(ApplicationDbContext db) {
+        public static void InitializeIdentityForEF(ApplicationDbContext db)
+        {
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "admin@free.fr";
@@ -121,13 +182,15 @@ namespace Cdf54.Ja.SignalR.Chat.Models
 
             //Create Role Admin if it does not exist
             var role = roleManager.FindByName(roleName);
-            if (role == null) {
+            if (role == null)
+            {
                 role = new IdentityRole(roleName);
                 var roleresult = roleManager.Create(role);
             }
 
             var user = userManager.FindByName(name);
-            if (user == null) {
+            if (user == null)
+            {
                 user = new ApplicationUser { UserName = pseudo, Email = name, Pseudo = pseudo };
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
@@ -135,7 +198,8 @@ namespace Cdf54.Ja.SignalR.Chat.Models
 
             // Add user admin to Role Admin if not already added
             var rolesForUser = userManager.GetRoles(user.Id);
-            if (!rolesForUser.Contains(role.Name)) {
+            if (!rolesForUser.Contains(role.Name))
+            {
                 var result = userManager.AddToRole(user.Id, role.Name);
             }
 
@@ -244,7 +308,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
 
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
-        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager) : 
+        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager) :
             base(userManager, authenticationManager) { }
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)

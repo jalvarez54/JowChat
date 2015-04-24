@@ -1,4 +1,6 @@
-﻿@model Cdf54.Ja.SignalR.Chat.Models.IndexViewModel
+﻿@using Microsoft.AspNet.Identity
+
+@model Cdf54.Ja.SignalR.Chat.Models.IndexViewModel
 @{
     ViewBag.Title = "Manage your account";
 }
@@ -11,10 +13,13 @@
             @Html.ActionLink("Change your profile", "ChangeProfile")
         </p>
         @*<p>
-            @Html.ActionLink("Change your Pseudo/UserName", "ChangePseudoUserName")
-        </p>*@
+                @Html.ActionLink("Change your Pseudo/UserName", "ChangePseudoUserName")
+            </p>*@
         <p>
             @Html.ActionLink("Change your photo", "ChangePhoto")
+        </p>
+        <p>
+            @Html.ActionLink("Remove my account", "RemoveAccount", "Manage", new { id = @User.Identity.GetUserId() }, null)
         </p>
         <p>
             @if (Model.HasPassword)
@@ -49,7 +54,7 @@
             <form method="post" action="/Manage/DisableTFA">
                 <p>
                     Two factor is currently enabled:
-                    <input type="submit" value="Disable" class="btn btn-default"/>
+                    <input type="submit" value="Disable" class="btn btn-default" />
                 </p>
             </form>
         }
@@ -58,7 +63,7 @@
             <form method="post" action="/Manage/EnableTFA">
                 <p>
                     Two factor is currently disabled:
-                    <input type="submit" value="Enable" class="btn btn-default"/>
+                    <input type="submit" value="Enable" class="btn btn-default" />
                 </p>
             </form>
         }
@@ -76,7 +81,7 @@
             <form method="post" action="/Manage/RememberBrowser">
                 <p>
                     Browser is curently not remembered for two factor:
-                    <input type="submit" value="Remember Browser" class="btn btn-default"/>
+                    <input type="submit" value="Remember Browser" class="btn btn-default" />
                 </p>
             </form>
         }

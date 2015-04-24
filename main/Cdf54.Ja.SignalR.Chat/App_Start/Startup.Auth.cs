@@ -5,6 +5,8 @@ using Microsoft.Owin.Security.Cookies;
 using Cdf54.Ja.SignalR.Chat.Models;
 using Owin;
 using System;
+using JA.UTILS.Helpers;
+using System.Security.Claims;
 
 namespace Cdf54.Ja.SignalR.Chat
 {
@@ -45,22 +47,50 @@ namespace Cdf54.Ja.SignalR.Chat
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-            // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            // Enable logging with third party login providers
+            var mio = new Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions
+            {
+                ClientId = Utils.GetAppSetting("MicrosoftClientId"),
+                ClientSecret = Utils.GetAppSetting("MicrosoftClientSecret"),
+                CallbackPath = new PathString("/signin-microsoft"),
+                Provider = new Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider
+                    {
+                        OnAuthenticated = (context) =>
+                            {
+                                context.Identity.AddClaim(new Claim(ClaimTypes.Authentication, context.Identity.AuthenticationType));
+                                context.Identity.AddClaim(new Claim(ClaimTypes.Name, context.Identity.FindFirstValue(ClaimTypes.Name)));
+                                return System.Threading.Tasks.Task.FromResult(0);
+                            }
+                    }
+            };
+            mio.Scope.Add("wl.basic");
+            mio.Scope.Add("wl.emails");
+            mio.Scope.Add("wl.birthday");
+            mio.Scope.Add("wl.postal_addresses");
+            app.UseMicrosoftAccountAuthentication(mio);
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            var tro = new Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions
+            {
+                ConsumerKey = Utils.GetAppSetting("TwitterConsumerKey"),
+                ConsumerSecret = Utils.GetAppSetting("TwitterConsumerSecret"),
+            };
+            app.UseTwitterAuthentication(tro);
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            var fao = new Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions
+            {
+                AppId = Utils.GetAppSetting("FaceBookAppId"),
+                AppSecret = Utils.GetAppSetting("FaceBookAppSecret"),
+            };
+            fao.Scope.Add("email");
+            fao.Scope.Add("user_birthday");
+            app.UseFacebookAuthentication(fao);
 
-            //app.UseGoogleAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseGoogleAuthentication(new Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions
+            {
+                ClientId = Utils.GetAppSetting("GoogleClientId"),
+                ClientSecret = Utils.GetAppSetting("GoogleClientSecret"),
+                CallbackPath = new PathString("/signin-google")
+            });
         }
     }
 }

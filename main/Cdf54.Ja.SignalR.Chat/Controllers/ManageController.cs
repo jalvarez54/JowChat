@@ -61,6 +61,70 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             return View(model);
         }
 
+        //
+        // GET: /Users/Delete/5
+        public async Task<ActionResult> RemoveAccount(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        //
+        // POST: /Users/Delete/5
+        [HttpPost, ActionName("RemoveAccount")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RemoveAccountConfirmed(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                }
+
+                var user = await UserManager.FindByIdAsync(id);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+
+                // Remove photo if exist before remove account
+                //if Photo exist and is not a gravatar
+                if ((user.PhotoUrl != null && !user.PhotoUrl.Contains("http://")))
+                {
+                    // Delete file if not the BlankPhoto.jpg and if we change for a gravatar
+                    if (!user.PhotoUrl.Contains("BlankPhoto.jpg"))
+                    {
+                        string fileToDelete = Path.GetFileName(user.PhotoUrl);
+
+                        var path = Path.Combine(Server.MapPath("~/Content/Avatars"), fileToDelete);
+                        FileInfo fi = new FileInfo(path);
+                        if (fi.Exists)
+                            fi.Delete();
+                    }
+                }
+                var result = await UserManager.DeleteAsync(user);
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("", result.Errors.First());
+                    return View();
+                }
+
+                AuthenticationManager.SignOut();
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+
         // GET: /Manage/ChangeProfile
         public ActionResult ChangeProfile(EditMessageID? message = null)
         {
