@@ -174,6 +174,8 @@
         <binding protocol="http" bindingInformation="*:80:www.jowchat.net" />
 - [10000] TODO RESPONSE: see code in AccountController/ExternalLoginConfirmation
     ==> done
+- 2015-04-24 COMMIT: Codeplex jowchat.codeplex.com (107373) Version 2.0.Alpha: ADD: Login confirmation ADD: External login
+- 2015-04-24 COMMIT: Codeplex jowchat.codeplex.com (107374) Secure web.config
 
 
 
