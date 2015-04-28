@@ -149,7 +149,10 @@
 - [xxxxx] ADD: Login with name and email
     http://anthonychu.ca/post/aspnet-identity-20---logging-in-with-email-or-username/
     ==>
-
+- [xxxxx]	asp.net login refused if email not confirmed
+    ==>
+- [10007]	Migrations folder on source code controller ?
+    ==> done
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -243,7 +246,11 @@
 - EXEC: Update-Database in staging
     Update-Database -Script -ConnectionString "data source=192.168.107.232;initial catalog=Cdf54.Ja.SignalR.Chat;Persist Security Info=True;User ID=cdf54projet;Password=p@ssword2014" -ConnectionProviderName System.Data.SqlClient
     ==> done
-- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (?) ADD: Claims + Show claims (user and admin mode)
+- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (107379) ADD: Claims + Show claims (user and admin mode)
+- [10007]	Migrations folder on source code controller ?
+	DELETE: this folder from source control
+    ==> done
+- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (?) DELETE: this folder from source control
 
 
 
