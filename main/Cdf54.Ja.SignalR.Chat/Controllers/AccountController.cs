@@ -74,7 +74,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
             // This doen't count login failures towards lockout only two factor authentication
             // To enable password failures to trigger lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Pseudo, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -159,7 +159,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 // pseudo instead of email for username
                 //var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Pseudo = model.Pseudo };
                 //Changed: [10005] MODIF: Use email for login and pseudo for usernameView
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Pseudo = model.Pseudo };
+                var user = new ApplicationUser { UserName = model.Pseudo, Email = model.Email, Pseudo = model.Pseudo };
 
                 /* Add extension */
                 if (model.UseGravatar == false)
@@ -464,12 +464,12 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                             {
                                 if (user.Claims.All(t => t.ClaimType != c.Type))
                                     await UserManager.AddClaimAsync(user.Id, c);
-                            } 
+                            }
                             return RedirectToLocal(returnUrl);
                         }
 
                     }
-                AddErrors(result);
+                    AddErrors(result);
                 }
                 else
                 {

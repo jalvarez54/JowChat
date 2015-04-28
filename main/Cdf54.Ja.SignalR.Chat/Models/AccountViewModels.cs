@@ -47,14 +47,14 @@ namespace Cdf54.Ja.SignalR.Chat.Models
 
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
-
         //[Required]
-        //[Display(Name = "Pseudo")]
-        //public string Pseudo { get; set; }
+        //[Display(Name = "Email")]
+        //[EmailAddress]
+        //public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Pseudo")]
+        public string Pseudo { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

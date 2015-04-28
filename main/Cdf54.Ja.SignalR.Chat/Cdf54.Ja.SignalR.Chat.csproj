@@ -346,6 +346,18 @@
     <Compile Include="Hubs\ContentProviders\ImageContentProvider.cs" />
     <Compile Include="Hubs\ContentProviders\DailyMotionContentProvider.cs" />
     <Compile Include="Hubs\ContentProviders\YouTubeContentProvider.cs" />
+    <Compile Include="Migrations\201504060829359_Photo.cs" />
+    <Compile Include="Migrations\201504060829359_Photo.Designer.cs">
+      <DependentUpon>201504060829359_Photo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504081313144_Pseudo.cs" />
+    <Compile Include="Migrations\201504081313144_Pseudo.Designer.cs">
+      <DependentUpon>201504081313144_Pseudo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504170818195_UseGravatar.cs" />
+    <Compile Include="Migrations\201504170818195_UseGravatar.Designer.cs">
+      <DependentUpon>201504170818195_UseGravatar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -365,6 +377,17 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201504060829359_Photo.resx">
+      <DependentUpon>201504060829359_Photo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504081313144_Pseudo.resx">
+      <DependentUpon>201504081313144_Pseudo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504170818195_UseGravatar.resx">
+      <DependentUpon>201504170818195_UseGravatar.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

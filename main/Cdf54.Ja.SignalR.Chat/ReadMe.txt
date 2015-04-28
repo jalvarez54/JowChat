@@ -140,8 +140,6 @@
 - [xxxxx] ADD: Yahoo and LinkedIn
     http://www.jerriepelser.com/blog/introducing-the-yahoo-linkedin-oauth-security-providers-for-owin
     ==> XXXX
-- [xxxxx] BUG: Pseudo is no more unique since change [10005] !
-    ==>
 - [xxxxx] ADD: Gravatar type in appsettings
     ==>
 - [xxxxx] BUG: Test again forgotpassword since change [10005]
@@ -152,6 +150,8 @@
 - [xxxxx]	asp.net login refused if email not confirmed
     ==>
 - [10007]	Migrations folder on source code controller ?
+    ==> done
+- [10008] BUG: Pseudo is no more unique since change [10005] !
     ==> done
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -248,9 +248,14 @@
     ==> done
 - 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (107379) ADD: Claims + Show claims (user and admin mode)
 - [10007]	Migrations folder on source code controller ?
-	DELETE: this folder from source control
+    DELETE: Migrations folder from source control
     ==> done
-- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (?) DELETE: this folder from source control
+- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (107381) DELETE: Migrations folder from source control
+- [10008] BUG: Pseudo is no more unique since change [10005] !
+	MODIF: Use pseudo for login and pseudo for usernameView
+	so pseudo and email must bee unique.
+    ==> done
+- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (?) MODIF: Use pseudo for login and pseudo for usernameView
 
 
 
