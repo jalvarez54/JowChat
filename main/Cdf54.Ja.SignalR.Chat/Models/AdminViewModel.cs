@@ -27,4 +27,12 @@ namespace Cdf54.Ja.SignalR.Chat.Models
 
         public IEnumerable<SelectListItem> RolesList { get; set; }
     }
+    // [10006] ADD: Show claims (user and admin mode)
+    public class UsersClaimsViewModel
+    {
+        public string Id { get; set; }
+
+        public IList<System.Security.Claims.Claim> CurrentClaims { get; set; }
+
+    }
 }

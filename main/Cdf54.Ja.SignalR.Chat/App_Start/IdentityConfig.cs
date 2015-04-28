@@ -31,7 +31,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
+                RequireUniqueEmail = true,
             };
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
@@ -138,6 +138,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
                 msg.To.Add(message.Destination);
 
                 await client.SendMailAsync(msg);
+                
             }
 
             //

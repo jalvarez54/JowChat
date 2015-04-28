@@ -1,0 +1,59 @@
+﻿@model IEnumerable<System.Security.Claims.Claim>
+
+@{
+    ViewBag.Title = "GetUserClaims";
+}
+
+<h2>List of Identity Claims</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Subject.Name
+        </th>
+        <th>
+            Claim Issuer
+        </th>
+        <th>
+            Claim OriginalIssuer
+        </th>
+        <th>
+            Claim Type
+        </th>
+        <th>
+            Claim value
+        </th>
+        <th>
+            Claim ValueType
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Issuer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OriginalIssuer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValueType)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -16,6 +16,12 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         public bool BrowserRemembered { get; set; }
     }
 
+    //[10006] ADD: Show claims (user and admin mode)
+    public class UserClaimsViewModel
+    {
+        public IList<System.Security.Claims.Claim> CurrentClaims { get; set; }
+
+    }
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }

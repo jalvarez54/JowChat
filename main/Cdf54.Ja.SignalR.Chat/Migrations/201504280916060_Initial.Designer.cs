@@ -7,13 +7,13 @@ namespace Cdf54.Ja.SignalR.Chat.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class UseGravatar : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UseGravatar));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201504170818195_UseGravatar"; }
+            get { return "201504280916060_Initial"; }
         }
         
         string IMigrationMetadata.Source

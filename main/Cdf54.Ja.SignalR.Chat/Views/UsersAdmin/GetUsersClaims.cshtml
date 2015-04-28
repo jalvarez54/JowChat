@@ -1,0 +1,55 @@
+﻿@model List<Cdf54.Ja.SignalR.Chat.Models.UsersClaimsViewModel>
+
+@{
+    ViewBag.Title = "GetUsersClaims";
+}
+
+<h2>List of Users Claims</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Claim Issuer
+        </th>
+        <th>
+            Claim OriginalIssuer
+        </th>
+        <th>
+            Claim Type
+        </th>
+        <th>
+            Claim value
+        </th>
+        <th>
+            Claim ValueType
+        </th>
+        <th>
+
+        </th>
+    </tr>
+    @foreach(var user in Model)
+    {
+        foreach (var item in user.CurrentClaims)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Issuer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OriginalIssuer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValueType)
+                </td>
+            </tr>
+        }
+    }
+
+</table>

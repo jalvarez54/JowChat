@@ -109,7 +109,7 @@
     ==> done UserAdminController line 169
 - EXEC: Update-Database in staging
     Update-Database -Script -ConnectionString "data source=192.168.107.232;initial catalog=Cdf54.Ja.SignalR.Chat;Persist Security Info=True;User ID=cdf54projet;Password=p@ssword2014" -ConnectionProviderName System.Data.SqlClient
-    ==> XXXX
+    ==> done
 - ADD: 2FA
     ==> done
 - ADD: Remove account by a user
@@ -118,16 +118,38 @@
     ==> done
 - ADD: External login
     ==> done
-- ADD: Claims
-    ==> XXXX
 - [10000] QUESTION: Why in ExternalLogin sub-system, "asp.net identity 2 sample" use the view ExternalLoginConfirmation.cshtml
     insteadof retreive informations (Email) from the provider.
     ==> done
 - [10001] Web.config protection
-    Use external files for appSettings, only "appSettings.config" is distributed on source control.
     ==> done
 - [10002] PB with email when using web.config email parameters thread exception
     ==> done
+- [10003] ADD: Claims
+    ==> done
+- [10004] ADD: Update external claims
+    ==> XXXX
+- [10005] MODIF: Use email for login and pseudo for usernameView
+    ==> done
+- [10006] ADD: Show claims (user and admin mode)
+    ==> XXXX
+- [xxxxx] ADD: Claim photo capability
+    http://blogs.msdn.com/b/webdev/archive/2013/10/16/get-more-information-from-social-providers-used-in-the-vs-2013-project-templates.aspx
+    http://www.jerriepelser.com/blog/get-the-twitter-profile-image-using-the-asp-net-identity
+    ==> XXXX
+- [xxxxx] ADD: Yahoo and LinkedIn
+    http://www.jerriepelser.com/blog/introducing-the-yahoo-linkedin-oauth-security-providers-for-owin
+    ==> XXXX
+- [xxxxx] BUG: Pseudo is no more unique since change [10005] !
+    ==>
+- [xxxxx] ADD: Gravatar type in appsettings
+    ==>
+- [xxxxx] BUG: Test again forgotpassword since change [10005]
+    ==>
+- [xxxxx] ADD: Login with name and email
+    http://anthonychu.ca/post/aspnet-identity-20---logging-in-with-email-or-username/
+    ==>
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,7 +186,6 @@
     http://blogs.msdn.com/b/webdev/archive/2012/08/15/oauth-openid-support-for-webforms-mvc-and-webpages.aspx
     Twitter https://apps.twitter.com/ ==> done
     FaceBook https://developers.facebook.com/ ==> done
-        http://blogs.msdn.com/b/webdev/archive/2013/10/16/get-more-information-from-social-providers-used-in-the-vs-2013-project-templates.aspx
     Google http://www.asp.net/mvc/overview/security/create-an-aspnet-mvc-5-app-with-facebook-and-google-oauth2-and-openid-sign-on ,
            https://developers.google.com/identity/ ,
            https://console.developers.google.com/project
@@ -178,15 +199,51 @@
 - [10000] TODO RESPONSE: see code in AccountController/ExternalLoginConfirmation
     ==> done
 - 2015-04-24 COMMIT: Codeplex jowchat.codeplex.com (107373) Version 2.0.Alpha: ADD: Login confirmation ADD: External login
+- [10001] Web.config protection
+    Use external files for appSettings, only "appSettings.config" is distributed on source control.
+==> done
 - 2015-04-24 COMMIT: Codeplex jowchat.codeplex.com (107374) Secure web.config
 - [10002] PB with email when using web.config email parameters thread exception
     http://blog.falafel.com/avoid-taskcanceledexception-sending-email-async/
     http://stackoverflow.com/questions/22797845/asp-net-identity-2-0-how-to-implement-iidentitymessageservice-to-do-async-smtp
     ==> done
-- 2015-04-24 COMMIT: Codeplex jowchat.codeplex.com (?) Secure Mail settings
-
-
-
+- 2015-04-24 COMMIT: Codeplex jowchat.codeplex.com (107375) Secure Mail settings
+- [10003] ADD: Claims
+    http://blogs.msdn.com/b/webdev/archive/2013/06/27/introducing-asp-net-identity-membership-system-for-asp-net-applications.aspx
+    https://github.com/rustd/AspnetIdentitySample
+    http://blogs.msdn.com/b/webdev/archive/2013/10/16/get-more-information-from-social-providers-used-in-the-vs-2013-project-templates.aspx
+    BUG: @Html.AntiForgeryToken() La séquence contient plusieurs éléments correspondants. Sequence contains more than one matching element in _LoginPartial.cshtml
+        http://stackoverflow.com/questions/20614954/mvc5-antiforgerytoken-claims-sequence-contains-more-than-one-element
+        http://bartwullems.blogspot.fr/2013/09/aspnet-mvc-4-error-when-using-anti.html
+        The problem seem to appear when I store the claims (?)
+        Seem to be solved if i delete claims of same type (?)
+        [10004]SOLVED: In AccountControlle/ExternalLoginConfirmation add !(userInfoClaim.Type == ClaimTypes.NameIdentifier)
+    ==> done
+- [10004] ADD: Update external claims
+    http://stackoverflow.com/questions/21960511/update-user-claim-not-taking-effect-why
+    See AccountController/ExternalLoginCallback
+    BUG: Changing one value (ex: gender) then see 2 genders row in database old and new one, new updated_time is stored each time
+        seem UserManager.RemoveClaim dont remove claim
+    ==> XXXX
+- [10005] MODIF: Use email for login and pseudo for usernameView
+    See /Account/Register
+    ==> done
+- [10006] ADD: Show claims (user and admin mode)
+    for "user"
+    ADD: ManageController/GetUserClaims, Manage/GetUserClaims View
+        My version (show stored claims)
+        This version http://www.apress.com/files/extra/ASP_NET_Identity_Chapters.pdf (show identity claims)
+    ==> OK
+    for "admin"
+    ADD: UserAdminController/GetUsersClaims, UserAdmin/GetUsersClaims View
+    ==> Exception in UserAdminController/GetUsersClaims
+        var userClaims = await UserManager.GetClaimsAsync(user.Id);
+        Un DataReader associé à cette Command est déjà ouvert. Il doit d'abord être fermé.
+    ==> XXXX
+- EXEC: Update-Database in staging
+    Update-Database -Script -ConnectionString "data source=192.168.107.232;initial catalog=Cdf54.Ja.SignalR.Chat;Persist Security Info=True;User ID=cdf54projet;Password=p@ssword2014" -ConnectionProviderName System.Data.SqlClient
+    ==> done
+- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (?) ADD: Claims + Show claims (user and admin mode)
 
 
 

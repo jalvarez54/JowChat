@@ -5,6 +5,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using Microsoft.AspNet.Identity.Owin;
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Security.Claims;
+
 namespace JA.UTILS.Helpers
 {
     public static class MyHtmlHelpers
@@ -21,4 +27,5 @@ namespace JA.UTILS.Helpers
             return MvcHtmlString.Create(builder.ToString(TagRenderMode.SelfClosing));
         }
     }
+
 }

@@ -74,7 +74,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
             // This doen't count login failures towards lockout only two factor authentication
             // To enable password failures to trigger lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Pseudo, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -158,7 +158,8 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             {
                 // pseudo instead of email for username
                 //var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Pseudo = model.Pseudo };
-                var user = new ApplicationUser { UserName = model.Pseudo, Email = model.Email, Pseudo = model.Pseudo };
+                //Changed: [10005] MODIF: Use email for login and pseudo for usernameView
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Pseudo = model.Pseudo };
 
                 /* Add extension */
                 if (model.UseGravatar == false)
@@ -368,21 +369,34 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    var externalIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
-                    if (externalIdentity != null)
-                    {
-                        // Retrieve the existing claims for the user and add the FacebookAccessTokenClaim 
-                        //var currentClaims = await UserManager.GetClaimsAsync(externalIdentity.GetUserId());
-                        ////var providerClaim = externalIdentity.FindFirstValue("provider") ?? string.Empty;
-                        //await StoreClaim("provider", User.Identity.GetUserId(), externalIdentity);
-                        //await StoreClaim("FacebookId", User.Identity.GetUserId(), externalIdentity);
-                        //await StoreClaim("image", User.Identity.GetUserId(), externalIdentity);
-                        //await StoreClaim("link", User.Identity.GetUserId(), externalIdentity);
-                        //await StoreClaim(ClaimTypes.Name, User.Identity.GetUserId(), externalIdentity);
-                        //await StoreClaim(ClaimTypes.Email, User.Identity.GetUserId(), externalIdentity);
+                    ////[10004] ADD: Update external claims
+                    //var user = await UserManager.FindAsync(loginInfo.Login);
+                    //foreach (var userInfoClaim in loginInfo.ExternalIdentity.Claims)
+                    //    if (!(userInfoClaim.Type == ClaimTypes.NameIdentifier))
+                    //    {
+                    //        await UserManager.RemoveClaimAsync(user.Id, userInfoClaim);
+                    //    }
+                    //foreach (var userInfoClaim in loginInfo.ExternalIdentity.Claims)
+                    //    if (!(userInfoClaim.Type == ClaimTypes.NameIdentifier))
+                    //    {
+                    //        await UserManager.AddClaimAsync(user.Id, userInfoClaim);
+                    //        ApplicationUser appUser = await UserManager.FindByIdAsync(user.Id);
+                    //        appUser.Claims.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim()
+                    //        {
+                    //            UserId = appUser.Id,
+                    //            ClaimType = userInfoClaim.Type,
+                    //            ClaimValue = userInfoClaim.Value,
+                    //        });
+                    //    }
 
-                        //var addedClaims = await UserManager.GetClaimsAsync(User.Identity.GetUserId());
-                    }
+                    //var user = await UserManager.FindAsync(loginInfo.Login);  
+                    //const string ignoreClaim = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims";
+                    //foreach (var c in loginInfo.ExternalIdentity.Claims.Where(c => !c.Type.StartsWith(ignoreClaim)))
+                    //{
+                    //    if (user.Claims.All(t => t.ClaimType != c.Type))
+                    //        await UserManager.AddClaimAsync(user.Id, c);
+                    //} 
+
                     //http://www.asp.net/mvc/overview/security/preventing-open-redirection-attacks
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
@@ -418,9 +432,12 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
+
+
+
                 // [10000] Added
                 ViewBag.LoginProvider = info.Login.LoginProvider;
-                // 10000 Added + Twitter dont provide Email
+                // [10000] Added + Twitter dont provide Email
                 if (model.Email == info.Email || info.Login.LoginProvider == "Twitter")
                 {
                     // [10000] Change model.Email by info.DefaultUserName (no because user may have same pseudo)
@@ -433,9 +450,24 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                         result = await UserManager.AddLoginAsync(user.Id, info.Login);
                         if (result.Succeeded)
                         {
-                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                            //////[10003] ADD: Claims
+                            //////Converting Claims added in OnAuthenticated callback to ApplicationClaim objects to store them in Db
+                            //foreach (var userInfoClaim in info.ExternalIdentity.Claims)
+                            //    //[10004] To prevent exception in @Html.AntiForgeryToken() _LoginPartial
+                            //   if(!(userInfoClaim.Type == ClaimTypes.NameIdentifier)) UserManager.AddClaim(user.Id, userInfoClaim);
+                            await SignInManager.SignInAsync(user, isPersistent: true, rememberBrowser: false);
+
+                            const string ignoreClaim = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims";
+                            foreach (var c in info.ExternalIdentity.Claims.Where(c => !c.Type.StartsWith(ignoreClaim)))
+                            {
+                                if (user.Claims.All(t => t.ClaimType != c.Type))
+                                    await UserManager.AddClaimAsync(user.Id, c);
+                            } 
                             return RedirectToLocal(returnUrl);
                         }
+
                     }
                 AddErrors(result);
                 }

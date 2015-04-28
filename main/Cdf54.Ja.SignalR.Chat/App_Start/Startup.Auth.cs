@@ -48,49 +48,106 @@ namespace Cdf54.Ja.SignalR.Chat
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Enable logging with third party login providers
+
+            ///
+            /// MICROSOFT
+            ///
+            //[10003] ADD: Claims
+            var microsoftProvider = new Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider
+            {
+                OnAuthenticated = (context) =>
+                {
+                    foreach (var claim in context.User)
+                    {
+                        var claimType = string.Format("urn:microsoft:{0}", claim.Key);
+                        string claimValue = claim.Value.ToString();
+                        if (!context.Identity.HasClaim(claimType, claimValue))
+                            context.Identity.AddClaim(new System.Security.Claims.Claim(claimType, claimValue, "XmlSchemaString", "Microsoft"));
+                    }
+                    return System.Threading.Tasks.Task.FromResult(0);
+                }
+
+            };
             var mio = new Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions
             {
                 ClientId = Utils.GetAppSetting("MicrosoftClientId"),
                 ClientSecret = Utils.GetAppSetting("MicrosoftClientSecret"),
                 CallbackPath = new PathString("/signin-microsoft"),
-                Provider = new Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider
-                    {
-                        OnAuthenticated = (context) =>
-                            {
-                                context.Identity.AddClaim(new Claim(ClaimTypes.Authentication, context.Identity.AuthenticationType));
-                                context.Identity.AddClaim(new Claim(ClaimTypes.Name, context.Identity.FindFirstValue(ClaimTypes.Name)));
-                                return System.Threading.Tasks.Task.FromResult(0);
-                            }
-                    }
+                Provider = microsoftProvider,
             };
-            mio.Scope.Add("wl.basic");
-            mio.Scope.Add("wl.emails");
-            mio.Scope.Add("wl.birthday");
-            mio.Scope.Add("wl.postal_addresses");
+            //mio.Scope.Add("wl.basic");
+            //mio.Scope.Add("wl.emails");
+            //mio.Scope.Add("wl.birthday");
+            //mio.Scope.Add("wl.postal_addresses");
             app.UseMicrosoftAccountAuthentication(mio);
 
-            var tro = new Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions
+            ///
+            /// TWITTER
+            ///
+            //[10003] ADD: Claims
+            app.UseTwitterAuthentication( new Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions
             {
                 ConsumerKey = Utils.GetAppSetting("TwitterConsumerKey"),
                 ConsumerSecret = Utils.GetAppSetting("TwitterConsumerSecret"),
-            };
-            app.UseTwitterAuthentication(tro);
+            });
 
+            ///
+            /// FACEBOOK
+            ///
+            //[10003] ADD: Claims
+            var facebookProvider = new Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider
+            {
+                OnAuthenticated = (context) =>
+                {
+                    foreach (var claim in context.User)
+                    {
+                        var claimType = string.Format("urn:facebook:{0}", claim.Key);
+                        string claimValue = claim.Value.ToString();
+                        if (!context.Identity.HasClaim(claimType, claimValue))
+                            context.Identity.AddClaim(new System.Security.Claims.Claim(claimType, claimValue, "XmlSchemaString", "Facebook"));
+                    }
+                    return System.Threading.Tasks.Task.FromResult(0);
+                }
+            };
             var fao = new Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions
             {
                 AppId = Utils.GetAppSetting("FaceBookAppId"),
                 AppSecret = Utils.GetAppSetting("FaceBookAppSecret"),
+                Provider = facebookProvider,
             };
-            fao.Scope.Add("email");
-            fao.Scope.Add("user_birthday");
+            //fao.Scope.Add("email");
+            //fao.Scope.Add("user_birthday");
+            //fao.Scope.Add("friends_about_me");
+            //fao.Scope.Add("friends_photos");
             app.UseFacebookAuthentication(fao);
 
-            app.UseGoogleAuthentication(new Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions
+            ///
+            /// GOOGLE
+            ///
+            //[10003] ADD: Claims
+            var googleProvider = new Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationProvider
+            {
+                OnAuthenticated = (context) =>
+                {
+                    foreach (var claim in context.User)
+                    {
+                        var claimType = string.Format("urn:google:{0}", claim.Key);
+                        string claimValue = claim.Value.ToString();
+                        if (!context.Identity.HasClaim(claimType, claimValue))
+                            context.Identity.AddClaim(new System.Security.Claims.Claim(claimType, claimValue, "XmlSchemaString", "Google"));
+                    }
+                    return System.Threading.Tasks.Task.FromResult(0);
+                }
+            };
+            var goo = new Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions
             {
                 ClientId = Utils.GetAppSetting("GoogleClientId"),
                 ClientSecret = Utils.GetAppSetting("GoogleClientSecret"),
-                CallbackPath = new PathString("/signin-google")
-            });
+                CallbackPath = new PathString("/signin-google"),
+                Provider = googleProvider,
+            };
+            app.UseGoogleAuthentication(goo);
+
         }
     }
 }

@@ -59,6 +59,20 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             return View(await UserManager.Users.ToListAsync());
         }
 
+        // [10006] ADD: Show claims (user and admin mode)
+        // GET: /Manage/GetClaims
+        public async Task<ActionResult> GetUsersClaims()
+        {
+            var model = new List<UsersClaimsViewModel>();
+
+            var users = UserManager.Users;
+            foreach(var user in users){
+                var userClaims = await UserManager.GetClaimsAsync(user.Id);
+                model.Add(new UsersClaimsViewModel() { Id = user.Id, CurrentClaims = userClaims });
+            }
+            return View(model);
+        }
+
         //
         // GET: /Users/Details/5
         public async Task<ActionResult> Details(string id)

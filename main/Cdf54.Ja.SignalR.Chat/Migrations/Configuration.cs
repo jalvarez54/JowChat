@@ -10,8 +10,6 @@ namespace Cdf54.Ja.SignalR.Chat.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            //AutomaticMigrationDataLossAllowed = false; 
-            ContextKey = "Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext";
         }
 
         protected override void Seed(Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext context)

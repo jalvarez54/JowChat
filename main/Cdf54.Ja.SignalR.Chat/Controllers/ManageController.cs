@@ -61,6 +61,33 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             return View(model);
         }
 
+
+        // - [10006] ADD: Show claims (user and admin mode)
+        // GET: /Manage/GetClaims
+        public async Task<ActionResult> GetUserClaims()
+        {
+            //Version: Mine (show stored claims)
+            var model = await UserManager.GetClaimsAsync(User.Identity.GetUserId());
+            //var model = new UserClaimsViewModel() { CurrentClaims = userClaims };
+            return View(model);
+        }
+
+        // - [10006] ADD: Show claims (user and admin mode)
+        // GET: /Manage/GetClaims
+        public ActionResult GetUserIdentityClaims()
+        {
+            //Version: http://www.apress.com/files/extra/ASP_NET_Identity_Chapters.pdf (show identity claims)
+            System.Security.Claims.ClaimsIdentity ident = HttpContext.User.Identity as System.Security.Claims.ClaimsIdentity;
+            if (ident == null)
+            {
+                return View("Error", new string[] { "No claims available" });
+            }
+            else
+            {
+                return View(ident.Claims);
+            }
+        }
+
         //
         // GET: /Users/Delete/5
         public async Task<ActionResult> RemoveAccount(string id)
@@ -229,7 +256,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 }
                 if (model.IsNoPhotoChecked)
                 {
-                    var path =  Path.Combine(HttpContext.Request.ApplicationPath, "/Content/Avatars/BlankPhoto.jpg");
+                    var path = Path.Combine(HttpContext.Request.ApplicationPath, "/Content/Avatars/BlankPhoto.jpg");
                     model.PhotoUrl = path;
                 }
                 else
@@ -239,7 +266,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 if (model.UseGravatar == true)
                 {
                     model.PhotoUrl = JA.UTILS.Helpers.Utils.GetGravatarUrlForAddress(user.Email);
-               }
+                }
                 user.PhotoUrl = model.PhotoUrl;
                 user.UseGravatar = model.UseGravatar;
                 await UserManager.UpdateAsync(user);

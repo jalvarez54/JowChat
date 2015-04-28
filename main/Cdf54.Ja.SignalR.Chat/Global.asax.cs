@@ -14,6 +14,9 @@ namespace Cdf54.Ja.SignalR.Chat
         {
             System.Diagnostics.Trace.TraceInformation("Global.asax: Method{0}", "Application_Start");
 
+            //System.Web.Helpers.AntiForgeryConfig.UniqueClaimTypeIdentifier = System.Security.Claims.ClaimTypes.Email;
+            //System.Web.Helpers.AntiForgeryConfig.UniqueClaimTypeIdentifier = System.Security.Claims.ClaimTypes.NameIdentifier;
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

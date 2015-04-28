@@ -228,6 +228,9 @@
     <Content Include="Views\Manage\ChangeProfile.cshtml" />
     <Content Include="Views\Manage\ChangePseudoUserName.cshtml" />
     <Content Include="Views\Manage\RemoveAccount.cshtml" />
+    <Content Include="Views\Manage\GetUserIdentityClaims.cshtml" />
+    <Content Include="Views\UsersAdmin\GetUsersClaims.cshtml" />
+    <Content Include="Views\Manage\GetUserClaims.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -343,19 +346,13 @@
     <Compile Include="Hubs\ContentProviders\ImageContentProvider.cs" />
     <Compile Include="Hubs\ContentProviders\DailyMotionContentProvider.cs" />
     <Compile Include="Hubs\ContentProviders\YouTubeContentProvider.cs" />
-    <Compile Include="Migrations\201504060829359_Photo.cs" />
-    <Compile Include="Migrations\201504060829359_Photo.Designer.cs">
-      <DependentUpon>201504060829359_Photo.cs</DependentUpon>
+    <Compile Include="Migrations\201504280916060_Initial.cs" />
+    <Compile Include="Migrations\201504280916060_Initial.Designer.cs">
+      <DependentUpon>201504280916060_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201504081313144_Pseudo.cs" />
-    <Compile Include="Migrations\201504081313144_Pseudo.Designer.cs">
-      <DependentUpon>201504081313144_Pseudo.cs</DependentUpon>
+    <Compile Include="Migrations\Configuration.cs">
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Migrations\201504170818195_UseGravatar.cs" />
-    <Compile Include="Migrations\201504170818195_UseGravatar.Designer.cs">
-      <DependentUpon>201504170818195_UseGravatar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ChatAdminViewModel.cs" />
@@ -374,14 +371,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201504060829359_Photo.resx">
-      <DependentUpon>201504060829359_Photo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504081313144_Pseudo.resx">
-      <DependentUpon>201504081313144_Pseudo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504170818195_UseGravatar.resx">
-      <DependentUpon>201504170818195_UseGravatar.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504280916060_Initial.resx">
+      <DependentUpon>201504280916060_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
