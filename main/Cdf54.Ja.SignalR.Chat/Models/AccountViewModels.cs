@@ -52,9 +52,14 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         //[EmailAddress]
         //public string Email { get; set; }
 
+        //[Required]
+        //[Display(Name = "Pseudo")]
+        //public string Pseudo { get; set; }
+
+        //[10009] ADD: Login with name and email
         [Required]
-        [Display(Name = "Pseudo")]
-        public string Pseudo { get; set; }
+        [Display(Name = "Pseudo or Email")]
+        public string PseudoOrEmail { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

@@ -71,10 +71,23 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             {
                 return View(model);
             }
+            //[10009] ADD: Login with name and email
+            var username = model.PseudoOrEmail;
+            if (model.PseudoOrEmail.Contains("@"))
+            {
+                // Search UserName for that Email
+                var userForEmail = await UserManager.FindByEmailAsync(model.PseudoOrEmail);
+                if (userForEmail != null)
+                {
+                    username = userForEmail.UserName;
+                }
+            }
+            //[10009]
 
             // This doen't count login failures towards lockout only two factor authentication
             // To enable password failures to trigger lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Pseudo, model.Password, model.RememberMe, shouldLockout: false);
+            //var result = await SignInManager.PasswordSignInAsync(model.Pseudo, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -443,7 +456,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                     // [10000] Change model.Email by info.DefaultUserName (no because user may have same pseudo)
                     //var user = new ApplicationUser { UserName = info.DefaultUserName, Email = model.Email };
                     // so change change currentUser.UserName by currentUser.Pseudo in _LoginPartial
-                    var user = new ApplicationUser { Pseudo = info.DefaultUserName, UserName = model.Email, Email = model.Email };
+                    var user = new ApplicationUser { Pseudo = info.DefaultUserName, UserName = info.DefaultUserName, Email = model.Email };
                     var result = await UserManager.CreateAsync(user);
                     if (result.Succeeded)
                     {
@@ -500,6 +513,9 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         {
             return View();
         }
+
+        #region MyExtensionMethods
+        #endregion
 
         #region Helpers
         // Used for XSRF protection when adding external logins

@@ -30,7 +30,9 @@ namespace JA.UTILS.Helpers
             sbResult.Append(HashString(address));
             sbResult.Append("?");
             // https://ja.gravatar.com/site/implement/images/
-            sbResult.Append("d=wavatar");
+            string defaultGravatarImageType = GetAppSetting("DefaultGravatarImageType");
+            sbResult.Append("d=");
+            sbResult.Append(defaultGravatarImageType);
             sbResult.Append("&");
             sbResult.Append("s=100");
 

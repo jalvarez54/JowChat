@@ -14,10 +14,11 @@
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Pseudo, new { @class = "col-md-2 control-label" })
+                    @*[10009] ADD: Login with name and email*@
+                    @Html.LabelFor(m => m.PseudoOrEmail, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Pseudo, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Pseudo, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(m => m.PseudoOrEmail, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.PseudoOrEmail, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">

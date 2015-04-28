@@ -140,12 +140,7 @@
 - [xxxxx] ADD: Yahoo and LinkedIn
     http://www.jerriepelser.com/blog/introducing-the-yahoo-linkedin-oauth-security-providers-for-owin
     ==> XXXX
-- [xxxxx] ADD: Gravatar type in appsettings
-    ==>
 - [xxxxx] BUG: Test again forgotpassword since change [10005]
-    ==>
-- [xxxxx] ADD: Login with name and email
-    http://anthonychu.ca/post/aspnet-identity-20---logging-in-with-email-or-username/
     ==>
 - [xxxxx]	asp.net login refused if email not confirmed
     ==>
@@ -153,7 +148,10 @@
     ==> done
 - [10008] BUG: Pseudo is no more unique since change [10005] !
     ==> done
-
+- [10009] ADD: Login with name and email
+    ==> done
+- [10010] ADD: Gravatar type in appsettings
+    ==> done
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -252,10 +250,16 @@
     ==> done
 - 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (107381) DELETE: Migrations folder from source control
 - [10008] BUG: Pseudo is no more unique since change [10005] !
-	MODIF: Use pseudo for login and pseudo for usernameView
-	so pseudo and email must bee unique.
+    MODIF: Use pseudo for login and pseudo for usernameView
+    so pseudo and email must bee unique.
     ==> done
-- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (?) MODIF: Use pseudo for login and pseudo for usernameView
+- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (107382) MODIF: Use pseudo for login and pseudo for usernameView
+- [10009] ADD: Login with name and email
+    http://anthonychu.ca/post/aspnet-identity-20---logging-in-with-email-or-username/
+    ==> done
+- [10010] ADD: Gravatar type in appsettings
+    ==> done
+- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (?) [10009] ADD: Login with name and email
 
 
 
