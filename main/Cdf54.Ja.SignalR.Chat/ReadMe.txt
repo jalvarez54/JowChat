@@ -132,18 +132,11 @@
 - [10005] MODIF: Use email for login and pseudo for usernameView
     ==> done
 - [10006] ADD: Show claims (user and admin mode)
-    ==> XXXX
+    ==> doXX
 - [xxxxx] ADD: Claim photo capability
     http://blogs.msdn.com/b/webdev/archive/2013/10/16/get-more-information-from-social-providers-used-in-the-vs-2013-project-templates.aspx
     http://www.jerriepelser.com/blog/get-the-twitter-profile-image-using-the-asp-net-identity
-    ==> XXXX
-- [xxxxx] ADD: Yahoo and LinkedIn
-    http://www.jerriepelser.com/blog/introducing-the-yahoo-linkedin-oauth-security-providers-for-owin
-    ==> XXXX
-- [xxxxx] BUG: Test again forgotpassword since change [10005]
-    ==>
-- [xxxxx]	asp.net login refused if email not confirmed
-    ==>
+    ==> doXX
 - [10007]	Migrations folder on source code controller ?
     ==> done
 - [10008] BUG: Pseudo is no more unique since change [10005] !
@@ -152,6 +145,13 @@
     ==> done
 - [10010] ADD: Gravatar type in appsettings
     ==> done
+- [10011] BUG: Test again forgotpassword since change [10005]
+    ==> OK
+- [xxxxx] ADD: Yahoo and LinkedIn
+    http://www.jerriepelser.com/blog/introducing-the-yahoo-linkedin-oauth-security-providers-for-owin
+    ==> XXXX
+- [xxxxx]	asp.net login refused if email not confirmed
+    ==>
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,6 +193,7 @@
     ==> done
     Microsoft: http://www.asp.net/web-api/overview/security/external-authentication-services#MICROSOFT
         https://msdn.microsoft.com/fr-fr/library/hh243646.aspx
+        http://go.microsoft.com/fwlink/?LinkID=144070
     ==> done
   [9999] http://blogs.msdn.com/b/webdev/archive/2012/09/19/configuring-your-asp-net-application-for-microsoft-oauth-account.aspx
         with www.jowchat.net url in host file and iisExpress applicationHost.config modification
@@ -259,7 +260,10 @@
     ==> done
 - [10010] ADD: Gravatar type in appsettings
     ==> done
-- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (?) [10009] ADD: Login with name and email
+- 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (107383) [10009] ADD: Login with name and email
+- [10011] BUG: Test again forgotpassword since change [10005]
+    ==> OK
+- 2015-04-29 COMMIT: Codeplex jowchat.codeplex.com (?) [10011] BUG: Test again forgotpassword since change [10005]
 
 
 

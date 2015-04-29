@@ -115,7 +115,7 @@ namespace Cdf54.Ja.SignalR.Chat
                 AppSecret = Utils.GetAppSetting("FaceBookAppSecret"),
                 Provider = facebookProvider,
             };
-            //fao.Scope.Add("email");
+            fao.Scope.Add("email");
             //fao.Scope.Add("user_birthday");
             //fao.Scope.Add("friends_about_me");
             //fao.Scope.Add("friends_photos");

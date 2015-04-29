@@ -45,3 +45,7 @@ Web.Debug.config
 Web.Release.config
 \main\Cdf54.Ja.SignalR.Chat\App_Data
 \main\packages
+\main\Cdf54.Ja.SignalR.Chat\Migrations
+\main\Cdf54.Ja.SignalR.Chat\Migrations-localhost
+\main\Cdf54.Ja.SignalR.Chat\Migrations-192
+\main\Cdf54.Ja.SignalR.Chat\Migrations-89
