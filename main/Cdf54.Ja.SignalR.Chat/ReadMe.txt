@@ -147,11 +147,22 @@
     ==> done
 - [10011] BUG: Test again forgotpassword since change [10005]
     ==> OK
+- [10012]	asp.net login refused if email not confirmed
+    ==> done
 - [xxxxx] ADD: Yahoo and LinkedIn
     http://www.jerriepelser.com/blog/introducing-the-yahoo-linkedin-oauth-security-providers-for-owin
     ==> XXXX
-- [xxxxx]	asp.net login refused if email not confirmed
+- [xxxxx]	Check email when it's changed in "change profile"
     ==>
+- [xxxxx]	PB: Migration files VS dev env
+    http://robertgreiner.com/2012/05/using-entity-framework-database-migrations-to-update-a-remote-database/
+    http://blog.oneunicorn.com/2013/05/28/database-initializer-and-migrations-seed-methods/
+    ==>
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -263,8 +274,12 @@
 - 2015-04-28 COMMIT: Codeplex jowchat.codeplex.com (107383) [10009] ADD: Login with name and email
 - [10011] BUG: Test again forgotpassword since change [10005]
     ==> OK
-- 2015-04-29 COMMIT: Codeplex jowchat.codeplex.com (?) [10011] BUG: Test again forgotpassword since change [10005]
-
+- 2015-04-29 COMMIT: Codeplex jowchat.codeplex.com (107385) [10011] BUG: Test again forgotpassword since change [10005]
+- [10012]	asp.net login refused if email not confirmed
+    http://stackoverflow.com/questions/22153921/prevent-login-when-emailconfirmed-is-false
+    See AccountController/Login
+    ==> done
+- 2015-04-30 COMMIT: Codeplex jowchat.codeplex.com (?) [10012]	asp.net login refused if email not confirmed
 
 
 ////////////////////////

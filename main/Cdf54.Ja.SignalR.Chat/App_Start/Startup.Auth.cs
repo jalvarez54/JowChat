@@ -75,10 +75,10 @@ namespace Cdf54.Ja.SignalR.Chat
                 CallbackPath = new PathString("/signin-microsoft"),
                 Provider = microsoftProvider,
             };
-            //mio.Scope.Add("wl.basic");
-            //mio.Scope.Add("wl.emails");
-            //mio.Scope.Add("wl.birthday");
-            //mio.Scope.Add("wl.postal_addresses");
+            mio.Scope.Add("wl.basic");
+            mio.Scope.Add("wl.emails");
+            mio.Scope.Add("wl.birthday");
+            mio.Scope.Add("wl.postal_addresses");
             app.UseMicrosoftAccountAuthentication(mio);
 
             ///
@@ -116,9 +116,9 @@ namespace Cdf54.Ja.SignalR.Chat
                 Provider = facebookProvider,
             };
             fao.Scope.Add("email");
-            //fao.Scope.Add("user_birthday");
-            //fao.Scope.Add("friends_about_me");
-            //fao.Scope.Add("friends_photos");
+            fao.Scope.Add("user_birthday");
+            fao.Scope.Add("friends_about_me");
+            fao.Scope.Add("friends_photos");
             app.UseFacebookAuthentication(fao);
 
             ///

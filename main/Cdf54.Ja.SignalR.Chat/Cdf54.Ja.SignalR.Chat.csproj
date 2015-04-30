@@ -217,6 +217,7 @@
     <Content Include="App_Settings\appSettings-Debug.config" />
     <Content Include="App_Settings\MailSettings.config" />
     <Content Include="App_Settings\MailSettings-Common.config" />
+    <None Include="Properties\PublishProfiles\CDF54 VM from Home Temp Release.pubxml" />
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Chat\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Articles\_Specifications.cshtml" />
@@ -359,6 +360,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Migrations-localhost\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>

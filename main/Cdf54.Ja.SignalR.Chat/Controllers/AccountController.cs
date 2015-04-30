@@ -71,6 +71,17 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             {
                 return View(model);
             }
+            //[10012]	asp.net login refused if email not confirmed
+            var user = await UserManager.FindByNameAsync(model.PseudoOrEmail);
+            if (user != null)
+                {
+                    if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                    {
+                        ModelState.AddModelError("", "YOU NEED TO CONFIRM YOUR EMAIL");
+                        return View(model);
+                    }
+                }
+            //[10012]
             //[10009] ADD: Login with name and email
             var username = model.PseudoOrEmail;
             if (model.PseudoOrEmail.Contains("@"))
