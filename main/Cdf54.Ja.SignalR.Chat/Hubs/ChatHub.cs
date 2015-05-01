@@ -463,7 +463,7 @@ namespace Cdf54.Ja.SignalR.Chat.Hubs
         private void ChatAdminInit()
         {
             /// Search for an admin.
-            var AdminUsers = ConnectedUsers.Where(x => x.UserName.Contains(System.Configuration.ConfigurationManager.AppSettings["Administrator"].ToString()));
+            var AdminUsers = ConnectedUsers.Where(x => x.UserName.Contains(JA.UTILS.Helpers.Utils.GetAppSetting("AdminName")));
             if (AdminUsers != null)
             {
                 List<ChatAdminViewModel> AdminTableInfos = new List<ChatAdminViewModel>();

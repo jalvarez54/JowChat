@@ -174,7 +174,6 @@
     <Content Include="Content\app\Diapositive7.PNG" />
     <Content Include="Content\app\Spittoon.mp3" />
     <Content Include="Content\Avatars\BlankPhoto.jpg" />
-    <Content Include="Content\Avatars\preview.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -347,6 +346,27 @@
     <Compile Include="Hubs\ContentProviders\ImageContentProvider.cs" />
     <Compile Include="Hubs\ContentProviders\DailyMotionContentProvider.cs" />
     <Compile Include="Hubs\ContentProviders\YouTubeContentProvider.cs" />
+    <Compile Include="Migrations-localhost\201504060829359_Photo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Migrations-localhost\201504060829359_Photo.Designer.cs">
+      <DependentUpon>201504060829359_Photo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations-localhost\201504081313144_Pseudo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Migrations-localhost\201504081313144_Pseudo.Designer.cs">
+      <DependentUpon>201504081313144_Pseudo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations-localhost\201504170818195_UseGravatar.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Migrations-localhost\201504170818195_UseGravatar.Designer.cs">
+      <DependentUpon>201504170818195_UseGravatar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations-localhost\Configuration.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ChatAdminViewModel.cs" />
@@ -360,11 +380,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Migrations-localhost\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations-localhost\201504060829359_Photo.resx">
+      <DependentUpon>201504060829359_Photo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations-localhost\201504081313144_Pseudo.resx">
+      <DependentUpon>201504081313144_Pseudo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations-localhost\201504170818195_UseGravatar.resx">
+      <DependentUpon>201504170818195_UseGravatar.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

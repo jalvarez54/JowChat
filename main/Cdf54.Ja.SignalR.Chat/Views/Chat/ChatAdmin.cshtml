@@ -109,7 +109,13 @@
                                 <li>AppPath: <span id="spanAppPath"></span></li>
                                 <li>@MyRazorHelpers.AdminInformations()</li>
                                 <li>IIS Virtual path: <span id="spanIISVirtualPath"></span></li>
-                                <li>HttpContext.Current.Request.ApplicationPath: @HttpContext.Current.Request.ApplicationPath</li>
+                                @{
+                                    string vPath = HttpContext.Current.Request.ApplicationPath;
+                                    <li>HttpContext.Current.Request.ApplicationPath: @HttpContext.Current.Request.ApplicationPath</li>
+                                    <li>Path.Combine(HttpContext.Current.Request.ApplicationPath, "/Content/Avatars/BlankPhoto.jpg") @vPath: @Path.Combine(vPath, "/Content/Avatars/BlankPhoto.jpg")</li>
+                                }
+                                <li>HttpRuntime.AppDomainAppVirtualPath: @HttpRuntime.AppDomainAppVirtualPath</li>
+                                <li>Path.Combine(HttpRuntime.AppDomainAppVirtualPath, "/Content/Avatars/BlankPhoto.jpg"): @Path.Combine(HttpRuntime.AppDomainAppVirtualPath, "/Content/Avatars/BlankPhoto.jpg")</li>
                                 <li>Server.MapPath("~/Content/Avatars"): @Server.MapPath("~/Content/Avatars")</li>
                                 <li></li>
                                 <li></li>
@@ -124,7 +130,7 @@
                                     {
                                         foreach (string dataItem in dataLine.Split(','))
                                         {@dataItem <text>&nbsp;</text>}
-                                    <br />
+                                        <br />
                                     }
                                 </li>
                             </ul>

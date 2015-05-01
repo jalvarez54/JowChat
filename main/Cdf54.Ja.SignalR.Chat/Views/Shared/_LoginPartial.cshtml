@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated) {
 
+    //var loginProviders = Context.GetOwinContext().Authentication.User;
+
     var userManager = new UserManager<Cdf54.Ja.SignalR.Chat.Models.ApplicationUser>
         (new Microsoft.AspNet.Identity.EntityFramework.UserStore<Cdf54.Ja.SignalR.Chat.Models.ApplicationUser>
             (new Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext()));
@@ -19,7 +21,13 @@
     }
     else
     {
-        image = Path.Combine(HttpContext.Current.Request.ApplicationPath, "/Content/Avatars/BlankPhoto.jpg");
+        
+        //string vPath = HttpContext.Current.Request.ApplicationPath;
+        //image = Path.Combine(vPath, "/Content/Avatars/BlankPhoto.jpg");
+        // [10015] PB: Migration files VS dev env
+        string vPath = JA.UTILS.Helpers.Utils.AppPath();
+        image = vPath + "/Content/Avatars/BlankPhoto.jpg";
+        //[10015]
     }
     
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {

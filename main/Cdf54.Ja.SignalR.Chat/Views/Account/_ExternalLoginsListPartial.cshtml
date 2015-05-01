@@ -1,5 +1,5 @@
 ﻿@model Cdf54.Ja.SignalR.Chat.Models.ExternalLoginListViewModel
-@using Microsoft.Owin.Security
+@using Microsoft.Owin.Security;
 
 <h4>Use another service to log in.</h4>
 <hr />
@@ -61,24 +61,23 @@
                     </ul>
                     <em>Use these link to login with an external provider, depending on your physical location, it will be Intranet, localhost or Internet.</em>
                     <ul>
-                    @{
-                    string remoteAddress = Request.ServerVariables["REMOTE_ADDR"];
-                    if (remoteAddress.Contains("192"))
-                    {
-                        <li><a href="http://www.jowchat192.net/Cdf54Chat/Account/Login#.VUDlZpMbLO3" target="_blank">Intranet</a></li>
-                    }
-                    else
-                        if (remoteAddress.Contains("127") || remoteAddress.Contains("::1"))
-                        {
-                            <li><a href="http://www.jowchat.net/Account/Login#.VUDlZpMbLO3" target="_blank">localhost</a></li>
+                        @{
+                            //[10012] Show one link (Intranet, Internet, or localhost) in _ExternalLoginsListPartial
+                            switch (JA.UTILS.Helpers.Utils.GetIpAddressType(Request.ServerVariables["REMOTE_ADDR"]))
+                            {
+                                case JA.UTILS.Helpers.Utils.AddressType.Internet:
+                                    <li><a href="http://www.jowchat89.net/Cdf54Chat/Account/Login#.VUDlZpMbLO3" target="_blank">Internet</a></li>
+                                    break;
+                                case JA.UTILS.Helpers.Utils.AddressType.Intranet:
+                                <li><a href="http://www.jowchat192.net/Cdf54Chat/Account/Login#.VUDlZpMbLO3" target="_blank">Intranet</a></li>
+                                    break;
+                                case JA.UTILS.Helpers.Utils.AddressType.localhost:
+                                <li><a href="http://www.jowchat.net/Account/Login#.VUDlZpMbLO3" target="_blank">localhost</a></li>
+                                    break;
+                            }
+                            //[10012]
                         }
-                        else
-                        {
-                            <li><a href="http://www.jowchat89.net/Cdf54Chat/Account/Login#.VUDlZpMbLO3" target="_blank">Internet</a></li>
-                        }
-}
                     </ul>
-
                 </p>
             </div>
         }

@@ -9,11 +9,76 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Security.Cryptography;
 using System.Text;
+using System.Net;
+using System.Net.Sockets;
 
 namespace JA.UTILS.Helpers
 {
     public class Utils
     {
+        public static string AppPath()
+        {
+            string appPath = "";
+            var a = HttpRuntime.AppDomainAppVirtualPath;
+            if (a == "/")
+            {
+                appPath = "";
+            }
+            else
+            {
+                appPath = a;
+            }
+            return appPath;
+        }
+
+        /// <summary>
+        /// 2005/04/30
+        /// </summary>
+        public enum AddressType
+        {
+            localhost,
+            Intranet,
+            Internet
+        }
+        /// <summary>
+        /// 2005/04/30
+        /// http://stackoverflow.com/questions/8113546/how-to-determine-whether-an-ip-address-in-private
+        /// </summary>
+        /// <param name="ipaddress"></param>
+        /// <returns></returns>
+        public static bool isIPLocal(IPAddress ipaddress)
+        {
+            String[] straryIPAddress = ipaddress.ToString().Split(new String[] { "." }, StringSplitOptions.RemoveEmptyEntries);
+            int[] iaryIPAddress = new int[] { int.Parse(straryIPAddress[0]), int.Parse(straryIPAddress[1]), int.Parse(straryIPAddress[2]), int.Parse(straryIPAddress[3]) };
+            if (iaryIPAddress[0] == 10 || (iaryIPAddress[0] == 192 && iaryIPAddress[1] == 168) || (iaryIPAddress[0] == 172 && (iaryIPAddress[1] >= 16 && iaryIPAddress[1] <= 31)))
+            {
+                return true;
+            }
+            else
+            {
+                // IP Address is "probably" public. This doesn't catch some VPN ranges like OpenVPN and Hamachi.
+                return false;
+            }
+        }
+        /// <summary>
+        /// 2005/04/30
+        /// https://msdn.microsoft.com/fr-fr/library/system.net.ipaddress.isloopback%28v=vs.110%29.aspx
+        /// </summary>
+        /// <param name="ipAddress"></param>
+        /// <returns></returns>
+        public static AddressType GetIpAddressType(string ipAddress)
+        {
+            System.Net.IPAddress address = System.Net.IPAddress.Parse(ipAddress);
+            // Perform semantic check by verifying that the address is a valid IPv4 
+            // or IPv6 loopback address. 
+            if (IPAddress.IsLoopback(address) && address.AddressFamily == AddressFamily.InterNetworkV6)
+                return AddressType.localhost;
+            else
+                if (IPAddress.IsLoopback(address) && address.AddressFamily == AddressFamily.InterNetwork)
+                    return AddressType.localhost;
+
+            return isIPLocal(address) ? AddressType.Intranet : AddressType.Internet;
+        }
         /// <summary>
         /// 2005/04/17
         /// Gets the currently active Gravatar image URL for the email address supplied to this method call

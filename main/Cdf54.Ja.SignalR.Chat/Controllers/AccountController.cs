@@ -75,8 +75,10 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             var user = await UserManager.FindByNameAsync(model.PseudoOrEmail);
             if (user != null)
                 {
-                    if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                    // [10013] Admin dont need to confirm email
+                    if (!await UserManager.IsEmailConfirmedAsync(user.Id) && model.PseudoOrEmail != Utils.GetAppSetting("AdminName") && model.PseudoOrEmail != Utils.GetAppSetting("Administrator"))
                     {
+                    // [10013]
                         ModelState.AddModelError("", "YOU NEED TO CONFIRM YOUR EMAIL");
                         return View(model);
                     }
@@ -90,6 +92,13 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 var userForEmail = await UserManager.FindByEmailAsync(model.PseudoOrEmail);
                 if (userForEmail != null)
                 {
+                    // [10013] Admin dont need to confirm email
+                    if (!await UserManager.IsEmailConfirmedAsync(userForEmail.Id) && model.PseudoOrEmail != Utils.GetAppSetting("AdminName") && model.PseudoOrEmail != Utils.GetAppSetting("Administrator"))
+                    {
+                        // [10013]
+                        ModelState.AddModelError("", "YOU NEED TO CONFIRM YOUR EMAIL");
+                        return View(model);
+                    }
                     username = userForEmail.UserName;
                 }
             }
@@ -419,8 +428,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                     //{
                     //    if (user.Claims.All(t => t.ClaimType != c.Type))
                     //        await UserManager.AddClaimAsync(user.Id, c);
-                    //} 
-
+                    //}
                     //http://www.asp.net/mvc/overview/security/preventing-open-redirection-attacks
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:

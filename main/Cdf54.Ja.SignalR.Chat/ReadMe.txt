@@ -149,15 +149,25 @@
     ==> OK
 - [10012]	asp.net login refused if email not confirmed
     ==> done
+- [10012] Show one link (Intranet, Internet, or localhost) in _ExternalLoginsListPartial
+    ==> done
+- [10013] Admin dont need to confirm email
+    ==> done
+- [10014] BUG: Default avatar not show on production (Cdf54Chat)
+    ==> done
+- [10015] PB: Migration files VS dev env
+    ==> done
 - [xxxxx] ADD: Yahoo and LinkedIn
     http://www.jerriepelser.com/blog/introducing-the-yahoo-linkedin-oauth-security-providers-for-owin
     ==> XXXX
-- [xxxxx]	Check email when it's changed in "change profile"
-    ==>
-- [xxxxx]	PB: Migration files VS dev env
-    http://robertgreiner.com/2012/05/using-entity-framework-database-migrations-to-update-a-remote-database/
-    http://blog.oneunicorn.com/2013/05/28/database-initializer-and-migrations-seed-methods/
-    ==>
+- [XXXXX] Use provider avatar by default for external login
+    var pictureUrl = loginInfo.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("picture")).Value;
+    ==> XXXX
+- [xxxxx] Check email when it's changed in "change profile"
+    ==> XXXX
+- [xxxxx]
+    
+    ==> XXXX
 
 
 
@@ -279,8 +289,23 @@
     http://stackoverflow.com/questions/22153921/prevent-login-when-emailconfirmed-is-false
     See AccountController/Login
     ==> done
-- 2015-04-30 COMMIT: Codeplex jowchat.codeplex.com (?) [10012]	asp.net login refused if email not confirmed
-
+- 2015-04-30 COMMIT: Codeplex jowchat.codeplex.com (107388) [10012]	asp.net login refused if email not confirmed
+- [10012] Show one link (Intranet, Internet, or localhost) in _ExternalLoginsListPartial
+    - http://stackoverflow.com/questions/8113546/how-to-determine-whether-an-ip-address-in-private
+    - https://msdn.microsoft.com/fr-fr/library/system.net.ipaddress.isloopback%28v=vs.110%29.aspx
+    ==> done
+- [10013] Admin dont need to confirm email
+    ==> done
+- [10014] BUG: Default avatar not show on production (Cdf54Chat)
+    JA.UTILS.Helpers.Utils.AppPath()
+    ==> done
+- [10015] PB: Migration files VS dev env
+    http://robertgreiner.com/2012/05/using-entity-framework-database-migrations-to-update-a-remote-database/
+    http://blog.oneunicorn.com/2013/05/28/database-initializer-and-migrations-seed-methods/
+    done but not perfect !!!
+    Add/Exclude Migrations-192 or Migration-localhost from project before publishing or local execute.
+    ==> done
+- 2015-05-01 COMMIT: Codeplex jowchat.codeplex.com (?) [10013] Admin dont need to confirm email + [10015] PB: Migration files VS dev env
 
 ////////////////////////
 // Version 1.0.Alpha
@@ -542,7 +567,7 @@
 // NB
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 - Elements like application settings, IIS virtual path are only resolved on server side.
-    It's not possible to retrive those values in JS on client side.
+    It's not possible to retreive those values in JS on client side.
         ===> Sol:
             Insert functions in _ViewStart.cshtml
                 ex:

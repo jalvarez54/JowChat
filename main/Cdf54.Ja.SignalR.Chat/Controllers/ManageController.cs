@@ -256,7 +256,12 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 }
                 if (model.IsNoPhotoChecked)
                 {
-                    var path = Path.Combine(HttpContext.Request.ApplicationPath, "/Content/Avatars/BlankPhoto.jpg");
+                    //string vPath = HttpRuntime.AppDomainAppVirtualPath;
+                    //var path = Path.Combine(vPath, "/Content/Avatars/BlankPhoto.jpg");
+                    // [10015] PB: Migration files VS dev env
+                    string vPath = Utils.AppPath();
+                    var path = vPath + "/Content/Avatars/BlankPhoto.jpg";
+                    // [10015]
                     model.PhotoUrl = path;
                 }
                 else

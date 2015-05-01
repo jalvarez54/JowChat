@@ -216,7 +216,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var user = userManager.FindByName(name);
             if (user == null)
             {
-                user = new ApplicationUser { UserName = pseudo, Email = name, Pseudo = pseudo };
+                user = new ApplicationUser { UserName = pseudo, Email = name, Pseudo = pseudo , EmailConfirmed = true, LockoutEnabled = true};
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }
