@@ -157,13 +157,21 @@
     ==> done
 - [10015] PB: Migration files VS dev env
     ==> done
+- [10016] BUG: Default photo for external login Chat user photo
+    ==> done
+- [10017] Use provider avatar by default for external login
+    ==> done
 - [xxxxx] ADD: Yahoo and LinkedIn
     http://www.jerriepelser.com/blog/introducing-the-yahoo-linkedin-oauth-security-providers-for-owin
     ==> XXXX
-- [XXXXX] Use provider avatar by default for external login
+- [10017] Use provider avatar by default for external login
     var pictureUrl = loginInfo.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("picture")).Value;
     ==> XXXX
 - [xxxxx] Check email when it's changed in "change profile"
+    ==> XXXX
+- [xxxxx] Use provider avatar by default for external login
+    for Facebook, Twitter, Microsoft, done for google [10017]
+    ADD: this function in Profile Change photo.
     ==> XXXX
 - [xxxxx]
     
@@ -305,7 +313,16 @@
     done but not perfect !!!
     Add/Exclude Migrations-192 or Migration-localhost from project before publishing or local execute.
     ==> done
-- 2015-05-01 COMMIT: Codeplex jowchat.codeplex.com (?) [10013] Admin dont need to confirm email + [10015] PB: Migration files VS dev env
+- 2015-05-01 COMMIT: Codeplex jowchat.codeplex.com (107391) [10013] Admin dont need to confirm email + [10015] PB: Migration files VS dev env
+- [10016] BUG: Default photo for external login Chat user photo
+    See AccountController/ExternalLoginConfirmation
+    ==> done
+- [10017] Use provider avatar by default for external login
+    var pictureUrl = loginInfo.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("picture")).Value;
+    See AccountController/ExternalLoginConfirmation
+    done for google
+    ==> done
+- 2015-05-01 COMMIT: Codeplex jowchat.codeplex.com (?) [10016] + [10017] Use provider avatar by default for external login
 
 ////////////////////////
 // Version 1.0.Alpha

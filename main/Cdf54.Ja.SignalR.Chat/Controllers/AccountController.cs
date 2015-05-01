@@ -476,6 +476,13 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                     //var user = new ApplicationUser { UserName = info.DefaultUserName, Email = model.Email };
                     // so change change currentUser.UserName by currentUser.Pseudo in _LoginPartial
                     var user = new ApplicationUser { Pseudo = info.DefaultUserName, UserName = info.DefaultUserName, Email = model.Email };
+                    // [10016] BUG: Default photo for external login Chat user photo
+                    user.PhotoUrl =  Utils.AppPath() + "/Content/Avatars/BlankPhoto.jpg";
+                    // [10017] Use provider avatar by default for external login
+                    if(info.Login.LoginProvider == "Google")
+                        user.PhotoUrl = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:google:picture")).Value;
+                    //[10017]
+                    // [10016]
                     var result = await UserManager.CreateAsync(user);
                     if (result.Succeeded)
                     {

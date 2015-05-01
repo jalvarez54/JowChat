@@ -243,7 +243,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var user0 = userManager.FindByName(name0);
             if (user0 == null)
             {
-                user0 = new ApplicationUser { UserName = pseudo0, Email = name0, Pseudo = pseudo0, UseGravatar = true, PhotoUrl = JA.UTILS.Helpers.Utils.GetGravatarUrlForAddress(name0) };
+                user0 = new ApplicationUser { UserName = pseudo0, Email = name0, Pseudo = pseudo0, EmailConfirmed = true, UseGravatar = true, PhotoUrl = JA.UTILS.Helpers.Utils.GetGravatarUrlForAddress(name0) };
                 var result0 = userManager.Create(user0, password0);
                 result0 = userManager.SetLockoutEnabled(user0.Id, false);
             }
@@ -266,7 +266,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var user1 = userManager.FindByName(name1);
             if (user1 == null)
             {
-                user1 = new ApplicationUser { UserName = pseudo1, Email = name1, Pseudo = pseudo1 };
+                user1 = new ApplicationUser { UserName = pseudo1, Email = name1, Pseudo = pseudo1, EmailConfirmed = true,};
                 var result1 = userManager.Create(user1, password1);
                 result1 = userManager.SetLockoutEnabled(user1.Id, false);
             }
@@ -283,7 +283,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var user2 = userManager.FindByName(name2);
             if (user2 == null)
             {
-                user2 = new ApplicationUser { UserName = pseudo2, Email = name2, Pseudo = pseudo2 };
+                user2 = new ApplicationUser { UserName = pseudo2, Email = name2, Pseudo = pseudo2, EmailConfirmed = true };
                 var result2 = userManager.Create(user2, password2);
                 result2 = userManager.SetLockoutEnabled(user2.Id, false);
             }
@@ -300,7 +300,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var user3 = userManager.FindByName(name3);
             if (user3 == null)
             {
-                user3 = new ApplicationUser { UserName = pseudo3, Email = name3, Pseudo = pseudo3 };
+                user3 = new ApplicationUser { UserName = pseudo3, Email = name3, Pseudo = pseudo3, EmailConfirmed = true};
                 var result3 = userManager.Create(user3, password3);
                 result3 = userManager.SetLockoutEnabled(user3.Id, false);
             }
@@ -317,7 +317,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var user4 = userManager.FindByName(name4);
             if (user4 == null)
             {
-                user4 = new ApplicationUser { UserName = pseudo4, Email = name4, Pseudo = pseudo4 };
+                user4 = new ApplicationUser { UserName = pseudo4, Email = name4, Pseudo = pseudo4, EmailConfirmed = true };
                 var result4 = userManager.Create(user4, password4);
                 result4 = userManager.SetLockoutEnabled(user4.Id, false);
             }
