@@ -165,8 +165,9 @@
     http://www.jerriepelser.com/blog/introducing-the-yahoo-linkedin-oauth-security-providers-for-owin
     ==> XXXX
 - [10017] Use provider avatar by default for external login
-    var pictureUrl = loginInfo.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("picture")).Value;
-    ==> XXXX
+    ==> done
+- [10018] Use provider avatar by default for external login with facebook, microsoft, twitter
+    ==> done
 - [xxxxx] Check email when it's changed in "change profile"
     ==> XXXX
 - [xxxxx] Use provider avatar by default for external login
@@ -322,7 +323,15 @@
     See AccountController/ExternalLoginConfirmation
     done for google
     ==> done
-- 2015-05-01 COMMIT: Codeplex jowchat.codeplex.com (?) [10016] + [10017] Use provider avatar by default for external login
+- 2015-05-01 COMMIT: Codeplex jowchat.codeplex.com (107392) [10016] + [10017] Use provider avatar by default for external login
+- [10018] Use provider avatar by default for external login
+    http://www.jerriepelser.com/blog/get-the-twitter-profile-image-using-the-asp-net-identity
+    http://stackoverflow.com/questions/14836956/how-to-get-user-image-with-twitter-api-1-1
+    wl.photos http://go.microsoft.com/fwlink/?LinkID=144070 
+    See AccountController/ExternalLoginConfirmation
+    done for google, Facebook, Microsoft
+    ==> done
+- 2015-05-01 COMMIT: Codeplex jowchat.codeplex.com (?) [10018] Use provider avatar by default for external login
 
 ////////////////////////
 // Version 1.0.Alpha

@@ -66,7 +66,6 @@ namespace Cdf54.Ja.SignalR.Chat
                     }
                     return System.Threading.Tasks.Task.FromResult(0);
                 }
-
             };
             var mio = new Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions
             {
@@ -78,6 +77,7 @@ namespace Cdf54.Ja.SignalR.Chat
             mio.Scope.Add("wl.basic");
             mio.Scope.Add("wl.emails");
             mio.Scope.Add("wl.birthday");
+            mio.Scope.Add("wl.photos");
             mio.Scope.Add("wl.postal_addresses");
             app.UseMicrosoftAccountAuthentication(mio);
 

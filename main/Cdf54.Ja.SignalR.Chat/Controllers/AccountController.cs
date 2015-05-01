@@ -478,9 +478,25 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                     var user = new ApplicationUser { Pseudo = info.DefaultUserName, UserName = info.DefaultUserName, Email = model.Email };
                     // [10016] BUG: Default photo for external login Chat user photo
                     user.PhotoUrl =  Utils.AppPath() + "/Content/Avatars/BlankPhoto.jpg";
-                    // [10017] Use provider avatar by default for external login
-                    if(info.Login.LoginProvider == "Google")
+                    // [10017] Use provider avatar by default for external login 
+                    if (info.Login.LoginProvider == "Google")
                         user.PhotoUrl = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:google:picture")).Value;
+                    if (info.Login.LoginProvider == "Microsoft")
+                    {
+                        var microsoftAccountId = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:microsoftaccount:id")).Value;
+                        user.PhotoUrl = string.Format("https://apis.live.net/v5.0/{0}/picture", microsoftAccountId);
+                    }
+                    if (info.Login.LoginProvider == "Facebook")
+                    {
+                        var facebookAccountId = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:facebook:id")).Value;
+                        user.PhotoUrl = string.Format("http://graph.facebook.com/{0}/picture", facebookAccountId);
+                    }
+                    if (info.Login.LoginProvider == "Twitter")
+                    {
+                        var twitterScreenname = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:twitter:screenname")).Value;
+                        user.PhotoUrl = string.Format("https://twitter.com/{0}/profile_image?size=original", twitterScreenname);
+                    }
+
                     //[10017]
                     // [10016]
                     var result = await UserManager.CreateAsync(user);
