@@ -341,7 +341,8 @@
     for Facebook, Twitter, Microsoft, done for google [10017]
     See ManageControlle/ChangePhoto
     ==> done
-- 2015-05-03 COMMIT: Codeplex jowchat.codeplex.com (?) [10019] Use provider avatar by default for external login ADD: this function in Profile Change photo.
+- 2015-05-03 COMMIT: Codeplex jowchat.codeplex.com (107398) [10019] Use provider avatar by default for external login ADD: this function in Profile Change photo.
+- 2015-05-03 COMMIT: Codeplex jowchat.codeplex.com () PB: Migration folders
 
 ////////////////////////
 // Version 1.0.Alpha
