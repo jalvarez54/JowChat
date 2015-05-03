@@ -54,7 +54,7 @@
             <div class="input-group">
                 <input id="subfile" type="text" class="form-control" placeholder="Search for image file to add..." readonly>
                 <span class="input-group-btn">
-                    <a class="btn btn-primary" onclick="$('#filePhoto').click();">Browse</a>
+                    <a id="submitbutton" class="btn btn-primary" onclick="$('#filePhoto').click();">Browse</a>
                 </span>
             </div>
             @Html.ValidationMessageFor(m => m.Photo)<br />

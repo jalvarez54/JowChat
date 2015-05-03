@@ -176,6 +176,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             RegisterViewModel model = new RegisterViewModel();
             model.PhotoUrl = System.IO.Path.Combine(HttpRuntime.AppDomainAppVirtualPath, @"Content/Avatars", @"BlankPhoto.jpg");
             model.UseGravatar = false;
+
             return View(model);
             /* \Add extension */
         }

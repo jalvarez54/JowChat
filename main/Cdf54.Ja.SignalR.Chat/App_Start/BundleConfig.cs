@@ -15,6 +15,8 @@ namespace Cdf54.Ja.SignalR.Chat
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/chatphoto").Include(
+           "~/Scripts/app/cdf54.ja.signalR.chat.namespace.js",
+            "~/Scripts/app/cdf54.ja.utils.js",
             "~/Scripts/app/cdf54.ja.signalR.chatphoto.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're 

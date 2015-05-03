@@ -20,6 +20,8 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         public bool IsNoPhotoChecked { get; set; }
         public string Pseudo { get; set; }
         public bool UseGravatar { get; set; }
+        //[10019] Use provider avatar by default for external login ADD: this function in Profile Change photo.
+        public bool UseSocialNetworkPicture { get; set; }
         /* \Add extension */
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

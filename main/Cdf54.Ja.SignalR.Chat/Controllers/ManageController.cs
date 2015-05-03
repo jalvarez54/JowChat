@@ -153,11 +153,11 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
 
         // GET: /Manage/ChangeProfile
-        public ActionResult ChangeProfile(EditMessageID? message = null)
+        public ActionResult ChangeProfile(ManageMessageId? message = null)
         {
             ViewBag.StatusMessage =
-                message == EditMessageID.ModifSuccess ? "Your profile has been updated."
-                : message == EditMessageID.Error ? "An error has occurred."
+                message == ManageMessageId.ModifSuccess ? "Your profile has been updated."
+                : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
 
             var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
@@ -193,7 +193,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 }
 
 
-                return RedirectToAction("ChangeProfile", new { Message = EditMessageID.ModifSuccess });
+                return RedirectToAction("ChangeProfile", new { Message = ManageMessageId.ModifSuccess });
             }
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -201,12 +201,13 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         }
 
         // GET: /Manage/ChangePhoto
-        public ActionResult ChangePhoto(EditMessageID? message = null)
+        public ActionResult ChangePhoto(ManageMessageId? message = null)
         {
             ViewBag.StatusMessage =
-                message == EditMessageID.ModifSuccess ? "Your photo has been changed."
-                : message == EditMessageID.Error ? "An error has occurred."
-                : message == EditMessageID.NoChange ? "No change made."
+                message == ManageMessageId.ModifSuccess ? "Your photo has been changed."
+                : message == ManageMessageId.Error ? "An error has occurred."
+                : message == ManageMessageId.NoChange ? "No change have been made."
+                : message == ManageMessageId.NoExternalProvider ? "No external login provider found."
                 : "";
 
             var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
@@ -223,6 +224,35 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             model.UseGravatar = user.UseGravatar;
             model.Email = user.Email;
             model.Pseudo = user.Pseudo;
+
+            //[10019] Use provider avatar by default for external login ADD: this function in Profile Change photo.
+            model.UseSocialNetworkPicture = user.UseSocialNetworkPicture;
+            var owc = Request.GetOwinContext();
+            var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
+            if (linkedAccounts.Count != 0)
+            {
+                model.ExternalProvider = linkedAccounts[0].LoginProvider;
+
+                if (model.ExternalProvider == "Google")
+                    model.GooglePhotoUrl = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:google:picture")).Value;
+                if (model.ExternalProvider == "Microsoft")
+                {
+                    var microsoftAccountId = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:microsoftaccount:id")).Value;
+                    model.MicrosoftAccountId = microsoftAccountId;
+                }
+                if (model.ExternalProvider == "Facebook")
+                {
+                    var facebookAccountId = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:facebook:id")).Value;
+                    model.FacebookAccountId = facebookAccountId;
+                }
+                if (model.ExternalProvider == "Twitter")
+                {
+                    var twitterScreenname = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:twitter:screenname")).Value;
+                    model.TwitterScreenname = twitterScreenname;
+                }
+            }
+            //[10019]
+
             return View(model);
         }
         //
@@ -236,22 +266,28 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             if (ModelState.IsValid)
             {
                 // No change
-                if (model.Photo == null && !model.IsNoPhotoChecked && !model.UseGravatar)
+                if (model.Photo == null && !model.IsNoPhotoChecked && model.UseGravatar == user.UseGravatar && model.UseSocialNetworkPicture == user.UseSocialNetworkPicture)
                 {
-                    return RedirectToAction("ChangePhoto", new { Message = EditMessageID.NoChange });
+                    return RedirectToAction("ChangePhoto", new { Message = ManageMessageId.NoChange });
                 }
-                //if Photo exist and is not a gravatar
-                if ((user.PhotoUrl != null && !user.PhotoUrl.Contains("http://")))
+                // Delete photo if photo exist and is not a gravatar or socialnetworkPicture.
+                if (user.PhotoUrl != null)
                 {
-                    // Delete file if not the BlankPhoto.jpg and if we change for a gravatar
-                    if (((!user.PhotoUrl.Contains("BlankPhoto.jpg")) && model.IsNoPhotoChecked) || ((!user.PhotoUrl.Contains("BlankPhoto.jpg")) && model.UseGravatar))
+                    if (!(user.PhotoUrl.Contains("http://") || user.PhotoUrl.Contains("https://")))
                     {
-                        string fileToDelete = Path.GetFileName(user.PhotoUrl);
+                        // Delete file if not the BlankPhoto.jpg and if we change for a gravatar or socialnetworkpicture or new photo
+                        if (!user.PhotoUrl.Contains("BlankPhoto.jpg"))
+                        {
+                            if (model.IsNoPhotoChecked || model.UseGravatar || model.UseSocialNetworkPicture || model.Photo != null)
+                            {
+                                string fileToDelete = Path.GetFileName(user.PhotoUrl);
 
-                        var path = Path.Combine(Server.MapPath("~/Content/Avatars"), fileToDelete);
-                        FileInfo fi = new FileInfo(path);
-                        if (fi.Exists)
-                            fi.Delete();
+                                var path = Path.Combine(Server.MapPath("~/Content/Avatars"), fileToDelete);
+                                FileInfo fi = new FileInfo(path);
+                                if (fi.Exists)
+                                    fi.Delete();
+                            }
+                        }
                     }
                 }
                 if (model.IsNoPhotoChecked)
@@ -265,18 +301,55 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                     model.PhotoUrl = path;
                 }
                 else
-                {
-                    model.PhotoUrl = Utils.SavePhotoFileToDisk(model.Photo, this, user.PhotoUrl, false);
-                }
+                    // Save on disk only uploaded picture.
+                    if (model.Photo != null )
+                    {
+                        model.PhotoUrl = Utils.SavePhotoFileToDisk(model.Photo, this, user.PhotoUrl, false);
+                    }
                 if (model.UseGravatar == true)
                 {
                     model.PhotoUrl = JA.UTILS.Helpers.Utils.GetGravatarUrlForAddress(user.Email);
                 }
+                //[10019] Use provider avatar by default for external login ADD: this function in Profile Change photo.
+                if (model.UseSocialNetworkPicture == true)
+                {
+                    var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
+                    var owc = Request.GetOwinContext();
+
+                    if (linkedAccounts.Count == 0)
+                    {
+                        return RedirectToAction("ChangePhoto", new { Message = ManageMessageId.NoExternalProvider });
+                    }
+
+                    model.ExternalProvider = linkedAccounts[0].LoginProvider;
+
+                    if (model.ExternalProvider == "Google")
+                        model.PhotoUrl = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:google:picture")).Value;
+                    if (model.ExternalProvider == "Microsoft")
+                    {
+                        var microsoftAccountId = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:microsoftaccount:id")).Value;
+                        model.PhotoUrl = string.Format("https://apis.live.net/v5.0/{0}/picture", microsoftAccountId);
+                    }
+                    if (model.ExternalProvider == "Facebook")
+                    {
+                        var facebookAccountId = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:facebook:id")).Value;
+                        model.PhotoUrl = string.Format("http://graph.facebook.com/{0}/picture", facebookAccountId);
+                    }
+                    if (model.ExternalProvider == "Twitter")
+                    {
+                        var twitterScreenname = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:twitter:screenname")).Value;
+                        model.PhotoUrl = string.Format("https://twitter.com/{0}/profile_image?size=original", twitterScreenname);
+                    }
+                    
+                }
+                //[10019]
+
                 user.PhotoUrl = model.PhotoUrl;
                 user.UseGravatar = model.UseGravatar;
+                user.UseSocialNetworkPicture = model.UseSocialNetworkPicture;
                 await UserManager.UpdateAsync(user);
 
-                return RedirectToAction("ChangePhoto", new { Message = EditMessageID.ModifSuccess });
+                return RedirectToAction("ChangePhoto", new { Message = ManageMessageId.ModifSuccess });
             }
             model.PhotoUrl = user.PhotoUrl;
 
@@ -603,17 +676,11 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             return false;
         }
 
-        #region MyApplications auxiliaires
-        public enum EditMessageID
-        {
-            ModifSuccess,
-            Error,
-            NoChange,
-        }
-        #endregion
-
         public enum ManageMessageId
         {
+            NoChange,
+            NoExternalProvider,
+            ModifSuccess,
             AddPhoneSuccess,
             ChangePhotoSuccess,
             ChangePasswordSuccess,

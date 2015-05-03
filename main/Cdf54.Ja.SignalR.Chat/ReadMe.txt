@@ -168,11 +168,15 @@
     ==> done
 - [10018] Use provider avatar by default for external login with facebook, microsoft, twitter
     ==> done
+- [10019] Use provider avatar by default for external login ADD: this function in Profile Change photo.
+    ==> done
 - [xxxxx] Check email when it's changed in "change profile"
     ==> XXXX
-- [xxxxx] Use provider avatar by default for external login
-    for Facebook, Twitter, Microsoft, done for google [10017]
-    ADD: this function in Profile Change photo.
+- [xxxxx] Url pb [10014]
+    Change code with "Other" solution.
+    ==> XXXX
+- [xxxxx] BUG: Photo size in AdminUser
+    
     ==> XXXX
 - [xxxxx]
     
@@ -307,6 +311,7 @@
     ==> done
 - [10014] BUG: Default avatar not show on production (Cdf54Chat)
     JA.UTILS.Helpers.Utils.AppPath()
+    Other solution with: Url.Content("~/Content/Avatars/BlankPhoto.jpg")
     ==> done
 - [10015] PB: Migration files VS dev env
     http://robertgreiner.com/2012/05/using-entity-framework-database-migrations-to-update-a-remote-database/
@@ -329,9 +334,14 @@
     http://stackoverflow.com/questions/14836956/how-to-get-user-image-with-twitter-api-1-1
     wl.photos http://go.microsoft.com/fwlink/?LinkID=144070 
     See AccountController/ExternalLoginConfirmation
-    done for google, Facebook, Microsoft
+    done for google, Facebook, Microsoft, Twitter
     ==> done
-- 2015-05-01 COMMIT: Codeplex jowchat.codeplex.com (?) [10018] Use provider avatar by default for external login
+- 2015-05-01 COMMIT: Codeplex jowchat.codeplex.com (107396) [10018] Use provider avatar by default for external login
+- [10019] Use provider avatar by default for external login ADD: this function in Profile Change photo.
+    for Facebook, Twitter, Microsoft, done for google [10017]
+    See ManageControlle/ChangePhoto
+    ==> done
+- 2015-05-03 COMMIT: Codeplex jowchat.codeplex.com (?) [10019] Use provider avatar by default for external login ADD: this function in Profile Change photo.
 
 ////////////////////////
 // Version 1.0.Alpha
@@ -476,6 +486,8 @@
     http://www.deluxeblogtips.com/2010/04/get-gravatar-using-only-javascript.html
     http://www.southcoastweb.co.uk/bootstrap-by-twitter-file-input-box/
 - 2015-04-21 COMMIT: Codeplex jowchat.codeplex.com (107368) ADD: gravatar capability
+- EXEC: Add-Migration UseSocialNetworkPicture
+- EXEC: Update-Database
 
 ////////////////////////
 // Version 0.0.Alpha

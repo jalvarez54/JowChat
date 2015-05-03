@@ -31,7 +31,7 @@
             <div class="input-group">
                 <input id="subfile" type="text" class="form-control" placeholder="Search for image file to add..." readonly>
                 <span class="input-group-btn">
-                    <a class="btn btn-primary" onclick="$('#filePhoto').click();">Browse</a>
+                    <a id="submitbutton" class="btn btn-primary" onclick="$('#filePhoto').click();">Browse</a>
                 </span>
             </div>
             @Html.ValidationMessageFor(m => m.Photo)<br />
@@ -52,11 +52,22 @@
             <small class="text-muted"> See <a title="My gravatar" href="https://fr.gravatar.com/" target="_blank">Gravatar Web Site</a></small>
         </div>
     </div>
+    //[10019] Use provider avatar by default for external login ADD: this function in Profile Change photo.
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Change photo" class="btn btn-primary" />
+        @Html.LabelFor(model => model.UseSocialNetworkPicture, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(model => model.UseSocialNetworkPicture, new Dictionary<string, object>
+                {
+                    {"id", "UseSocialNetworkPicture"},
+                    { "data-ExternalProvider", @Model.ExternalProvider },
+                    { "data-GooglePhotoUrl", @Model.GooglePhotoUrl },
+                    { "data-microsoftAccountId", @Model.MicrosoftAccountId },
+                    { "data-facebookAccountId", @Model.FacebookAccountId },
+                    { "data-twitterScreenname", @Model.TwitterScreenname },
+                })
         </div>
     </div>
+    //[10019]
     @* if user don't have photo don't propose to remove it*@
     if (!(Model.PhotoUrl.Contains("BlankPhoto.jpg")))
     {
@@ -67,9 +78,13 @@
             </div>
         </div>
     }
-
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Change photo" class="btn btn-primary" />
+        </div>
+    </div>
 }
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/chatphoto")
-}
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/bundles/chatphoto")
+        }

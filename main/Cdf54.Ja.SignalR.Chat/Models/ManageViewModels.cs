@@ -31,17 +31,25 @@ namespace Cdf54.Ja.SignalR.Chat.Models
     public class ChangePhotoViewModel
     {
         public string PhotoUrl { get; set; }
-        [NotMapped]
         [Display(Name = "Change")]
         [Cdf54.Ja.SignalR.Chat.CustomFiltersAttributes.MyCustomAttributes.ValidateFile]
         public HttpPostedFileWrapper Photo { get; set; }
-        [NotMapped]
         [Display(Name = "Remove if checked")]
         public bool IsNoPhotoChecked { get; set; }
         [Display(Name = "Use my Gravatar")]
         public bool UseGravatar { get; set; }
         public string Email { get; set; }
         public string Pseudo { get; set; }
+        //[10019] Use provider avatar by default for external login ADD: this function in Profile Change photo. 
+        [Display(Name = "Use my Social Network Picture")]
+        public bool UseSocialNetworkPicture { get; set; }
+        public string ExternalProvider { get; set; }
+        public string GooglePhotoUrl { get; set; }
+        public string MicrosoftAccountId { get; set; }
+        public string FacebookAccountId { get; set; }
+        public string TwitterScreenname { get; set; }
+        //[10019]
+
 
     }
     public class ChangeProfileViewModel
