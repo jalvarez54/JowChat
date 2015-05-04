@@ -64,18 +64,6 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         public string PhotoUrl { get; set; }
 
     }
-    public class ChangePseudoUserNameViewModel
-    {
-        [Required]
-        [Display(Name = "Pseudo")]
-        public string Pseudo { get; set; }
-    }
-    /* \Add extension */
-    public class FactorViewModel
-    {
-        public string Purpose { get; set; }
-    }
-
     public class SetPasswordViewModel
     {
         [Required]

@@ -65,7 +65,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
         {
             var model = new List<UsersClaimsViewModel>();
 
-            var users = UserManager.Users;
+            var users = UserManager.Users.ToList();
             foreach(var user in users){
                 var userClaims = await UserManager.GetClaimsAsync(user.Id);
                 model.Add(new UsersClaimsViewModel() { Id = user.Id, CurrentClaims = userClaims });

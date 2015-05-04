@@ -1,6 +1,6 @@
 ﻿@model Cdf54.Ja.SignalR.Chat.Models.ChangeProfileViewModel
 @{
-    ViewBag.Title = "Change Profile";
+    ViewBag.Title = "Change Profile"; 
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -8,7 +8,7 @@
 @using (Html.BeginForm("ChangeProfile", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Change Profile Form</h4>
+    <h4> Change Profile Form for user: "@ViewBag.UserName"</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     
@@ -17,7 +17,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Pseudo, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Pseudo, new { @class = "form-control", @readonly = true})
+                @Html.TextBoxFor(m => m.Pseudo, new { @class = "form-control"})
             </div>
         </div>
         <div class="form-group">

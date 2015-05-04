@@ -21,6 +21,9 @@
             @Html.DisplayNameFor(model => model.UseGravatar)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.UseSocialNetworkPicture)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.UserName)
         </th>
         <th>
@@ -38,10 +41,13 @@
     {
         <tr>
             <td>
-                @Html.Image( "" , item.PhotoUrl, item.UserName, item.UserName, null)
+                @Html.Image("content-user-img", item.PhotoUrl, item.UserName, item.UserName, null)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UseGravatar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UseSocialNetworkPicture)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)

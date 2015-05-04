@@ -13,6 +13,8 @@ namespace Cdf54.Ja.SignalR.Chat.Models
     {
         public string ConnectionId { get; set; }
         public string UserName { get; set; }
+        //[10021]
+        public string Pseudo { get; set; }
         public string ConnectionDateTime { get; set; }
         public string Message { get; set; }
         public string MessageDateTime { get; set; }

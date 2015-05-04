@@ -99,7 +99,11 @@ display:block;
 height: auto;
 max-width: 200px;
 }
-    
+.content-user-img {
+display:block;
+height: auto;
+max-width: 100px;
+}
 /*#endregion*/
 
 

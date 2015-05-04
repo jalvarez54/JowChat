@@ -165,6 +165,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             var model = new ChangeProfileViewModel();
             model.Pseudo = user.Pseudo;
             model.Email = user.Email;
+            ViewBag.UserName = user.UserName;
 
             return View(model);
         }
@@ -179,6 +180,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
             if (ModelState.IsValid)
             {
+                user.Pseudo = model.Pseudo;
                 user.Email = model.Email;
                 if (user.UseGravatar == true)
                 {
@@ -223,6 +225,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             }
             model.UseGravatar = user.UseGravatar;
             model.Email = user.Email;
+            //[10021]
             model.Pseudo = user.Pseudo;
 
             //[10019] Use provider avatar by default for external login ADD: this function in Profile Change photo.

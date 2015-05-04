@@ -10,6 +10,9 @@
 <table class="table">
     <tr>
         <th>
+            User ID
+        </th>
+        <th>
             Claim Issuer
         </th>
         <th>
@@ -30,9 +33,13 @@
     </tr>
     @foreach(var user in Model)
     {
+        
         foreach (var item in user.CurrentClaims)
         {
             <tr>
+                <td>
+                    @user.Id
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Issuer)
                 </td>

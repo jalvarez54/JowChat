@@ -94,7 +94,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         [Cdf54.Ja.SignalR.Chat.CustomFiltersAttributes.MyCustomAttributes.ValidateFile]
         public HttpPostedFileWrapper Photo { get; set; }
         [Required]
-        [Display(Name = "Pseudo")]
+        [Display(Name = "User Name")]
         public string Pseudo { get; set; }
         [Display(Name = "Use my Gravatar")]
         public bool UseGravatar { get; set; }
