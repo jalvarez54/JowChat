@@ -368,7 +368,9 @@
     Or we'll have to had: image = JA.UTILS.Helpers.Utils.AppPath() + "/Content/Avatars/BlankPhoto.jpg",
     every where we use user object in Hubs/ChatHub, what we go for example in _LoginPartial.cshtml
     ==> done
-- 2015-05-05 COMMIT: Codeplex jowchat.codeplex.com () [10022] BUG: Seed add default photo
+- 2015-05-05 COMMIT: Codeplex jowchat.codeplex.com (107405) [10022] BUG: Seed add default photo
+- [10023] DELETE: package folder from server
+- 2015-05-05 COMMIT: Codeplex jowchat.codeplex.com () [10023] DELETE: package folder from server
 
 
 
