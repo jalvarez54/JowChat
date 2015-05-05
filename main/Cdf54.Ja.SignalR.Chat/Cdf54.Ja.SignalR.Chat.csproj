@@ -200,6 +200,7 @@
     <Content Include="Content\jquery.cssemoticons.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Icon.png" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
@@ -217,6 +218,10 @@
     </Content>
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -366,22 +371,6 @@
     <Compile Include="Hubs\ContentProviders\ImageContentProvider.cs" />
     <Compile Include="Hubs\ContentProviders\DailyMotionContentProvider.cs" />
     <Compile Include="Hubs\ContentProviders\YouTubeContentProvider.cs" />
-    <Compile Include="Migrations-localhost\201504060829359_Photo.cs" />
-    <Compile Include="Migrations-localhost\201504060829359_Photo.Designer.cs">
-      <DependentUpon>201504060829359_Photo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations-localhost\201504081313144_Pseudo.cs" />
-    <Compile Include="Migrations-localhost\201504081313144_Pseudo.Designer.cs">
-      <DependentUpon>201504081313144_Pseudo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations-localhost\201504170818195_UseGravatar.cs" />
-    <Compile Include="Migrations-localhost\201504170818195_UseGravatar.Designer.cs">
-      <DependentUpon>201504170818195_UseGravatar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations-localhost\201505030420389_UseSocialNetworkPicture.cs" />
-    <Compile Include="Migrations-localhost\201505030420389_UseSocialNetworkPicture.Designer.cs">
-      <DependentUpon>201505030420389_UseSocialNetworkPicture.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ChatAdminViewModel.cs" />
@@ -395,23 +384,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="fonts\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations-localhost\201504060829359_Photo.resx">
-      <DependentUpon>201504060829359_Photo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations-localhost\201504081313144_Pseudo.resx">
-      <DependentUpon>201504081313144_Pseudo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations-localhost\201504170818195_UseGravatar.resx">
-      <DependentUpon>201504170818195_UseGravatar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations-localhost\201505030420389_UseSocialNetworkPicture.resx">
-      <DependentUpon>201505030420389_UseSocialNetworkPicture.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

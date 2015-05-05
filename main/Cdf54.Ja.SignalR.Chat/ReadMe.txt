@@ -178,9 +178,12 @@
     ==> done
 - [10022] BUG: Seed add default photo
     ==> done
-- [xxxxx] Had Pseudo in UserDetailsModel and make Pseudo as ScreenName
-    
-    ==> XXXX
+- [10023] DELETE: package folder from server
+    ==> done
+- [10024] MOVE: glyphicons files to Content/fonts
+    ==> done
+
+
 - [xxxxx] Check email when it's changed in "change profile"
     ==> XXXX
 - [xxxxx] Url pb [10014]
@@ -371,6 +374,8 @@
 - 2015-05-05 COMMIT: Codeplex jowchat.codeplex.com (107405) [10022] BUG: Seed add default photo
 - [10023] DELETE: package folder from server
 - 2015-05-05 COMMIT: Codeplex jowchat.codeplex.com () [10023] DELETE: package folder from server
+- [10024] MOVE: glyphicons files to Content/fonts
+- 2015-05-05 COMMIT: Codeplex jowchat.codeplex.com () MOVE: glyphicons files to Content/fonts
 
 
 
