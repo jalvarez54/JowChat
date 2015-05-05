@@ -123,6 +123,7 @@ namespace Cdf54.Ja.SignalR.Chat.Hubs
             var Db = new Cdf54.Ja.SignalR.Chat.Models.ApplicationDbContext();
             var user = Db.Users.First(us => us.UserName == Context.User.Identity.Name);
             var userName = user.UserName;
+            
             var caller = new UserDetail { ConnectionId = Context.ConnectionId, UserName = userName, PhotoUrl = user.PhotoUrl};
 
             lock (ConnectedUsers)

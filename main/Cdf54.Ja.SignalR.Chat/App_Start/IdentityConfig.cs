@@ -198,6 +198,10 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         // Create Users with password=P@ssword2015 in the Admin and/or Member role        
         public static void InitializeIdentityForEF(ApplicationDbContext db)
         {
+            //[10022] BUG: Seed add default photo
+            var image = JA.UTILS.Helpers.Utils.AppPath() + "/Content/Avatars/BlankPhoto.jpg";
+            //[10022]
+
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "admin@free.fr";
@@ -216,7 +220,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var user = userManager.FindByName(name);
             if (user == null)
             {
-                user = new ApplicationUser { UserName = pseudo, Email = name, Pseudo = pseudo , EmailConfirmed = true, LockoutEnabled = true};
+                user = new ApplicationUser { UserName = pseudo, Email = name, Pseudo = pseudo , EmailConfirmed = true, LockoutEnabled = true, PhotoUrl = image};
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
             }
@@ -266,7 +270,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var user1 = userManager.FindByName(name1);
             if (user1 == null)
             {
-                user1 = new ApplicationUser { UserName = pseudo1, Email = name1, Pseudo = pseudo1, EmailConfirmed = true,};
+                user1 = new ApplicationUser { UserName = pseudo1, Email = name1, Pseudo = pseudo1, EmailConfirmed = true, PhotoUrl = image};
                 var result1 = userManager.Create(user1, password1);
                 result1 = userManager.SetLockoutEnabled(user1.Id, false);
             }
@@ -283,7 +287,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var user2 = userManager.FindByName(name2);
             if (user2 == null)
             {
-                user2 = new ApplicationUser { UserName = pseudo2, Email = name2, Pseudo = pseudo2, EmailConfirmed = true };
+                user2 = new ApplicationUser { UserName = pseudo2, Email = name2, Pseudo = pseudo2, EmailConfirmed = true, PhotoUrl = image };
                 var result2 = userManager.Create(user2, password2);
                 result2 = userManager.SetLockoutEnabled(user2.Id, false);
             }
@@ -300,7 +304,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var user3 = userManager.FindByName(name3);
             if (user3 == null)
             {
-                user3 = new ApplicationUser { UserName = pseudo3, Email = name3, Pseudo = pseudo3, EmailConfirmed = true};
+                user3 = new ApplicationUser { UserName = pseudo3, Email = name3, Pseudo = pseudo3, EmailConfirmed = true, PhotoUrl = image };
                 var result3 = userManager.Create(user3, password3);
                 result3 = userManager.SetLockoutEnabled(user3.Id, false);
             }
@@ -317,7 +321,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
             var user4 = userManager.FindByName(name4);
             if (user4 == null)
             {
-                user4 = new ApplicationUser { UserName = pseudo4, Email = name4, Pseudo = pseudo4, EmailConfirmed = true };
+                user4 = new ApplicationUser { UserName = pseudo4, Email = name4, Pseudo = pseudo4, EmailConfirmed = true, PhotoUrl = image };
                 var result4 = userManager.Create(user4, password4);
                 result4 = userManager.SetLockoutEnabled(user4.Id, false);
             }

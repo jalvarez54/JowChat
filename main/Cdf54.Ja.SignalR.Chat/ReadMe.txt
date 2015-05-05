@@ -176,9 +176,8 @@
     ==> done
 - [10021] Pseudo, UserName Email usage
     ==> done
-
-
-
+- [10022] BUG: Seed add default photo
+    ==> done
 - [xxxxx] Had Pseudo in UserDetailsModel and make Pseudo as ScreenName
     
     ==> XXXX
@@ -190,7 +189,6 @@
 - [xxxxx] ADD: Yahoo and LinkedIn
     http://www.jerriepelser.com/blog/introducing-the-yahoo-linkedin-oauth-security-providers-for-owin
     ==> XXXX
-
 
 
 - [xxxxx] 
@@ -363,7 +361,14 @@
     NB: Pseudo should be unique (not verified for now)
     TODO: Chat: Had Pseudo in UserDetailsModel and make Pseudo as ScreenName
     ==> done
-- 2015-05-04 COMMIT: Codeplex jowchat.codeplex.com () [10021] Pseudo, UserName Email usage (see readme.txt)
+- 2015-05-04 COMMIT: Codeplex jowchat.codeplex.com (107404) [10021] Pseudo, UserName Email usage (see readme.txt)
+- [10022] BUG: Seed add default photo
+    See IdentityConfig.cs + when register no pb because default photo is implemented.
+    To correct disfuntionment in chat when PhotoUrl is null
+    Or we'll have to had: image = JA.UTILS.Helpers.Utils.AppPath() + "/Content/Avatars/BlankPhoto.jpg",
+    every where we use user object in Hubs/ChatHub, what we go for example in _LoginPartial.cshtml
+    ==> done
+- 2015-05-05 COMMIT: Codeplex jowchat.codeplex.com () [10022] BUG: Seed add default photo
 
 
 
@@ -539,7 +544,6 @@
     http://www.deluxeblogtips.com/2010/04/get-gravatar-using-only-javascript.html
     http://www.southcoastweb.co.uk/bootstrap-by-twitter-file-input-box/
 - 2015-04-21 COMMIT: Codeplex jowchat.codeplex.com (107368) ADD: gravatar capability
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -644,7 +648,6 @@
 - Add "Perfs Tools" folder with cranck outside project
 - Change IdentitySample to Cdf54.Ja.SignalR.Chat
 - Add _ViewStart.cshtml in Chat views to share Razor with js files instead of having this code in each view file Chat folder.
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
