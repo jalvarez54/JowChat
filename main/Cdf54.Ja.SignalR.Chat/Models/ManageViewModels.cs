@@ -44,10 +44,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         [Display(Name = "Use my Social Network Picture")]
         public bool UseSocialNetworkPicture { get; set; }
         public string ExternalProvider { get; set; }
-        public string GooglePhotoUrl { get; set; }
-        public string MicrosoftAccountId { get; set; }
-        public string FacebookAccountId { get; set; }
-        public string TwitterScreenname { get; set; }
+        public string ParameterProvider { get; set; }
         //[10019]
 
 

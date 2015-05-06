@@ -182,6 +182,12 @@
     ==> done
 - [10024] MOVE: glyphicons files to Content/fonts
     ==> done
+- [10025] MOVE: glyphicons files to /fonts
+    ==> done
+- [10026] ADD: Github for external login
+    ==> done
+- [10027] BUG After upgrade packages
+    ==> XXXX
 
 
 - [xxxxx] Check email when it's changed in "change profile"
@@ -376,7 +382,20 @@
 - 2015-05-05 COMMIT: Codeplex jowchat.codeplex.com () [10023] DELETE: package folder from server
 - [10024] MOVE: glyphicons files to Content/fonts
 - 2015-05-05 COMMIT: Codeplex jowchat.codeplex.com () MOVE: glyphicons files to Content/fonts
-
+- [10025] MOVE: glyphicons files to /fonts
+- [10026] ADD: Github for external login
+    https://developer.github.com/v3/oauth/
+    https://github.com/RockstarLabs/OwinOAuthProviders
+    Install-Package Owin.Security.Providers
+    ==> done
+- [10027] BUG After upgrade packages
+    All work fine with localhost, not for 192 and 89
+    Work for Facebook and Microsoft in the three config
+    Microsoft.Owin.Security.Google from 2.1.0 to 3.0.1 ==> error: access_denied
+    Microsoft.Owin.Security.Twitter from 2.1.0 to 3.0.1 ==> error: access_denied
+    RESOLVED for Google when downgrade Microsoft.Owin.Security.Google from 3.0.1 to 2.1.0 but not for Twitter
+    STILL NOT RESOLVED: for Twitter when downgrade all Microsoft.Owin*.* from 3.0.1 to 2.1.0 and All work fine with localhost
+    ==> XXXX
 
 
 

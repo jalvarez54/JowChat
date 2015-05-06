@@ -8,6 +8,8 @@ using System;
 using JA.UTILS.Helpers;
 using System.Security.Claims;
 
+using Owin.Security.Providers.GitHub;
+
 namespace Cdf54.Ja.SignalR.Chat
 {
     public partial class Startup
@@ -117,8 +119,8 @@ namespace Cdf54.Ja.SignalR.Chat
             };
             fao.Scope.Add("email");
             fao.Scope.Add("user_birthday");
-            fao.Scope.Add("friends_about_me");
-            fao.Scope.Add("friends_photos");
+            //fao.Scope.Add("friends_about_me");
+            //fao.Scope.Add("friends_photos");
             app.UseFacebookAuthentication(fao);
 
             ///
@@ -148,6 +150,36 @@ namespace Cdf54.Ja.SignalR.Chat
             };
             app.UseGoogleAuthentication(goo);
 
+            ///
+            /// GITHUB : [10026] ADD: Github for external login
+            ///
+            var githubProvider = new GitHubAuthenticationProvider
+            {
+                OnAuthenticated = (context) =>
+                {
+                    foreach (var claim in context.User)
+                    {
+                        var claimType = string.Format("urn:github:{0}", claim.Key);
+                        string claimValue = claim.Value.ToString();
+                        if (!context.Identity.HasClaim(claimType, claimValue))
+                            context.Identity.AddClaim(new System.Security.Claims.Claim(claimType, claimValue, "XmlSchemaString", "GitHub"));
+                    }
+                    return System.Threading.Tasks.Task.FromResult(0);
+                }
+            };
+            var git = new GitHubAuthenticationOptions
+            {
+                ClientId = Utils.GetAppSetting("GitHubClientId"),
+                ClientSecret = Utils.GetAppSetting("GitHubClientSecret"),
+                Provider = githubProvider,
+            };
+            //git.Scope.Add("avatar_url");
+            //git.Scope.Add("user");
+            //git.Scope.Add("email");
+            //git.Scope.Add("repo");
+            //git.Scope.Add("gist");
+            app.UseGitHubAuthentication(git);
+            
         }
     }
 }

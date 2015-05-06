@@ -497,6 +497,11 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                         var twitterScreenname = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:twitter:screenname")).Value;
                         user.PhotoUrl = string.Format("https://twitter.com/{0}/profile_image?size=original", twitterScreenname);
                     }
+                    if (info.Login.LoginProvider == "GitHub")
+                    {
+                        var githubId = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:github:id")).Value;
+                        user.PhotoUrl = string.Format("https://avatars.githubusercontent.com/u/{0}?v=3", githubId);
+                    }
 
                     //[10017]
                     // [10016]

@@ -237,22 +237,29 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                 model.ExternalProvider = linkedAccounts[0].LoginProvider;
 
                 if (model.ExternalProvider == "Google")
-                    model.GooglePhotoUrl = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:google:picture")).Value;
+                    model.ParameterProvider = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:google:picture")).Value;
                 if (model.ExternalProvider == "Microsoft")
                 {
                     var microsoftAccountId = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:microsoftaccount:id")).Value;
-                    model.MicrosoftAccountId = microsoftAccountId;
+                    model.ParameterProvider = microsoftAccountId;
                 }
                 if (model.ExternalProvider == "Facebook")
                 {
                     var facebookAccountId = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:facebook:id")).Value;
-                    model.FacebookAccountId = facebookAccountId;
+                    model.ParameterProvider = facebookAccountId;
                 }
                 if (model.ExternalProvider == "Twitter")
                 {
                     var twitterScreenname = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:twitter:screenname")).Value;
-                    model.TwitterScreenname = twitterScreenname;
+                    model.ParameterProvider = twitterScreenname;
                 }
+                //[10026] ADD: Github for external login
+                if (model.ExternalProvider == "GitHub")
+                {
+                    var githibId = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:github:id")).Value;
+                    model.ParameterProvider = githibId;
+                }
+                //[10026]
             }
             //[10019]
 
@@ -343,7 +350,11 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                         var twitterScreenname = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:twitter:screenname")).Value;
                         model.PhotoUrl = string.Format("https://twitter.com/{0}/profile_image?size=original", twitterScreenname);
                     }
-                    
+                    if (model.ExternalProvider == "GitHub")
+                    {
+                        var githubId = owc.Authentication.User.Claims.FirstOrDefault(c => c.Type.Equals("urn:github:id")).Value;
+                        model.PhotoUrl = string.Format("https://avatars.githubusercontent.com/u/{0}?v=3", githubId);
+                    }
                 }
                 //[10019]
 

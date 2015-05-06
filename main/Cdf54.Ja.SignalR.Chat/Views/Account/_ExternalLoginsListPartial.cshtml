@@ -47,6 +47,15 @@
                                 <span class="fa fa-google"></span> @p.AuthenticationType
                             </button>
                         }
+                        //[10026] ADD: Github for external login
+                        if (@p.AuthenticationType == "GitHub")
+                        {
+                            <button type="submit" class="btn btn-default btn-xs" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">
+                                <span class="fa fa-github"></span> @p.AuthenticationType
+                            </button>
+                        }
+                        //[10026]
+
                     }
                 </p>
                 <p>

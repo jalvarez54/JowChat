@@ -58,7 +58,7 @@ namespace Cdf54.Ja.SignalR.Chat.Models
 
         //[10009] ADD: Login with name and email
         [Required]
-        [Display(Name = "Pseudo or Email")]
+        [Display(Name = "UserName or Email")]
         public string PseudoOrEmail { get; set; }
 
         [Required]

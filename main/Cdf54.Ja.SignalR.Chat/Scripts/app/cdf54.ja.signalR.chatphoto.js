@@ -64,7 +64,7 @@ function UseGravatarClick(email, size) {
             var usnp = document.getElementById("UseGravatar");
             document.getElementById("UseGravatar").disabled = true;
             document.getElementById("preview").hidden = false;
-            document.getElementById("blah").src = get_socialnetworkpicture($this.attr("data-ExternalProvider"), $this.attr("data-GooglePhotoUrl"), $this.attr("data-microsoftAccountId"), $this.attr("data-facebookAccountId"), $this.attr("data-twitterScreenname"))
+            document.getElementById("blah").src = get_socialnetworkpicture($this.attr("data-ExternalProvider"), $this.attr("data-ParameterProvider"))
 
         } else {
             // the checkbox was unchecked
@@ -165,23 +165,25 @@ function get_gravatar(email, size) {
     return 'http://www.gravatar.com/avatar/' + MD5(email) + '?d=wavatar&s=' + size;
 }
 
-function get_socialnetworkpicture(externalProvider, googlePhotoUrl, microsoftAccountId, facebookAccountId, twitterScreenname) {
+function get_socialnetworkpicture(externalProvider, parameterProvider) {
 
     var photoUrl;
    
     if (externalProvider == "Google")
-        photoUrl = googlePhotoUrl;
+        photoUrl = parameterProvider;
     if (externalProvider == "Microsoft")
     {
-        photoUrl = CDF54.JA.UTILS.StringFormat("https://apis.live.net/v5.0/{0}/picture", microsoftAccountId);
+        photoUrl = CDF54.JA.UTILS.StringFormat("https://apis.live.net/v5.0/{0}/picture", parameterProvider);
     }
     if (externalProvider == "Facebook")
     {
-        photoUrl = CDF54.JA.UTILS.StringFormat("http://graph.facebook.com/{0}/picture", facebookAccountId);
+        photoUrl = CDF54.JA.UTILS.StringFormat("http://graph.facebook.com/{0}/picture", parameterProvider);
     }
-    if (externalProvider == "Twitter")
-    {
-        photoUrl = CDF54.JA.UTILS.StringFormat("https://twitter.com/{0}/profile_image?size=original", twitterScreenname);
+    if (externalProvider == "Twitter") {
+        photoUrl = CDF54.JA.UTILS.StringFormat("https://twitter.com/{0}/profile_image?size=original", parameterProvider);
+    }
+    if (externalProvider == "GitHub") {
+        photoUrl = CDF54.JA.UTILS.StringFormat("https://avatars.githubusercontent.com/u/{0}?v=3", parameterProvider);
     }
 
     return photoUrl;
