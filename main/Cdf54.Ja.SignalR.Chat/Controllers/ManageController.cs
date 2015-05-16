@@ -125,7 +125,7 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
                 // Remove photo if exist before remove account
                 //if Photo exist and is not a gravatar
-                if ((user.PhotoUrl != null && !user.PhotoUrl.Contains("http://")))
+                if ((user.PhotoUrl != null && !user.PhotoUrl.Contains("http://") && !user.PhotoUrl.Contains("https://")))
                 {
                     // Delete file if not the BlankPhoto.jpg and if we change for a gravatar
                     if (!user.PhotoUrl.Contains("BlankPhoto.jpg"))
@@ -164,8 +164,10 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
             var model = new ChangeProfileViewModel();
             model.Pseudo = user.Pseudo;
+            // [10028] ADD: UserName (ReadOnly) in Manage/ChangeProfile
+            model.UserName = user.UserName;
+            // [10028]
             model.Email = user.Email;
-            ViewBag.UserName = user.UserName;
 
             return View(model);
         }
@@ -371,8 +373,58 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
             return View(model);
         }
 
+        //[10031] ADD: webcam function for webcamjs with BUG !!!!
+        [HttpPost]
+        public JsonResult Upload()
+        {
+            var stream = Request.InputStream;
+            string dump, dump1;
+
+            using (var reader = new System.IO.StreamReader(stream))
+                dump = reader.ReadToEnd();
+
+            dump1 = dump.Substring(dump.IndexOf("image/jpeg") + "image/jpeg".Length + 5);
+
+            var buffer = System.Convert.FromBase64String(dump1);
+            // TODO: I am saving the image on the hard disk but
+            // you could do whatever processing you want with it
+            System.IO.File.WriteAllBytes(Server.MapPath("~/app_data/capture.jpg"), buffer);
+
+            return Json(new { success = true });
+
+        }
+        //[10031]
+
+        //[10031] ADD: webcam function for jquery.webcam.js
+        [HttpPost]
+        public async Task Capture()
+        {
+
+            var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
+
+            var stream = Request.InputStream;
+            string dump;
+
+            using (var reader = new System.IO.StreamReader(stream))
+                dump = reader.ReadToEnd();
+
+            user.PhotoUrl = Utils.SaveBytesPhotoFileToDisk(dump, this, user.PhotoUrl, false);
+            user.UseGravatar = false;
+            user.UseSocialNetworkPicture = false;
+
+            await UserManager.UpdateAsync(user);
+
+        }
+        [HttpPost]
+        public JsonResult Rebind()
+        {
+            return Json(new { success = true });
+        }
+
+        //[10031]
+
         //
-        // GET: /Account/RemoveLogin
+        // GET: /Manage/RemoveLogin
         public ActionResult RemoveLogin()
         {
             var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());

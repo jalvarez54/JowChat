@@ -481,26 +481,33 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
                     user.PhotoUrl =  Utils.AppPath() + "/Content/Avatars/BlankPhoto.jpg";
                     // [10017] Use provider avatar by default for external login 
                     if (info.Login.LoginProvider == "Google")
+                    {
                         user.PhotoUrl = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:google:picture")).Value;
+                        user.UseSocialNetworkPicture = true;
+                    }
                     if (info.Login.LoginProvider == "Microsoft")
                     {
                         var microsoftAccountId = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:microsoftaccount:id")).Value;
                         user.PhotoUrl = string.Format("https://apis.live.net/v5.0/{0}/picture", microsoftAccountId);
+                        user.UseSocialNetworkPicture = true;
                     }
                     if (info.Login.LoginProvider == "Facebook")
                     {
                         var facebookAccountId = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:facebook:id")).Value;
                         user.PhotoUrl = string.Format("http://graph.facebook.com/{0}/picture", facebookAccountId);
+                        user.UseSocialNetworkPicture = true;
                     }
                     if (info.Login.LoginProvider == "Twitter")
                     {
                         var twitterScreenname = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:twitter:screenname")).Value;
                         user.PhotoUrl = string.Format("https://twitter.com/{0}/profile_image?size=original", twitterScreenname);
+                        user.UseSocialNetworkPicture = true;
                     }
                     if (info.Login.LoginProvider == "GitHub")
                     {
                         var githubId = info.ExternalIdentity.Claims.FirstOrDefault(c => c.Type.Equals("urn:github:id")).Value;
                         user.PhotoUrl = string.Format("https://avatars.githubusercontent.com/u/{0}?v=3", githubId);
+                        user.UseSocialNetworkPicture = true;
                     }
 
                     //[10017]

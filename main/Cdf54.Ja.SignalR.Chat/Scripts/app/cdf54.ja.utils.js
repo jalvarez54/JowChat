@@ -67,7 +67,13 @@ CDF54.JA.UTILS = (function () {
         EncodeString: function (stringToConvert) {
             return $('<span/>').text(stringToConvert).html();
         },
-
+        // For virtual path: Obsolete
+        getContextPath: function ()
+        {
+            var ctx = window.location.pathname,
+                path = '/' !== ctx ? ctx.substring(0, ctx.indexOf('/', 1) + 1) : ctx;
+            return path + (/\/$/.test(path) ? '' : '/');
+        },
 
     };// Public members
 })();//CDF54.JA.UTILS module.

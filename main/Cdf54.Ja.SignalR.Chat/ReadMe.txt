@@ -36,15 +36,15 @@
 - Replace: .click() with .on
     http://chez-syl.fr/2012/02/les-evenements-sur-des-elements-charges-en-ajax/
     http://chez-syl.fr/2011/12/comment-traduire-gestionnaires-evenements-avec-le-nouveau-on/
-    ==>
+    ==> XXXX
 - Replace Bootstrap carousel with fancybox carousel in Home/Index (responsive)
-    ==>
+    ==> XXXX
 - PB: Why can I see _StartFail and not StartDown ?
     ==> CDF54.JA.SIGNALR.CHAT.APP. cause StartDown in a return
 - BUG: public override System.Threading.Tasks.Task OnReconnected() 
     When publish web.config usercount => 0 with same ConnectionID
     http://www.asp.net/signalr/overview/guide-to-the-api/handling-connection-lifetime-events
-    ==>
+    ==> XXXX
 - Show multimedia content, image, video...
     Ref. : https://github.com/SignalR/SignalR/tree/master/samples/Microsoft.AspNet.SignalR.Samples/Hubs/Chat
     CollegeHumorContentProvider, ImageContentProvider only, YouTubeContentProvider fail ==> ADD: yield return "https://www.youtube.com"; ==> OK !.
@@ -187,16 +187,29 @@
 - [10026] ADD: Github for external login
     ==> done
 - [10027] BUG After upgrade packages
+    ==> done
+- [10028] ADD: UserName (ReadOnly) in Manage/ChangeProfile
+    ==> done
+- [10029] ADD: Write access to JOW-SALOON/IIs_IUSRS user for photo upload.
+    ==> done
+- [10030] BUG: Use my Social Network Picture not checked after register
+    ==> done
+- [10031] ADD: webcam function
+    ==> done
+
+
+
+- [xxxxx] ADD: webcam function
+    Videochat
     ==> XXXX
 
-
+- [xxxxx] BUG: Exception when remove external account
+    Not regular .... Why ?
+    ==> XXXX
 - [xxxxx] Check email when it's changed in "change profile"
     ==> XXXX
 - [xxxxx] Url pb [10014]
     Change code with "Other" solution.
-    ==> XXXX
-- [xxxxx] ADD: Yahoo and LinkedIn
-    http://www.jerriepelser.com/blog/introducing-the-yahoo-linkedin-oauth-security-providers-for-owin
     ==> XXXX
 
 
@@ -395,28 +408,25 @@
     Microsoft.Owin.Security.Twitter from 2.1.0 to 3.0.1 ==> error: access_denied
     RESOLVED for Google when downgrade Microsoft.Owin.Security.Google from 3.0.1 to 2.1.0 but not for Twitter
     STILL NOT RESOLVED: for Twitter when downgrade all Microsoft.Owin*.* from 3.0.1 to 2.1.0 and All work fine with localhost
-    ==> XXXX
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    ==> done
+- 2015-05-06 COMMIT: Codeplex jowchat.codeplex.com (107408) [10026] ADD: Github for external login + [10027] BUG After upgrade packages
+- [10027] BUG After upgrade packages
+    RESOLVED: (But dont know why exactly)  for twitter, using http://www.noip.com/ with official IP of my BOX.
+    ==> done
+- [10028] ADD: UserName (ReadOnly) in Manage/ChangeProfile
+    ==> done
+- [10029] ADD: Write access to JOW-SALOON/IIs_IUSRS user for photo upload.
+    ==> done
+- [10030] BUG: Use my Social Network Picture not checked after register
+    ADD: user.UseSocialNetworkPicture = true; in AccountController/ExternalLoginConfirmation
+    ==> done
+- [10031] ADD: webcam function
+    http://www.jqueryrain.com/2013/10/best-jquery-webcam-plugin-example/
+    http://weblogs.asp.net/gunnarpeipman/using-jquery-webcam-plugin-with-asp-net-mvc
+    Photo avatar
+    BUG: Photo dont change in real time.
+    ==> done
+- 2015-05-16 COMMIT: Codeplex jowchat.codeplex.com (?) ADD: webcam function + Correct some bugs
 
 
 

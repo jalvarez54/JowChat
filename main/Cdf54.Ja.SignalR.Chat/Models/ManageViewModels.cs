@@ -59,6 +59,8 @@ namespace Cdf54.Ja.SignalR.Chat.Models
         [Display(Name = "Pseudo")]
         public string Pseudo { get; set; }
         public string PhotoUrl { get; set; }
+        [Display(Name = "User name")]
+        public string UserName { get; set; }
 
     }
     public class SetPasswordViewModel

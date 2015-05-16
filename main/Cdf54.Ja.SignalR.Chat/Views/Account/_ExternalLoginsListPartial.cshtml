@@ -58,36 +58,36 @@
 
                     }
                 </p>
-                <p>
-                    Some external providers don't support IP address parameters (Microsoft, Facebook, Google).
-                </p>
-                <p>
-                    Add these entries to your <strong>host</strong> file:
-                    <ul>
-                        <li>127.0.0.1 www.jowchat.net</li>
-                        <li>192.168.107.253 www.jowchat192.net</li>
-                        <li>89.87.172.42 www.jowchat89.net</li>
-                    </ul>
-                    <em>Use these link to login with an external provider, depending on your physical location, it will be Intranet, localhost or Internet.</em>
-                    <ul>
-                        @{
-                            //[10012] Show one link (Intranet, Internet, or localhost) in _ExternalLoginsListPartial
-                            switch (JA.UTILS.Helpers.Utils.GetIpAddressType(Request.ServerVariables["REMOTE_ADDR"]))
-                            {
-                                case JA.UTILS.Helpers.Utils.AddressType.Internet:
-                                    <li><a href="http://www.jowchat89.net/Cdf54Chat/Account/Login#.VUDlZpMbLO3" target="_blank">Internet</a></li>
-                                    break;
-                                case JA.UTILS.Helpers.Utils.AddressType.Intranet:
-                                <li><a href="http://www.jowchat192.net/Cdf54Chat/Account/Login#.VUDlZpMbLO3" target="_blank">Intranet</a></li>
-                                    break;
-                                case JA.UTILS.Helpers.Utils.AddressType.localhost:
-                                <li><a href="http://www.jowchat.net/Account/Login#.VUDlZpMbLO3" target="_blank">localhost</a></li>
-                                    break;
-                            }
-                            //[10012]
-                        }
-                    </ul>
-                </p>
+                @*<p>
+        Some external providers don't support IP address parameters (Microsoft, Facebook, Google).
+    </p>
+    <p>
+        Add these entries to your <strong>host</strong> file:
+        <ul>
+            <li>127.0.0.1 www.jowchat.net</li>
+            <li>192.168.107.253 www.jowchat192.net</li>
+            <li>89.87.172.42 www.jowchat89.net</li>
+        </ul>
+        <em>Use these link to login with an external provider, depending on your physical location, it will be Intranet, localhost or Internet.</em>
+        <ul>
+            @{
+                //[10012] Show one link (Intranet, Internet, or localhost) in _ExternalLoginsListPartial
+                switch (JA.UTILS.Helpers.Utils.GetIpAddressType(Request.ServerVariables["REMOTE_ADDR"]))
+                {
+                    case JA.UTILS.Helpers.Utils.AddressType.Internet:
+                        <li><a href="http://www.jowchat89.net/Cdf54Chat/Account/Login#.VUDlZpMbLO3" target="_blank">Internet</a></li>
+                        break;
+                    case JA.UTILS.Helpers.Utils.AddressType.Intranet:
+                    <li><a href="http://www.jowchat192.net/Cdf54Chat/Account/Login#.VUDlZpMbLO3" target="_blank">Intranet</a></li>
+                        break;
+                    case JA.UTILS.Helpers.Utils.AddressType.localhost:
+                    <li><a href="http://www.jowchat.net/Account/Login#.VUDlZpMbLO3" target="_blank">localhost</a></li>
+                        break;
+                }
+                //[10012]
+            }
+        </ul>
+    </p>*@
             </div>
         }
     }

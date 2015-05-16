@@ -75,7 +75,9 @@
     <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -141,7 +143,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -194,6 +198,7 @@
     <Content Include="Content\app\Spittoon.ogg" />
     <Content Include="Content\app\Spittoon.wav" />
     <Content Include="Content\Avatars\BlankPhoto.jpg" />
+    <Content Include="Content\Avatars\NoPhoto.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -231,6 +236,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.webcam.js" />
+    <Content Include="Scripts\jscam.swf" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\app\cdf54.ja.signalR.chat.min.js.map">
       <DependentUpon>cdf54.ja.signalR.chat.min.js</DependentUpon>
@@ -253,13 +260,15 @@
     <Content Include="App_Settings\appSettings-Debug.config" />
     <Content Include="App_Settings\MailSettings.config" />
     <Content Include="App_Settings\MailSettings-Common.config" />
-    <None Include="Properties\PublishProfiles\CDF54 VM from Home Temp Release.pubxml" />
+    <None Include="Properties\PublishProfiles\JOW-SALOON Release.pubxml" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\webcam.js" />
+    <Content Include="Scripts\webcam.swf" />
     <Content Include="Views\Chat\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Articles\_Specifications.cshtml" />
     <Content Include="Views\Shared\Articles\_About.cshtml" />
@@ -272,9 +281,11 @@
     <Content Include="Views\Manage\GetUserClaims.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web.Staging CDF54 VM.config">
       <DependentUpon>Web.config</DependentUpon>

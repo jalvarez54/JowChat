@@ -166,6 +166,12 @@ namespace JA.UTILS.Helpers
             //file is not locked
             return false;
         }
+        /// <summary>
+        /// 2005/05/15
+        /// </summary>
+        /// <param name="picture"></param>
+        /// <param name="ole"></param>
+        /// <returns></returns>
         public static String ByteToStringImage(byte[] picture, int ole)
         {
             // Image in data base ole = 78 (ole Header)
@@ -294,8 +300,10 @@ namespace JA.UTILS.Helpers
         /// <param name="photo">HttpPostedFileWrapper</param>
         /// <param name="controller">Controller calling</param>
         /// <returns>Path where photo is stored with it's calculated filename, or default photo "BlankPhoto.jpg" or null on error</returns>
-        public static string SavePhotoFileToDisk(HttpPostedFileWrapper photo, System.Web.Mvc.Controller controller, string oldPhotoUrl, bool isNoPhotoChecked)
+        public static string SavePhotoFileToDisk(Object myphoto, System.Web.Mvc.Controller controller, string oldPhotoUrl, bool isNoPhotoChecked)
         {
+
+            HttpPostedFileWrapper photo = (HttpPostedFileWrapper)myphoto;
 
             string photoPath = string.Empty;
             string fileName = string.Empty;
@@ -342,11 +350,84 @@ namespace JA.UTILS.Helpers
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 // Handled exception catch code
                 //Helpers.Utils.SignalExceptionToElmahAndTrace(ex, controller);
                 return null;
             }
             return photoPath;
         }
+        /// <summary>
+        /// 2005/05/15
+        /// Save photo to disk.
+        /// </summary>
+        /// <param name="myphoto">string</param>
+        /// <param name="controller">Controller calling</param>
+        /// <returns>Path where photo is stored with it's calculated filename.Or null on error.</returns>
+        public static string SaveBytesPhotoFileToDisk(Object myphoto, System.Web.Mvc.Controller controller, string oldPhotoUrl, bool isNoPhotoChecked)
+        {
+
+           string dump = (string)myphoto;
+
+            string photoPath = string.Empty;
+            string fileName = string.Empty;
+
+            // If photo is uploaded calculate his name
+            if (dump != null)
+            {
+                fileName = Guid.NewGuid().ToString() + ".jpg";
+            }
+
+            try
+            {
+                //Delete old file if exist.
+                if (oldPhotoUrl != null)
+                {
+                    if (!oldPhotoUrl.Contains("BlankPhoto.jpg"))
+                    {
+                        string fileToDelete = Path.GetFileName(oldPhotoUrl);
+                        var path = Path.Combine(controller.Server.MapPath("~/Content/Avatars"), fileToDelete);
+                        photoPath = Path.Combine(HttpRuntime.AppDomainAppVirtualPath, "Content/Avatars", fileName);
+                        FileInfo fi = new FileInfo(path);
+                        if (fi.Exists)
+                            fi.Delete();
+                    }
+                }
+                // We save the photo on disk
+                var p = Path.Combine(controller.Server.MapPath("~/Content/Avatars"), fileName);
+                System.IO.File.WriteAllBytes(p, String_To_Bytes2(dump));
+                photoPath = Path.Combine(HttpRuntime.AppDomainAppVirtualPath, "Content/Avatars", fileName);
+
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                // Handled exception catch code
+                //Helpers.Utils.SignalExceptionToElmahAndTrace(ex, controller);
+                return null;
+            }
+            return photoPath;
+        }
+        /// <summary>
+        /// 2005/05/15
+        /// 
+        /// </summary>
+        /// <param name="strInput"></param>
+        /// <returns></returns>
+        public static byte[] String_To_Bytes2(string strInput)
+        {
+            int numBytes = (strInput.Length) / 2;
+            byte[] bytes = new byte[numBytes];
+
+            for (int x = 0; x < numBytes; ++x)
+            {
+                bytes[x] = System.Convert.ToByte(strInput.Substring(x * 2, 2), 16);
+            }
+
+            return bytes;
+        }
+
     }
+
+
 }
