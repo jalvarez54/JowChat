@@ -8,7 +8,6 @@
 @using (Html.BeginForm("ChangePhoto", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Change Photo Form</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
@@ -78,7 +77,6 @@
             @Html.CheckBox("WebCam")
             <input id="capture_button" type="button" value="Capture" class="btn btn-primary btn-xs" />
             <input id="upload_button" type=button value="Upload Photo" class="btn btn-primary btn-xs">
-
         </div>
     </div>
     //[10031]

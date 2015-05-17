@@ -1,7 +1,7 @@
 ﻿
 /// <reference path="~/Scripts/app/cdf54.ja.utils.js" />
-/// <reference path="~/Scripts/app/webcam.js" />
-/// <reference path="~/Scripts/app/jquery.webcam.js" />
+/// <reference path="~/Scripts/webcam.js" />
+/// <reference path="~/Scripts/jquery.webcam.js" />
 
 /* Add extension */
 function readURL(input) {
@@ -190,6 +190,8 @@ function UseGravatarClick(email, size) {
             document.getElementById("upload_button").disabled = false;
             document.getElementById("JQWebCam").disabled = true;
             document.getElementById("JQcapture_button").disabled = true;
+            document.getElementById("change_photo_button").disabled = true;
+
             var usnp = document.getElementById("UseSocialNetworkPicture");
             if (usnp)
                 document.getElementById("UseSocialNetworkPicture").disabled = true;
@@ -217,13 +219,14 @@ function UseGravatarClick(email, size) {
             document.getElementById("upload_button").disabled = true;
             document.getElementById("JQWebCam").disabled = false;
             document.getElementById("JQcapture_button").disabled = true;
+            document.getElementById("change_photo_button").disabled = false;
+
             var usnp = document.getElementById("UseSocialNetworkPicture");
             if (usnp)
                 document.getElementById("UseSocialNetworkPicture").disabled = false;
             var inpc = document.getElementById("IsNoPhotoChecked");
             if (inpc)
                 document.getElementById("IsNoPhotoChecked").disabled = false;
-
             Webcam.reset();
         }
     });
@@ -237,7 +240,15 @@ function UseGravatarClick(email, size) {
     });
     $("#upload_button").click(function () {
         var data_uri = document.getElementById("blah").getAttribute('src');
-        Webcam.upload(data_uri, rootDir + "Upload");
+        Webcam.upload(data_uri, rootDir + "Manage/Upload", function (code, text) {
+            // Upload complete!
+            // 'code' will be the HTTP response code from the server, e.g. 200
+            // 'text' will be the raw response content
+            alert("Photo Capture successfully! " + "code = " + code + " text = " + text);
+            //[10031] BUG: Photo dont change in real time.
+            document.getElementById("login_photo").setAttribute('src', data_uri);
+            //[10031]
+        });
     });
     //[10031]
 
@@ -255,6 +266,8 @@ function UseGravatarClick(email, size) {
             document.getElementById("capture_button").disabled = true;
             document.getElementById("upload_button").disabled = true;
             document.getElementById("JQcapture_button").disabled = false;
+            document.getElementById("change_photo_button").disabled = true;
+
             var usnp = document.getElementById("UseSocialNetworkPicture");
             if (usnp)
                 document.getElementById("UseSocialNetworkPicture").disabled = true;
@@ -287,6 +300,8 @@ function UseGravatarClick(email, size) {
             document.getElementById("capture_button").disabled = true;
             document.getElementById("upload_button").disabled = true;
             document.getElementById("JQcapture_button").disabled = true;
+            document.getElementById("change_photo_button").disabled = false;
+
             var usnp = document.getElementById("UseSocialNetworkPicture");
             if (usnp)
                 document.getElementById("UseSocialNetworkPicture").disabled = false;
@@ -336,23 +351,29 @@ function UseGravatarClick(email, size) {
             document.getElementById("IsNoPhotoChecked").disabled = true;
     }
 
-    if ($('#WebCam').is(':checked')) {
-        // the checkbox is checked at load time
-        document.getElementById("filePhoto").disabled = true;
-        document.getElementById("UseGravatar").disabled = true;
-        var inpc = document.getElementById("IsNoPhotoChecked");
-        if (inpc)
-            document.getElementById("IsNoPhotoChecked").disabled = true;
-    }
+    document.getElementById("capture_button").disabled = true;
+    document.getElementById("upload_button").disabled = true;
+    document.getElementById("JQcapture_button").disabled = true;
+    document.getElementById("change_photo_button").disabled = true;
 
-    if ($('#JQWebCam').is(':checked')) {
-        // the checkbox is checked at load time
-        document.getElementById("filePhoto").disabled = true;
-        document.getElementById("UseGravatar").disabled = true;
-        var inpc = document.getElementById("IsNoPhotoChecked");
-        if (inpc)
-            document.getElementById("IsNoPhotoChecked").disabled = true;
-    }
+
+    //if ($('#WebCam').is(':checked')) {
+    //    // the checkbox is checked at load time
+    //    document.getElementById("filePhoto").disabled = true;
+    //    document.getElementById("UseGravatar").disabled = true;
+    //    var inpc = document.getElementById("IsNoPhotoChecked");
+    //    if (inpc)
+    //        document.getElementById("IsNoPhotoChecked").disabled = true;
+    //}
+
+    //if ($('#JQWebCam').is(':checked')) {
+    //    // the checkbox is checked at load time
+    //    document.getElementById("filePhoto").disabled = true;
+    //    document.getElementById("UseGravatar").disabled = true;
+    //    var inpc = document.getElementById("IsNoPhotoChecked");
+    //    if (inpc)
+    //        document.getElementById("IsNoPhotoChecked").disabled = true;
+    //}
 
 })();
 

@@ -196,6 +196,8 @@
     ==> done
 - [10031] ADD: webcam function
     ==> done
+- [10032] CHANGE: [10029] With right to Cdf854Chat apppool
+    ==> done
 
 
 
@@ -206,8 +208,10 @@
 - [xxxxx] BUG: Exception when remove external account
     Not regular .... Why ?
     ==> XXXX
+
 - [xxxxx] Check email when it's changed in "change profile"
     ==> XXXX
+
 - [xxxxx] Url pb [10014]
     Change code with "Other" solution.
     ==> XXXX
@@ -423,10 +427,17 @@
 - [10031] ADD: webcam function
     http://www.jqueryrain.com/2013/10/best-jquery-webcam-plugin-example/
     http://weblogs.asp.net/gunnarpeipman/using-jquery-webcam-plugin-with-asp-net-mvc
+    http://www.codeproject.com/Articles/442515/Uploading-and-returning-files-in-ASP-NET-MVC
+    https://github.com/jhuckaby/webcamjs
+    https://github.com/infusion/jQuery-webcam
     Photo avatar
-    BUG: Photo dont change in real time.
+    BUG: Photo dont change in real time. (Resolved for webcamjs, not for JQWebcam)
     ==> done
-- 2015-05-16 COMMIT: Codeplex jowchat.codeplex.com (?) ADD: webcam function + Correct some bugs
+- 2015-05-16 COMMIT: Codeplex jowchat.codeplex.com (107475) ADD: webcam function + Correct some bugs
+- [10032] CHANGE: [10029] With right to Cdf54Chat apppool 
+    https://www.bluevalleytech.com/techtalk/blog/assigning-ntfs-folder-permission-to-iis7-application-pools.aspx
+    ==> done
+- 2015-05-17 COMMIT: Codeplex jowchat.codeplex.com (?) Correct webcamjs bug and had callback
 
 
 

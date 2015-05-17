@@ -303,7 +303,7 @@ namespace JA.UTILS.Helpers
         public static string SavePhotoFileToDisk(Object myphoto, System.Web.Mvc.Controller controller, string oldPhotoUrl, bool isNoPhotoChecked)
         {
 
-            HttpPostedFileWrapper photo = (HttpPostedFileWrapper)myphoto;
+            HttpPostedFileBase photo = (HttpPostedFileBase)myphoto;
 
             string photoPath = string.Empty;
             string fileName = string.Empty;

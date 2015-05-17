@@ -38,7 +38,7 @@
         <li>
             <a href="@Url.Action("Index", "Manage")" title="Manage" , rel="nofollow">
                 @*[10000] change currentUser.UserName by currentUser.Pseudo*@
-                @currentUser.Pseudo <img class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@Url.Content(@image)" />
+                @currentUser.Pseudo <img id="login_photo" class="img-circle" style="float: left; padding-right:5px" height="35" width="35" src="@Url.Content(@image)" />
             </a>
             @*@Html.ActionLink(User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
         </li>

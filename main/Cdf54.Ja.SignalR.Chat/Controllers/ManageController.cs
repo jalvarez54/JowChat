@@ -375,20 +375,18 @@ namespace Cdf54.Ja.SignalR.Chat.Controllers
 
         //[10031] ADD: webcam function for webcamjs with BUG !!!!
         [HttpPost]
-        public JsonResult Upload()
+        public async Task<JsonResult> Upload()
         {
-            var stream = Request.InputStream;
-            string dump, dump1;
+            HttpPostedFileBase photo = Request.Files["webcam"];
 
-            using (var reader = new System.IO.StreamReader(stream))
-                dump = reader.ReadToEnd();
+            var user = UserManager.Users.First(u => u.UserName == User.Identity.Name);
 
-            dump1 = dump.Substring(dump.IndexOf("image/jpeg") + "image/jpeg".Length + 5);
+            user.PhotoUrl = Utils.SavePhotoFileToDisk(photo, this, user.PhotoUrl, false);
+            user.UseGravatar = false;
+            user.UseSocialNetworkPicture = false;
 
-            var buffer = System.Convert.FromBase64String(dump1);
-            // TODO: I am saving the image on the hard disk but
-            // you could do whatever processing you want with it
-            System.IO.File.WriteAllBytes(Server.MapPath("~/app_data/capture.jpg"), buffer);
+            await UserManager.UpdateAsync(user);
+
 
             return Json(new { success = true });
 
