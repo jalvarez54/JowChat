@@ -198,7 +198,9 @@
     ==> done
 - [10032] CHANGE: [10029] With right to Cdf854Chat apppool
     ==> done
-
+- [10033] Visual Studio 2015 upgrade
+    In web.config change (LocalDb)\v11.0 by (LocalDb)\MSSQLLocalDB
+    http://thebillwagner.com/Blog/Item/2015-02-05-VersionindependentlocalDBinVisualStudio2015
 
 
 - [xxxxx] ADD: webcam function
