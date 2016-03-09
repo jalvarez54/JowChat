@@ -9,7 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		..\Documentation\ChronoChat.vsdx = ..\Documentation\ChronoChat.vsdx
 		..\Documentation\Staging-Architecture.vsd = ..\Documentation\Staging-Architecture.vsd
-		..\Documentation\Technical Report.docx = ..\Documentation\Technical Report.docx
 		WebEssentials-Settings.json = WebEssentials-Settings.json
 		..\Documentation\Websocket-Signalr.pptx = ..\Documentation\Websocket-Signalr.pptx
 	EndProjectSection
